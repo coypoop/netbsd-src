@@ -18,3 +18,5 @@ cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/lib/
 #Remove PATH changes from ~/netbsd-src/lib/libhammer/Makefile
 
 #Change ~/netbsd-src/lib/libhammer/libhammer.h to not include <vfs/...> but <fs/...>
+
+#Add #include <sys/ioctl.h> to sys/fs/hammer/hammer_ioctl.h
