@@ -65,14 +65,14 @@ libhammer_find_pfs_mount(uuid_t *unique_uuid)
 	retval = NULL;
 
 	/* Do not continue if there are no mounted filesystems */
-	mntsize = getfsstat(NULL, 0, MNT_NOWAIT);
+	mntsize = getvfsstat(NULL, 0, MNT_NOWAIT);
 	if (mntsize <= 0)
 		return retval;
 
 	mntbufsize = mntsize * sizeof(struct statvfs);
 	mntbuf = _libhammer_malloc(mntbufsize);
 
-	mntsize = getfsstat(mntbuf, (long)mntbufsize, MNT_NOWAIT);
+	mntsize = getvfsstat(mntbuf, (long)mntbufsize, MNT_NOWAIT);
 	curmount = mntsize - 1;
 
 	/*

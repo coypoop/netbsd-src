@@ -21,8 +21,9 @@ cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/lib/
 
 #Add #include <sys/ioctl.h> to ~/netbsd-src/sys/fs/hammer/hammer_ioctl.h
 
-#in ~/netbsd-src/lib/libhammer/misc.c, replace: %s/statfs/statvfs/
-
+#in ~/netbsd-src/lib/libhammer/misc.c, replace:
+#   %s/statfs/statvfs/
+#   %s/getfsstat/getvfsstat/
 
 # Future roadblocks:
 # Dillon on why porting HAMMER is hard: https://wiki.freebsd.org/PortingHAMMERFS
