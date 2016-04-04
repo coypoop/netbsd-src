@@ -2,7 +2,7 @@
 
 LIB=	hammer
 SHLIBDIR?= /lib
-SRCS=	crc32.c icrc32.c info.c misc.c stats.c snapshot.c compat.c
+SRCS=	info.c misc.c stats.c snapshot.c compat.c
 INCS=	libhammer.h
 CFLAGS+= -I${.CURDIR}/../../sys
 
@@ -47,7 +47,6 @@ MLINKS+= libhammer_stats.3 libhammer_stats_btree_searches.3
 MLINKS+= libhammer_stats.3 libhammer_btree_stats.3
 MLINKS+= libhammer_stats.3 libhammer_io_stats.3
 
-.PATH: ${.CURDIR}/../../sys/libkern
 SHLIB_MAJOR=	0
 
 .include <bsd.lib.mk>

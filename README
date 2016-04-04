@@ -14,3 +14,5 @@ cp -R ~/dragonfly/sbin/hammer ~/netbsd-src/sbin/
 
 cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/lib/
 #Append libhammer to SUBDIR in ~/netbsd-src/lib/Makefile
+#Remove crc32.c and icrc32.c from SRCs in ~/netbsd-src/lib/libhammer/Makefile
+#Remove PATH changes from ~/netbsd-src/lib/libhammer/Makefile
