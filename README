@@ -19,9 +19,9 @@ cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/lib/
 
 #Change ~/netbsd-src/lib/libhammer/libhammer.h to not include <vfs/...> but <fs/...>
 
-#Add #include <sys/ioctl.h> to sys/fs/hammer/hammer_ioctl.h
+#Add #include <sys/ioctl.h> to ~/netbsd-src/sys/fs/hammer/hammer_ioctl.h
 
-
+#in ~/netbsd-src/lib/libhammer/misc.c, replace: %s/statfs/statvfs/
 
 
 # Future roadblocks:

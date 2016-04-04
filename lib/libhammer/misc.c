@@ -54,7 +54,7 @@ libhammer_find_pfs_mount(uuid_t *unique_uuid)
 {
 	struct hammer_ioc_pseudofs_rw pfs;
 	struct hammer_pseudofs_data pfsd;
-	struct statfs *mntbuf;
+	struct statvfs *mntbuf;
 	int mntsize;
 	int curmount;
 	int fd;
@@ -69,7 +69,7 @@ libhammer_find_pfs_mount(uuid_t *unique_uuid)
 	if (mntsize <= 0)
 		return retval;
 
-	mntbufsize = mntsize * sizeof(struct statfs);
+	mntbufsize = mntsize * sizeof(struct statvfs);
 	mntbuf = _libhammer_malloc(mntbufsize);
 
 	mntsize = getfsstat(mntbuf, (long)mntbufsize, MNT_NOWAIT);
@@ -80,7 +80,7 @@ libhammer_find_pfs_mount(uuid_t *unique_uuid)
 	 * this function.
 	 */
 	while(curmount >= 0) {
-		struct statfs *mnt = &mntbuf[curmount];
+		struct statvfs *mnt = &mntbuf[curmount];
 		/*
 		 * Discard any non null(5) or hammer(5) filesystems as synthetic
 		 * filesystems like procfs(5) could accept ioctl calls and thus
@@ -126,12 +126,12 @@ libhammer_find_pfs_mount(uuid_t *unique_uuid)
 void
 libhammer_pfs_canonical_path(char * mtpt, libhammer_pfsinfo_t pip, char **path)
 {
-	struct statfs st;
+	struct statvfs st;
 
 	assert(pip != NULL);
 	assert(mtpt != NULL);
 
-	if ((statfs(mtpt, &st) < 0) ||
+	if ((statvfs(mtpt, &st) < 0) ||
 	    ((strcmp("hammer", st.f_fstypename) != 0) &&
 	    (strcmp("null", st.f_fstypename) != 0))) {
 		*path = NULL;
