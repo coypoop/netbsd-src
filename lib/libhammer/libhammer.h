@@ -40,8 +40,8 @@
 #include <sys/queue.h>
 #include <sys/param.h>
 
-#include <vfs/hammer/hammer_disk.h>
-#include <vfs/hammer/hammer_ioctl.h>
+#include <fs/hammer/hammer_disk.h>
+#include <fs/hammer/hammer_ioctl.h>
 
 #define TXTLEN	64
 
