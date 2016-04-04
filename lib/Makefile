@@ -279,5 +279,7 @@ SUBDIR+=	lua
 # Needed by rump and rescue which are outside the smbfs tree
 SUBDIR+=	../external/bsd/smbfs/lib
 
+SUBDIR+=	libhammer
+
 .include <bsd.buildinstall.mk>
 .include <bsd.subdir.mk>

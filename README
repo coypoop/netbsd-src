@@ -1,0 +1,16 @@
+# Place NetBSD source in ~/netbsd-src
+# Place dflybsd source in ~/dragonfly
+
+cp -R ~/dragonfly/sys/vfs/hammer ~/netbsd-src/sys/ufs/
+#Append hammer to SUBDIR In ~/netbsd-src/sys/ufs/Makefile
+#Replace <bsd.kmod.mk> by <bsd.kinc.mk> in ~/netbsd-src/sys/ufs/hammer/Makefile
+cp -R ~/dragonfly/sbin/newfs_hammer ~/netbsd-src/sbin/
+#Apennd newfs_hammer to SUBDIR in ~/netbsd-src/sbin/Makefile
+
+cp -R ~/dragonfly/sbin/mount_hammer ~/netbsd-src/sbin/
+#Apennd mount_hammer to SUBDIR in ~/netbsd-src/sbin/Makefile
+
+cp -R ~/dragonfly/sbin/hammer ~/netbsd-src/sbin/
+
+cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/lib/
+#Append libhammer to SUBDIR in ~/netbsd-src/lib/Makefile

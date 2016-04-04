@@ -17,6 +17,7 @@ SUBDIR=	amrctl apmlabel atactl badsect bioctl brconfig ccdconfig \
 # support for various file systems
 SUBDIR+= newfs_ext2fs fsck_ext2fs
 SUBDIR+= newfs fsck_ffs fsdb dump restore clri tunefs resize_ffs
+SUBDIR+= newfs_hammer
 SUBDIR+= newfs_lfs fsck_lfs dump_lfs resize_lfs
 SUBDIR+= newfs_msdos fsck_msdos
 SUBDIR+= newfs_sysvbfs
@@ -30,6 +31,7 @@ SUBDIR+= mount_ext2fs
 SUBDIR+= mount_fdesc
 SUBDIR+= mount_filecore
 SUBDIR+= mount_ffs
+SUBDIR+= mount_hammer
 SUBDIR+= mount_hfs
 SUBDIR+= mount_kernfs
 SUBDIR+= mount_lfs
