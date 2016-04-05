@@ -48,6 +48,8 @@ CPPFLAGS+=	-I${KERNDIR}/../../../common/include
 .endif
 
 # Other stuff
+SUBDIR+=hammer
+
 SRCS+=	kern_assert.c __main.c
 SRCS+=	cpuset.c inet_addr.c intoa.c
 .if empty(SRCS:Mbyte_swap_8.*)
