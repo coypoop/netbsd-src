@@ -20,6 +20,10 @@ cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/sys/lib/
 #	~/netbsd-src/sbin/hammer/hammer_util.h
 # to not include <vfs/...> but <fs/...>
 
+#Change ~/netbsd-src/sbin/hammer/ondisk.c 
+# to include <sys/disklabel.h> instead of <sys/diskslice.h>
+#    include <sys/bootblock.h> instead of <sys/diskmbr.h>
+
 #Add #include <sys/ioctl.h> to ~/netbsd-src/sys/fs/hammer/hammer_ioctl.h
 
 #in ~/netbsd-src/sys/lib/libhammer/misc.c, replace:

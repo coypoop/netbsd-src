@@ -32,8 +32,8 @@
  * SUCH DAMAGE.
  */
 
-#include <sys/diskslice.h>
-#include <sys/diskmbr.h>
+#include <sys/disklabel.h>
+#include <sys/bootblock.h>
 
 #include "hammer_util.h"
 
