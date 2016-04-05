@@ -3,7 +3,7 @@
 
 PROG=	newfs_hammer
 MAN=	newfs_hammer.8
-CFLAGS+= -I${.CURDIR}/../../sys/lib/libhammer -I${.CURDIR}/../hammer
+CFLAGS+= -I${.CURDIR}/../../sys/ -I${.CURDIR}/../../sys/lib/libhammer -I${.CURDIR}/../hammer
 SRCS= newfs_hammer.c
 
 .PATH: ${.CURDIR}/../../sys/lib/
