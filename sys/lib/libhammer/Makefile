@@ -4,7 +4,7 @@ LIB=	hammer
 SHLIBDIR?= /lib
 SRCS=	info.c misc.c stats.c snapshot.c compat.c
 INCS=	libhammer.h
-CFLAGS+= -I${.CURDIR}/../../sys
+CFLAGS+= -I${.CURDIR}/../../../sys
 
 MAN+=	 libhammer.3
 MAN+=	 libhammer_fsinfo.3

@@ -3,10 +3,10 @@
 
 PROG=	newfs_hammer
 MAN=	newfs_hammer.8
-CFLAGS+= -I${.CURDIR}/../../sys -I${.CURDIR}/../hammer
+CFLAGS+= -I${.CURDIR}/../../sys/lib/libhammer -I${.CURDIR}/../hammer
 SRCS= newfs_hammer.c
 
-.PATH: ${.CURDIR}/../../sys/libkern
+.PATH: ${.CURDIR}/../../sys/lib/
 SRCS+= crc32.c icrc32.c
 .PATH: ${.CURDIR}/../hammer
 SRCS+= ondisk.c cache.c blockmap.c

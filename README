@@ -8,22 +8,29 @@ cp -R ~/dragonfly/sbin/newfs_hammer ~/netbsd-src/sbin/
 #Apennd newfs_hammer to SUBDIR in ~/netbsd-src/sbin/Makefile
 
 cp -R ~/dragonfly/sbin/mount_hammer ~/netbsd-src/sbin/
-#Apennd mount_hammer to SUBDIR in ~/netbsd-src/sbin/Makefile
+#Apend mount_hammer to SUBDIR in ~/netbsd-src/sbin/Makefile
 
 cp -R ~/dragonfly/sbin/hammer ~/netbsd-src/sbin/
 
-cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/lib/
-#Append libhammer to SUBDIR in ~/netbsd-src/lib/Makefile
-#Remove crc32.c and icrc32.c from SRCs in ~/netbsd-src/lib/libhammer/Makefile
-#Remove PATH changes from ~/netbsd-src/lib/libhammer/Makefile
+cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/sys/lib/
 
-#Change ~/netbsd-src/lib/libhammer/libhammer.h to not include <vfs/...> but <fs/...>
+#XXX Remove PATH changes from Makefiles introduced
+
+#Change ~/netbsd-src/sys/lib/libhammer/libhammer.h to not include <vfs/...> but <fs/...>
 
 #Add #include <sys/ioctl.h> to ~/netbsd-src/sys/fs/hammer/hammer_ioctl.h
 
-#in ~/netbsd-src/lib/libhammer/misc.c, replace:
+#in ~/netbsd-src/sys/lib/libhammer/misc.c, replace:
 #   %s/statfs/statvfs/
 #   %s/getfsstat/getvfsstat/
+
+#in ~/netbsd-src/sbin/newfs_hammer/Makefile, :
+#change -I${.CURDIR}/../../sys to -I${.CURDIR}/../../sys/lib/libhammer.
+
+#in ~/netbsd-src/sys/lib/libhammer/Makefile:
+#change -I${.CURDIR}/../../sys to -I${.CURDIR}/../../../sys
+
+
 
 # Future roadblocks:
 # Dillon on why porting HAMMER is hard: https://wiki.freebsd.org/PortingHAMMERFS
