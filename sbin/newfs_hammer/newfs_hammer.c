@@ -436,7 +436,7 @@ trim_volume(struct volume_info *vol)
 		    (unsigned long long)ioarg[0]/512,
 		    (unsigned long long)ioarg[1]/512);
 
-		if (ioctl(vol->fd, IOCTLTRIM, ioarg) < 0) {
+		if (ioctl(vol->fd, MNT_DISCARD, ioarg) < 0) {
 			printf("Device trim failed\n");
 			usage ();
 		}
