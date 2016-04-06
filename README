@@ -39,5 +39,9 @@ cp -R ~/dragonfly/lib/libhammer/ ~/netbsd-src/sys/lib/
 #in ~/netbsd-src/sbin/newfs_hammer/newfs_hammer.c
 # IOCTLTRIM->MNT_DISCARD
 
+cp ~/dragonfly/lib/libc/uuid/uuid_name_lookup.c ~/netbsd-src/lib/libc/uuid/
+# add uuid_name_lookup.c to SRCS
+# add uuid_name_lookup.c to MLINKS
+
 # Future roadblocks:
 # Dillon on why porting HAMMER is hard: https://wiki.freebsd.org/PortingHAMMERFS
