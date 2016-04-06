@@ -1,4 +1,8 @@
-############# CURRENT FAILURE #####################################
+########################## TODO #################################
+Adapt uuid_name_lookup to use rbtree(3).
+Add missing functions for it to compile.
+
+Current compilation failure:
 /home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:97:23: error: expected ')' before 'const'
 /home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:97:23: error: expected ')' before 'const'
 /home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:139:1: error: no previous prototype for 'uuid_name_lookup' [-Werror=missing-prototypes]
@@ -18,9 +22,7 @@
 /home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:83:1: error: 'uuid_rbnamecmp' defined but not used [-Werror=unused-function]
 /home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:89:1: error: 'uuid_rbuuidcmp' defined but not used [-Werror=unused-function]
 
-Solution: Clean up uuid_name_lookup.c and import more missing things
-
-############# STEPS DONE TO BUILD STUFF ###########################
+################### STEPS DONE TO BUILD STUFF ####################
 
 # Place NetBSD source in ~/netbsd-src
 # Place dflybsd source in ~/dragonfly
