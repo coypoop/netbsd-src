@@ -1,3 +1,27 @@
+############# CURRENT FAILURE #####################################
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:97:23: error: expected ')' before 'const'
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:97:23: error: expected ')' before 'const'
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:139:1: error: no previous prototype for 'uuid_name_lookup' [-Werror=missing-prototypes]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:149:10: error: implicit declaration of function 'uuid_nrbtree_RB_LOOKUP_NAME' [-Werror=implicit-function-declaration]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:149:8: error: assignment makes pointer from integer without a cast [-Werror=int-conversion]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:161:13: error: 'uuid_s_not_found' undeclared (first use in this function)
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:180:1: error: no previous prototype for 'uuid_reset_lookup' [-Werror=missing-prototypes]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:182:2: error: implicit declaration of function 'uuid_urbtree_RB_SCAN' [-Werror=implicit-function-declaration]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:139:1: error: no previous prototype for 'uuid_name_lookup' [-Werror=missing-prototypes]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:83:1: error: 'uuid_rbnamecmp' defined but not used [-Werror=unused-function]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:89:1: error: 'uuid_rbuuidcmp' defined but not used [-Werror=unused-function]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:149:10: error: implicit declaration of function 'uuid_nrbtree_RB_LOOKUP_NAME' [-Werror=implicit-function-declaration]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:149:8: error: assignment makes pointer from integer without a cast [-Werror=int-conversion]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:161:13: error: 'uuid_s_not_found' undeclared (first use in this function)
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:180:1: error: no previous prototype for 'uuid_reset_lookup' [-Werror=missing-prototypes]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:182:2: error: implicit declaration of function 'uuid_urbtree_RB_SCAN' [-Werror=implicit-function-declaration]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:83:1: error: 'uuid_rbnamecmp' defined but not used [-Werror=unused-function]
+/home/netbsd/src/lib/libc/uuid/uuid_name_lookup.c:89:1: error: 'uuid_rbuuidcmp' defined but not used [-Werror=unused-function]
+
+Solution: Clean up uuid_name_lookup.c and import more missing things
+
+############# STEPS DONE TO BUILD STUFF ###########################
+
 # Place NetBSD source in ~/netbsd-src
 # Place dflybsd source in ~/dragonfly
 
@@ -43,5 +67,5 @@ cp ~/dragonfly/lib/libc/uuid/uuid_name_lookup.c ~/netbsd-src/lib/libc/uuid/
 # add uuid_name_lookup.c to SRCS
 # add uuid_name_lookup.c to MLINKS
 
-# Future roadblocks:
+####################### Future roadblocks ############################
 # Dillon on why porting HAMMER is hard: https://wiki.freebsd.org/PortingHAMMERFS
