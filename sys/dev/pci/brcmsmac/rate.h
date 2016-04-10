@@ -21,7 +21,7 @@
 #include "d11.h"
 #include "phy/phy_hal.h"
 
-extern const u8 rate_info[];
+extern const uint8_t rate_info[];
 extern const struct brcms_c_rateset cck_ofdm_mimo_rates;
 extern const struct brcms_c_rateset ofdm_mimo_rates;
 extern const struct brcms_c_rateset cck_ofdm_rates;
@@ -32,17 +32,17 @@ extern const struct brcms_c_rateset rate_limit_1_2;
 
 struct brcms_mcs_info {
 	/* phy rate in kbps [20Mhz] */
-	u32 phy_rate_20;
+	uint32_t phy_rate_20;
 	/* phy rate in kbps [40Mhz] */
-	u32 phy_rate_40;
+	uint32_t phy_rate_40;
 	/* phy rate in kbps [20Mhz] with SGI */
-	u32 phy_rate_20_sgi;
+	uint32_t phy_rate_20_sgi;
 	/* phy rate in kbps [40Mhz] with SGI */
-	u32 phy_rate_40_sgi;
+	uint32_t phy_rate_40_sgi;
 	/* phy ctl byte 3, code rate, modulation type, # of streams */
-	u8 tx_phy_ctl3;
+	uint8_t tx_phy_ctl3;
 	/* matching legacy ofdm rate in 500bkps */
-	u8 leg_ofdm;
+	uint8_t leg_ofdm;
 };
 
 #define BRCMS_MAXMCS	32	/* max valid mcs index */
@@ -53,12 +53,12 @@ extern const struct brcms_mcs_info mcs_table[];
 #define MCS_TXS_SHIFT	6	/* num tx streams - 1 bit shift */
 
 /* returns num tx streams - 1 */
-static inline u8 mcs_2_txstreams(u8 mcs)
+static inline uint8_t mcs_2_txstreams(uint8_t mcs)
 {
 	return (mcs_table[mcs].tx_phy_ctl3 & MCS_TXS_MASK) >> MCS_TXS_SHIFT;
 }
 
-static inline uint mcs_2_rate(u8 mcs, bool is40, bool sgi)
+static inline uint mcs_2_rate(uint8_t mcs, bool is40, bool sgi)
 {
 	if (sgi) {
 		if (is40)
@@ -112,34 +112,34 @@ static inline uint mcs_2_rate(u8 mcs, bool is40, bool sgi)
 /* bit indicates override rate only */
 #define RSPEC_OVERRIDE_MCS_ONLY 0x40000000
 
-static inline bool rspec_active(u32 rspec)
+static inline bool rspec_active(uint32_t rspec)
 {
 	return rspec & (RSPEC_RATE_MASK | RSPEC_MIMORATE);
 }
 
-static inline u8 rspec_phytxbyte2(u32 rspec)
+static inline uint8_t rspec_phytxbyte2(uint32_t rspec)
 {
 	return (rspec & 0xff00) >> 8;
 }
 
-static inline u32 rspec_get_bw(u32 rspec)
+static inline uint32_t rspec_get_bw(uint32_t rspec)
 {
 	return (rspec & RSPEC_BW_MASK) >> RSPEC_BW_SHIFT;
 }
 
-static inline bool rspec_issgi(u32 rspec)
+static inline bool rspec_issgi(uint32_t rspec)
 {
 	return (rspec & RSPEC_SHORT_GI) == RSPEC_SHORT_GI;
 }
 
-static inline bool rspec_is40mhz(u32 rspec)
+static inline bool rspec_is40mhz(uint32_t rspec)
 {
-	u32 bw = rspec_get_bw(rspec);
+	uint32_t bw = rspec_get_bw(rspec);
 
 	return bw == PHY_TXC1_BW_40MHZ || bw == PHY_TXC1_BW_40MHZ_DUP;
 }
 
-static inline uint rspec2rate(u32 rspec)
+static inline uint rspec2rate(uint32_t rspec)
 {
 	if (rspec & RSPEC_MIMORATE)
 		return mcs_2_rate(rspec & RSPEC_RATE_MASK, rspec_is40mhz(rspec),
@@ -147,64 +147,64 @@ static inline uint rspec2rate(u32 rspec)
 	return rspec & RSPEC_RATE_MASK;
 }
 
-static inline u8 rspec_mimoplcp3(u32 rspec)
+static inline uint8_t rspec_mimoplcp3(uint32_t rspec)
 {
 	return (rspec & 0xf00000) >> 16;
 }
 
-static inline bool plcp3_issgi(u8 plcp)
+static inline bool plcp3_issgi(uint8_t plcp)
 {
 	return (plcp & (RSPEC_SHORT_GI >> 16)) != 0;
 }
 
-static inline uint rspec_stc(u32 rspec)
+static inline uint rspec_stc(uint32_t rspec)
 {
 	return (rspec & RSPEC_STC_MASK) >> RSPEC_STC_SHIFT;
 }
 
-static inline uint rspec_stf(u32 rspec)
+static inline uint rspec_stf(uint32_t rspec)
 {
 	return (rspec & RSPEC_STF_MASK) >> RSPEC_STF_SHIFT;
 }
 
-static inline bool is_mcs_rate(u32 ratespec)
+static inline bool is_mcs_rate(uint32_t ratespec)
 {
 	return (ratespec & RSPEC_MIMORATE) != 0;
 }
 
-static inline bool is_ofdm_rate(u32 ratespec)
+static inline bool is_ofdm_rate(uint32_t ratespec)
 {
 	return !is_mcs_rate(ratespec) &&
 	       (rate_info[ratespec & RSPEC_RATE_MASK] & BRCMS_RATE_FLAG);
 }
 
-static inline bool is_cck_rate(u32 ratespec)
+static inline bool is_cck_rate(uint32_t ratespec)
 {
-	u32 rate = (ratespec & BRCMS_RATE_MASK);
+	uint32_t rate = (ratespec & BRCMS_RATE_MASK);
 
 	return !is_mcs_rate(ratespec) && (
 			rate == BRCM_RATE_1M || rate == BRCM_RATE_2M ||
 			rate == BRCM_RATE_5M5 || rate == BRCM_RATE_11M);
 }
 
-static inline bool is_single_stream(u8 mcs)
+static inline bool is_single_stream(uint8_t mcs)
 {
 	return mcs <= HIGHEST_SINGLE_STREAM_MCS || mcs == 32;
 }
 
-static inline u8 cck_rspec(u8 cck)
+static inline uint8_t cck_rspec(uint8_t cck)
 {
 	return cck & RSPEC_RATE_MASK;
 }
 
 /* Convert encoded rate value in plcp header to numerical rates in 500 KHz
  * increments */
-static inline u8 ofdm_phy2mac_rate(u8 rlpt)
+static inline uint8_t ofdm_phy2mac_rate(uint8_t rlpt)
 {
 	return wlc_phy_get_ofdm_rate_lookup()[rlpt & 0x7];
 }
 
-static inline u8 cck_phy2mac_rate(u8 signal)
+static inline uint8_t cck_phy2mac_rate(uint8_t signal)
 {
 	return signal/5;
 }
@@ -218,28 +218,28 @@ static inline u8 cck_phy2mac_rate(u8 signal)
  * rateset */
 bool brcms_c_rate_hwrs_filter_sort_validate(struct brcms_c_rateset *rs,
 					    const struct brcms_c_rateset *hw_rs,
-					    bool check_brate, u8 txstreams);
+					    bool check_brate, uint8_t txstreams);
 /* copy rateset src to dst as-is (no masking or sorting) */
 void brcms_c_rateset_copy(const struct brcms_c_rateset *src,
 			  struct brcms_c_rateset *dst);
 
 /* would be nice to have these documented ... */
-u32 brcms_c_compute_rspec(struct d11rxhdr *rxh, u8 *plcp);
+uint32_t brcms_c_compute_rspec(struct d11rxhdr *rxh, uint8_t *plcp);
 
 void brcms_c_rateset_filter(struct brcms_c_rateset *src,
 			    struct brcms_c_rateset *dst, bool basic_only,
-			    u8 rates, uint xmask, bool mcsallow);
+			    uint8_t rates, uint xmask, bool mcsallow);
 
 void brcms_c_rateset_default(struct brcms_c_rateset *rs_tgt,
 			     const struct brcms_c_rateset *rs_hw, uint phy_type,
 			     int bandtype, bool cck_only, uint rate_mask,
-			     bool mcsallow, u8 bw, u8 txstreams);
+			     bool mcsallow, uint8_t bw, uint8_t txstreams);
 
 s16 brcms_c_rate_legacy_phyctl(uint rate);
 
-void brcms_c_rateset_mcs_upd(struct brcms_c_rateset *rs, u8 txstreams);
+void brcms_c_rateset_mcs_upd(struct brcms_c_rateset *rs, uint8_t txstreams);
 void brcms_c_rateset_mcs_clear(struct brcms_c_rateset *rateset);
-void brcms_c_rateset_mcs_build(struct brcms_c_rateset *rateset, u8 txstreams);
-void brcms_c_rateset_bw_mcs_filter(struct brcms_c_rateset *rateset, u8 bw);
+void brcms_c_rateset_mcs_build(struct brcms_c_rateset *rateset, uint8_t txstreams);
+void brcms_c_rateset_bw_mcs_filter(struct brcms_c_rateset *rateset, uint8_t bw);
 
 #endif				/* _BRCM_RATE_H_ */

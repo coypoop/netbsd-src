@@ -58,7 +58,7 @@ int brcms_led_register(struct brcms_info *wl)
 	struct bcma_drv_cc *cc_drv  = &wl->wlc->hw->d11core->bus->drv_cc;
 	struct gpio_chip *bcma_gpio = &cc_drv->gpio;
 	struct ssb_sprom *sprom = &wl->wlc->hw->d11core->bus->sprom;
-	u8 *leds[] = { &sprom->gpio0,
+	uint8_t *leds[] = { &sprom->gpio0,
 		&sprom->gpio1,
 		&sprom->gpio2,
 		&sprom->gpio3 };
@@ -74,7 +74,7 @@ int brcms_led_register(struct brcms_info *wl)
 
 	/* find radio enabled LED */
 	for (i = 0; i < BRCMS_LED_NO; i++) {
-		u8 led = *leds[i];
+		uint8_t led = *leds[i];
 		if ((led & BRCMS_LED_BEH_MASK) == BRCMS_LED_RADIO) {
 			gpio = bcma_gpio->base + i;
 			if (led & BRCMS_LED_AL_MASK)

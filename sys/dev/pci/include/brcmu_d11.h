@@ -126,15 +126,15 @@ enum brcmu_chan_sb {
 };
 
 struct brcmu_chan {
-	u16 chspec;
-	u8 chnum;
-	u8 band;
+	uint16_t chspec;
+	uint8_t chnum;
+	uint8_t band;
 	enum brcmu_chan_bw bw;
 	enum brcmu_chan_sb sb;
 };
 
 struct brcmu_d11inf {
-	u8 io_type;
+	uint8_t io_type;
 
 	void (*encchspec)(struct brcmu_chan *ch);
 	void (*decchspec)(struct brcmu_chan *ch);

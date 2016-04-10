@@ -39,20 +39,20 @@
 
 /* structure to store per-tid state for the ampdu initiator */
 struct scb_ampdu_tid_ini {
-	u8 tid;		  /* initiator tid for easy lookup */
+	uint8_t tid;		  /* initiator tid for easy lookup */
 	/* tx retry count; indexed by seq modulo */
-	u8 txretry[AMPDU_TX_BA_MAX_WSIZE];
+	uint8_t txretry[AMPDU_TX_BA_MAX_WSIZE];
 	struct scb *scb;  /* backptr for easy lookup */
-	u8 ba_wsize;	  /* negotiated ba window size (in pdu) */
+	uint8_t ba_wsize;	  /* negotiated ba window size (in pdu) */
 };
 
 struct scb_ampdu {
 	struct scb *scb;	/* back pointer for easy reference */
-	u8 mpdu_density;	/* mpdu density */
-	u8 max_pdu;		/* max pdus allowed in ampdu */
-	u8 release;		/* # of mpdus released at a time */
-	u16 min_len;		/* min mpdu len to support the density */
-	u32 max_rx_ampdu_bytes;	/* max ampdu rcv length; 8k, 16k, 32k, 64k */
+	uint8_t mpdu_density;	/* mpdu density */
+	uint8_t max_pdu;		/* max pdus allowed in ampdu */
+	uint8_t release;		/* # of mpdus released at a time */
+	uint16_t min_len;		/* min mpdu len to support the density */
+	uint32_t max_rx_ampdu_bytes;	/* max ampdu rcv length; 8k, 16k, 32k, 64k */
 
 	/*
 	 * This could easily be a ini[] pointer and we keep this info in wl
@@ -65,18 +65,18 @@ struct scb_ampdu {
 
 /* station control block - one per remote MAC address */
 struct scb {
-	u32 magic;
-	u32 flags;	/* various bit flags as defined below */
-	u32 flags2;	/* various bit flags2 as defined below */
-	u8 state;	/* current state bitfield of auth/assoc process */
-	u8 ea[ETH_ALEN];	/* station address */
+	uint32_t magic;
+	uint32_t flags;	/* various bit flags as defined below */
+	uint32_t flags2;	/* various bit flags2 as defined below */
+	uint8_t state;	/* current state bitfield of auth/assoc process */
+	uint8_t ea[ETH_ALEN];	/* station address */
 	uint fragresid[NUMPRIO];/* #bytes unused in frag buffer per prio */
 
-	u16 seqctl[NUMPRIO];	/* seqctl of last received frame (for dups) */
+	uint16_t seqctl[NUMPRIO];	/* seqctl of last received frame (for dups) */
 	/* seqctl of last received frame (for dups) for non-QoS data and
 	 * management */
-	u16 seqctl_nonqos;
-	u16 seqnum[NUMPRIO];/* WME: driver maintained sw seqnum per priority */
+	uint16_t seqctl_nonqos;
+	uint16_t seqnum[NUMPRIO];/* WME: driver maintained sw seqnum per priority */
 
 	struct scb_ampdu scb_ampdu;	/* AMPDU state including per tid info */
 };

@@ -39,8 +39,8 @@ struct brcms_ucode {
 	size_t bcm43xx_16_mimosz;
 	__le32 *bcm43xx_24_lcn;
 	size_t bcm43xx_24_lcnsz;
-	u32 *bcm43xx_bommajor;
-	u32 *bcm43xx_bomminor;
+	uint32_t *bcm43xx_bommajor;
+	uint32_t *bcm43xx_bomminor;
 };
 
 int brcms_ucode_data_init(struct brcms_info *wl, struct brcms_ucode *ucode);

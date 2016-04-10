@@ -98,7 +98,7 @@
 #define	RES4313_HT_AVAIL_RSRC		14
 #define	RES4313_MACPHY_CLK_AVAIL_RSRC	15
 
-u16 si_pmu_fast_pwrup_delay(struct si_pub *sih)
+uint16_t si_pmu_fast_pwrup_delay(struct si_pub *sih)
 {
 	uint delay = PMU_MAX_TRANSITION_DLY;
 
@@ -112,14 +112,14 @@ u16 si_pmu_fast_pwrup_delay(struct si_pub *sih)
 		break;
 	}
 
-	return (u16) delay;
+	return (uint16_t) delay;
 }
 
-u32 si_pmu_measure_alpclk(struct si_pub *sih)
+uint32_t si_pmu_measure_alpclk(struct si_pub *sih)
 {
 	struct si_info *sii = container_of(sih, struct si_info, pub);
 	struct bcma_device *core;
-	u32 alp_khz;
+	uint32_t alp_khz;
 
 	if (ai_get_pmurev(sih) < 10)
 		return 0;
@@ -128,7 +128,7 @@ u32 si_pmu_measure_alpclk(struct si_pub *sih)
 	core = sii->icbus->drv_cc.core;
 
 	if (bcma_read32(core, CHIPCREGOFFS(pmustatus)) & PST_EXTLPOAVAIL) {
-		u32 ilp_ctr, alp_hz;
+		uint32_t ilp_ctr, alp_hz;
 
 		/*
 		 * Enable the reg to measure the freq,

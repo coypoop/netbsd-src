@@ -135,9 +135,9 @@
  */
 struct si_pub {
 	int ccrev;		/* chip common core rev */
-	u32 cccaps;		/* chip common capabilities */
+	uint32_t cccaps;		/* chip common capabilities */
 	int pmurev;		/* pmu core rev */
-	u32 pmucaps;		/* pmu capabilities */
+	uint32_t pmucaps;		/* pmu capabilities */
 	uint boardtype;		/* board type */
 	uint boardvendor;	/* board vendor */
 	uint chip;		/* chip number */
@@ -150,8 +150,8 @@ struct pci_dev;
 struct gpioh_item {
 	void *arg;
 	bool level;
-	void (*handler) (u32 stat, void *arg);
-	u32 event;
+	void (*handler) (uint32_t stat, void *arg);
+	uint32_t event;
 	struct gpioh_item *next;
 };
 
@@ -161,7 +161,7 @@ struct si_info {
 	struct bcma_bus *icbus;	/* handle to soc interconnect bus */
 	struct pci_dev *pcibus;	/* handle to pci bus */
 
-	u32 chipst;		/* chip status */
+	uint32_t chipst;		/* chip status */
 };
 
 /*
@@ -174,21 +174,21 @@ struct si_info {
 
 
 /* AMBA Interconnect exported externs */
-u32 ai_core_cflags(struct bcma_device *core, u32 mask, u32 val);
+uint32_t ai_core_cflags(struct bcma_device *core, uint32_t mask, uint32_t val);
 
 /* === exported functions === */
 struct si_pub *ai_attach(struct bcma_bus *pbus);
 void ai_detach(struct si_pub *sih);
-uint ai_cc_reg(struct si_pub *sih, uint regoff, u32 mask, u32 val);
+uint ai_cc_reg(struct si_pub *sih, uint regoff, uint32_t mask, uint32_t val);
 void ai_clkctl_init(struct si_pub *sih);
-u16 ai_clkctl_fast_pwrup_delay(struct si_pub *sih);
+uint16_t ai_clkctl_fast_pwrup_delay(struct si_pub *sih);
 bool ai_clkctl_cc(struct si_pub *sih, enum bcma_clkmode mode);
 bool ai_deviceremoved(struct si_pub *sih);
 
 /* Enable Ex-PA for 4313 */
 void ai_epa_4313war(struct si_pub *sih);
 
-static inline u32 ai_get_cccaps(struct si_pub *sih)
+static inline uint32_t ai_get_cccaps(struct si_pub *sih)
 {
 	return sih->cccaps;
 }
@@ -198,7 +198,7 @@ static inline int ai_get_pmurev(struct si_pub *sih)
 	return sih->pmurev;
 }
 
-static inline u32 ai_get_pmucaps(struct si_pub *sih)
+static inline uint32_t ai_get_pmucaps(struct si_pub *sih)
 {
 	return sih->pmucaps;
 }

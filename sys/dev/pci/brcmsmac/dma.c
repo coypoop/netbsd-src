@@ -150,10 +150,10 @@
 
 /* descriptor control flags 1 */
 #define D64_CTRL_COREFLAGS	0x0ff00000	/* core specific flags */
-#define	D64_CTRL1_EOT		((u32)1 << 28)	/* end of descriptor table */
-#define	D64_CTRL1_IOC		((u32)1 << 29)	/* interrupt on completion */
-#define	D64_CTRL1_EOF		((u32)1 << 30)	/* end of frame */
-#define	D64_CTRL1_SOF		((u32)1 << 31)	/* start of frame */
+#define	D64_CTRL1_EOT		((uint32_t)1 << 28)	/* end of descriptor table */
+#define	D64_CTRL1_IOC		((uint32_t)1 << 29)	/* interrupt on completion */
+#define	D64_CTRL1_EOF		((uint32_t)1 << 30)	/* end of frame */
+#define	D64_CTRL1_SOF		((uint32_t)1 << 31)	/* start of frame */
 
 /* descriptor control flags 2 */
 /* buffer byte count. real data len must <= 16KB */
@@ -229,36 +229,36 @@ struct dma_info {
 	/* pointer to dma64 rx descriptor ring */
 	struct dma64desc *rxd64;
 
-	u16 dmadesc_align;	/* alignment requirement for dma descriptors */
+	uint16_t dmadesc_align;	/* alignment requirement for dma descriptors */
 
-	u16 ntxd;		/* # tx descriptors tunable */
-	u16 txin;		/* index of next descriptor to reclaim */
-	u16 txout;		/* index of next descriptor to post */
+	uint16_t ntxd;		/* # tx descriptors tunable */
+	uint16_t txin;		/* index of next descriptor to reclaim */
+	uint16_t txout;		/* index of next descriptor to post */
 	/* pointer to parallel array of pointers to packets */
 	struct sk_buff **txp;
 	/* Aligned physical address of descriptor ring */
 	dma_addr_t txdpa;
 	/* Original physical address of descriptor ring */
 	dma_addr_t txdpaorig;
-	u16 txdalign;	/* #bytes added to alloc'd mem to align txd */
-	u32 txdalloc;	/* #bytes allocated for the ring */
-	u32 xmtptrbase;	/* When using unaligned descriptors, the ptr register
+	uint16_t txdalign;	/* #bytes added to alloc'd mem to align txd */
+	uint32_t txdalloc;	/* #bytes allocated for the ring */
+	uint32_t xmtptrbase;	/* When using unaligned descriptors, the ptr register
 			 * is not just an index, it needs all 13 bits to be
 			 * an offset from the addr register.
 			 */
 
-	u16 nrxd;	/* # rx descriptors tunable */
-	u16 rxin;	/* index of next descriptor to reclaim */
-	u16 rxout;	/* index of next descriptor to post */
+	uint16_t nrxd;	/* # rx descriptors tunable */
+	uint16_t rxin;	/* index of next descriptor to reclaim */
+	uint16_t rxout;	/* index of next descriptor to post */
 	/* pointer to parallel array of pointers to packets */
 	struct sk_buff **rxp;
 	/* Aligned physical address of descriptor ring */
 	dma_addr_t rxdpa;
 	/* Original physical address of descriptor ring */
 	dma_addr_t rxdpaorig;
-	u16 rxdalign;	/* #bytes added to alloc'd mem to align rxd */
-	u32 rxdalloc;	/* #bytes allocated for the ring */
-	u32 rcvptrbase;	/* Base for ptr reg when using unaligned descriptors */
+	uint16_t rxdalign;	/* #bytes added to alloc'd mem to align rxd */
+	uint32_t rxdalloc;	/* #bytes allocated for the ring */
+	uint32_t rcvptrbase;	/* Base for ptr reg when using unaligned descriptors */
 
 	/* tunables */
 	unsigned int rxbufsize;	/* rx buffer size in bytes, not including
@@ -286,10 +286,10 @@ struct dma_info {
 };
 
 /* Check for odd number of 1's */
-static u32 parity32(__le32 data)
+static uint32_t parity32(__le32 data)
 {
 	/* no swap needed for counting 1's */
-	u32 par_data = *(u32 *)&data;
+	uint32_t par_data = *(uint32_t *)&data;
 
 	par_data ^= par_data >> 16;
 	par_data ^= par_data >> 8;
@@ -360,7 +360,7 @@ static uint _dma_ctrlflags(struct dma_info *di, uint mask, uint flags)
 
 	/* If trying to enable parity, check if parity is actually supported */
 	if (dmactrlflags & DMA_CTRL_PEN) {
-		u32 control;
+		uint32_t control;
 
 		control = bcma_read32(di->core, DMA64TXREGOFFS(di, control));
 		bcma_write32(di->core, DMA64TXREGOFFS(di, control),
@@ -384,7 +384,7 @@ static uint _dma_ctrlflags(struct dma_info *di, uint mask, uint flags)
 
 static bool _dma64_addrext(struct dma_info *di, uint ctrl_offset)
 {
-	u32 w;
+	uint32_t w;
 	bcma_set32(di->core, ctrl_offset, D64_XC_AE);
 	w = bcma_read32(di->core, ctrl_offset);
 	bcma_mask32(di->core, ctrl_offset, ~D64_XC_AE);
@@ -419,7 +419,7 @@ static bool _dma_isaddrext(struct dma_info *di)
 
 static bool _dma_descriptor_align(struct dma_info *di)
 {
-	u32 addrl;
+	uint32_t addrl;
 
 	/* Check to see if the descriptors need to be aligned on 4K/8K or not */
 	if (di->d64txregbase != 0) {
@@ -441,11 +441,11 @@ static bool _dma_descriptor_align(struct dma_info *di)
  * allocated memory must be large enough to support this requirement.
  */
 static void *dma_alloc_consistent(struct dma_info *di, uint size,
-				  u16 align_bits, uint *alloced,
+				  uint16_t align_bits, uint *alloced,
 				  dma_addr_t *pap)
 {
 	if (align_bits) {
-		u16 align = (1 << align_bits);
+		uint16_t align = (1 << align_bits);
 		if (!IS_ALIGNED(PAGE_SIZE, align))
 			size += align;
 		*alloced = size;
@@ -454,9 +454,9 @@ static void *dma_alloc_consistent(struct dma_info *di, uint size,
 }
 
 static
-u8 dma_align_sizetobits(uint size)
+uint8_t dma_align_sizetobits(uint size)
 {
-	u8 bitpos = 0;
+	uint8_t bitpos = 0;
 	while (size >>= 1)
 		bitpos++;
 	return bitpos;
@@ -468,20 +468,20 @@ u8 dma_align_sizetobits(uint size)
  * descriptor ring size aligned location. This will ensure that the ring will
  * not cross page boundary
  */
-static void *dma_ringalloc(struct dma_info *di, u32 boundary, uint size,
-			   u16 *alignbits, uint *alloced,
+static void *dma_ringalloc(struct dma_info *di, uint32_t boundary, uint size,
+			   uint16_t *alignbits, uint *alloced,
 			   dma_addr_t *descpa)
 {
 	void *va;
-	u32 desc_strtaddr;
-	u32 alignbytes = 1 << *alignbits;
+	uint32_t desc_strtaddr;
+	uint32_t alignbytes = 1 << *alignbits;
 
 	va = dma_alloc_consistent(di, size, *alignbits, alloced, descpa);
 
 	if (NULL == va)
 		return NULL;
 
-	desc_strtaddr = (u32) roundup((unsigned long)va, alignbytes);
+	desc_strtaddr = (uint32_t) roundup((unsigned long)va, alignbytes);
 	if (((desc_strtaddr + size - 1) & boundary) != (desc_strtaddr
 							& boundary)) {
 		*alignbits = dma_align_sizetobits(size);
@@ -494,12 +494,12 @@ static void *dma_ringalloc(struct dma_info *di, u32 boundary, uint size,
 
 static bool dma64_alloc(struct dma_info *di, uint direction)
 {
-	u16 size;
+	uint16_t size;
 	uint ddlen;
 	void *va;
 	uint alloced = 0;
-	u16 align;
-	u16 align_bits;
+	uint16_t align;
+	uint16_t align_bits;
 
 	ddlen = sizeof(struct dma64desc);
 
@@ -555,7 +555,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	struct si_pub *sih = wlc->hw->sih;
 	struct bcma_device *core = wlc->hw->d11core;
 	struct dma_info *di;
-	u8 rev = core->id.rev;
+	uint8_t rev = core->id.rev;
 	uint size;
 	struct si_info *sii = container_of(sih, struct si_info, pub);
 
@@ -592,19 +592,19 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	di->dmadev = core->dma_dev;
 
 	/* save tunables */
-	di->ntxd = (u16) ntxd;
-	di->nrxd = (u16) nrxd;
+	di->ntxd = (uint16_t) ntxd;
+	di->nrxd = (uint16_t) nrxd;
 
 	/* the actual dma size doesn't include the extra headroom */
 	di->rxextrahdrroom =
 	    (rxextheadroom == -1) ? BCMEXTRAHDROOM : rxextheadroom;
 	if (rxbufsize > BCMEXTRAHDROOM)
-		di->rxbufsize = (u16) (rxbufsize - di->rxextrahdrroom);
+		di->rxbufsize = (uint16_t) (rxbufsize - di->rxextrahdrroom);
 	else
-		di->rxbufsize = (u16) rxbufsize;
+		di->rxbufsize = (uint16_t) rxbufsize;
 
-	di->nrxpost = (u16) nrxpost;
-	di->rxoffset = (u8) rxoffset;
+	di->nrxpost = (uint16_t) nrxpost;
+	di->rxoffset = (uint8_t) rxoffset;
 
 	/*
 	 * figure out the DMA physical address offset for dd and data
@@ -686,13 +686,13 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 		if (di->txdpa > SI_PCI_DMA_SZ) {
 			brcms_dbg_dma(di->core,
 				      "%s: txdpa 0x%x: addrext not supported\n",
-				      di->name, (u32)di->txdpa);
+				      di->name, (uint32_t)di->txdpa);
 			goto fail;
 		}
 		if (di->rxdpa > SI_PCI_DMA_SZ) {
 			brcms_dbg_dma(di->core,
 				      "%s: rxdpa 0x%x: addrext not supported\n",
-				      di->name, (u32)di->rxdpa);
+				      di->name, (uint32_t)di->rxdpa);
 			goto fail;
 		}
 	}
@@ -715,9 +715,9 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 
 static inline void
 dma64_dd_upd(struct dma_info *di, struct dma64desc *ddring,
-	     dma_addr_t pa, uint outidx, u32 *flags, u32 bufcount)
+	     dma_addr_t pa, uint outidx, uint32_t *flags, uint32_t bufcount)
 {
-	u32 ctrl2 = bufcount & D64_CTRL2_BC_MASK;
+	uint32_t ctrl2 = bufcount & D64_CTRL2_BC_MASK;
 
 	/* PCI bus with big(>1G) physical address, use address extension */
 	if ((di->dataoffsetlow == 0) || !(pa & PCI32ADDR_HIGH)) {
@@ -727,7 +727,7 @@ dma64_dd_upd(struct dma_info *di, struct dma64desc *ddring,
 		ddring[outidx].ctrl2 = cpu_to_le32(ctrl2);
 	} else {
 		/* address extension for 32-bit PCI */
-		u32 ae;
+		uint32_t ae;
 
 		ae = (pa & PCI32ADDR_HIGH) >> PCI32ADDR_HIGH_SHIFT;
 		pa &= ~PCI32ADDR_HIGH;
@@ -797,7 +797,7 @@ _dma_ddtable_init(struct dma_info *di, uint direction, dma_addr_t pa)
 		}
 	} else {
 		/* DMA64 32bits address extension */
-		u32 ae;
+		uint32_t ae;
 
 		/* shift the high bit(s) from pa to ae */
 		ae = (pa & PCI32ADDR_HIGH) >> PCI32ADDR_HIGH_SHIFT;
@@ -824,7 +824,7 @@ _dma_ddtable_init(struct dma_info *di, uint direction, dma_addr_t pa)
 static void _dma_rxenable(struct dma_info *di)
 {
 	uint dmactrlflags = di->dma.dmactrlflags;
-	u32 control;
+	uint32_t control;
 
 	brcms_dbg_dma(di->core, "%s:\n", di->name);
 
@@ -1026,8 +1026,8 @@ bool dma_rxfill(struct dma_pub *pub)
 {
 	struct dma_info *di = container_of(pub, struct dma_info, dma);
 	struct sk_buff *p;
-	u16 rxin, rxout;
-	u32 flags = 0;
+	uint16_t rxin, rxout;
+	uint32_t flags = 0;
 	uint n;
 	uint i;
 	dma_addr_t pa;
@@ -1077,7 +1077,7 @@ bool dma_rxfill(struct dma_pub *pub)
 		/* Do a cached write instead of uncached write since DMA_MAP
 		 * will flush the cache.
 		 */
-		*(u32 *) (p->data) = 0;
+		*(uint32_t *) (p->data) = 0;
 
 		pa = dma_map_single(di->dmadev, p->data, di->rxbufsize,
 				    DMA_FROM_DEVICE);
@@ -1140,7 +1140,7 @@ unsigned long dma_getvar(struct dma_pub *pub, const char *name)
 void dma_txinit(struct dma_pub *pub)
 {
 	struct dma_info *di = container_of(pub, struct dma_info, dma);
-	u32 control = D64_XC_XE;
+	uint32_t control = D64_XC_XE;
 
 	brcms_dbg_dma(di->core, "%s:\n", di->name);
 
@@ -1228,7 +1228,7 @@ void dma_txreclaim(struct dma_pub *pub, enum txd_range range)
 bool dma_txreset(struct dma_pub *pub)
 {
 	struct dma_info *di = container_of(pub, struct dma_info, dma);
-	u32 status;
+	uint32_t status;
 
 	if (di->ntxd == 0)
 		return true;
@@ -1255,7 +1255,7 @@ bool dma_txreset(struct dma_pub *pub)
 bool dma_rxreset(struct dma_pub *pub)
 {
 	struct dma_info *di = container_of(pub, struct dma_info, dma);
-	u32 status;
+	uint32_t status;
 
 	if (di->nrxd == 0)
 		return true;
@@ -1272,8 +1272,8 @@ static void dma_txenq(struct dma_info *di, struct sk_buff *p)
 {
 	unsigned char *data;
 	uint len;
-	u16 txout;
-	u32 flags = 0;
+	uint16_t txout;
+	uint32_t flags = 0;
 	dma_addr_t pa;
 
 	txout = di->txout;
@@ -1468,8 +1468,8 @@ void dma_kick_tx(struct dma_pub *pub)
 struct sk_buff *dma_getnexttxp(struct dma_pub *pub, enum txd_range range)
 {
 	struct dma_info *di = container_of(pub, struct dma_info, dma);
-	u16 start, end, i;
-	u16 active_desc;
+	uint16_t start, end, i;
+	uint16_t active_desc;
 	struct sk_buff *txp;
 
 	brcms_dbg_dma(di->core, "%s: %s\n",
@@ -1487,14 +1487,14 @@ struct sk_buff *dma_getnexttxp(struct dma_pub *pub, enum txd_range range)
 	if (range == DMA_RANGE_ALL)
 		end = di->txout;
 	else {
-		end = (u16) (B2I(((bcma_read32(di->core,
+		end = (uint16_t) (B2I(((bcma_read32(di->core,
 					       DMA64TXREGOFFS(di, status0)) &
 				   D64_XS0_CD_MASK) - di->xmtptrbase) &
 				 D64_XS0_CD_MASK, struct dma64desc));
 
 		if (range == DMA_RANGE_TRANSFERED) {
 			active_desc =
-				(u16)(bcma_read32(di->core,
+				(uint16_t)(bcma_read32(di->core,
 						  DMA64TXREGOFFS(di, status1)) &
 				      D64_XS1_AD_MASK);
 			active_desc =

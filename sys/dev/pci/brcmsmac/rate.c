@@ -25,7 +25,7 @@
  * Rate info per rate: It tells whether a rate is ofdm or not and its phy_rate
  * value
  */
-const u8 rate_info[BRCM_MAXRATE + 1] = {
+const uint8_t rate_info[BRCM_MAXRATE + 1] = {
 	/*  0     1     2     3     4     5     6     7     8     9 */
 /*   0 */ 0x00, 0x00, 0x0a, 0x00, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00,
 /*  10 */ 0x00, 0x37, 0x8b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8f, 0x00,
@@ -148,9 +148,9 @@ const struct brcms_mcs_info mcs_table[MCS_TABLE_SIZE] = {
  * section 17.3.2.2 of the original .11a standard
  */
 struct legacy_phycfg {
-	u32 rate_ofdm;	/* ofdm mac rate */
+	uint32_t rate_ofdm;	/* ofdm mac rate */
 	/* phy ctl byte 3, code rate, modulation type, # of streams */
-	u8 tx_phy_ctl3;
+	uint8_t tx_phy_ctl3;
 };
 
 /* Number of legacy_rate_cfg entries in the table */
@@ -287,7 +287,7 @@ static bool brcms_c_rateset_valid(struct brcms_c_rateset *rs, bool check_brate)
 	return false;
 }
 
-void brcms_c_rateset_mcs_upd(struct brcms_c_rateset *rs, u8 txstreams)
+void brcms_c_rateset_mcs_upd(struct brcms_c_rateset *rs, uint8_t txstreams)
 {
 	int i;
 	for (i = txstreams; i < MAX_STREAMS_SUPPORTED; i++)
@@ -301,10 +301,10 @@ void brcms_c_rateset_mcs_upd(struct brcms_c_rateset *rs, u8 txstreams)
 bool
 brcms_c_rate_hwrs_filter_sort_validate(struct brcms_c_rateset *rs,
 				   const struct brcms_c_rateset *hw_rs,
-				   bool check_brate, u8 txstreams)
+				   bool check_brate, uint8_t txstreams)
 {
-	u8 rateset[BRCM_MAXRATE + 1];
-	u8 r;
+	uint8_t rateset[BRCM_MAXRATE + 1];
+	uint8_t r;
 	uint count;
 	uint i;
 
@@ -340,10 +340,10 @@ brcms_c_rate_hwrs_filter_sort_validate(struct brcms_c_rateset *rs,
 }
 
 /* calculate the rate of a rx'd frame and return it as a ratespec */
-u32 brcms_c_compute_rspec(struct d11rxhdr *rxh, u8 *plcp)
+uint32_t brcms_c_compute_rspec(struct d11rxhdr *rxh, uint8_t *plcp)
 {
 	int phy_type;
-	u32 rspec = PHY_TXC1_BW_20MHZ << RSPEC_BW_SHIFT;
+	uint32_t rspec = PHY_TXC1_BW_20MHZ << RSPEC_BW_SHIFT;
 
 	phy_type =
 	    ((rxh->RxChan & RXS_CHAN_PHYTYPE_MASK) >> RXS_CHAN_PHYTYPE_SHIFT);
@@ -406,7 +406,7 @@ void brcms_c_rateset_copy(const struct brcms_c_rateset *src,
  */
 void
 brcms_c_rateset_filter(struct brcms_c_rateset *src, struct brcms_c_rateset *dst,
-		       bool basic_only, u8 rates, uint xmask, bool mcsallow)
+		       bool basic_only, uint8_t rates, uint xmask, bool mcsallow)
 {
 	uint i;
 	uint r;
@@ -441,7 +441,7 @@ void
 brcms_c_rateset_default(struct brcms_c_rateset *rs_tgt,
 			const struct brcms_c_rateset *rs_hw,
 			uint phy_type, int bandtype, bool cck_only,
-			uint rate_mask, bool mcsallow, u8 bw, u8 txstreams)
+			uint rate_mask, bool mcsallow, uint8_t bw, uint8_t txstreams)
 {
 	const struct brcms_c_rateset *rs_dflt;
 	struct brcms_c_rateset rs_sel;
@@ -498,14 +498,14 @@ void brcms_c_rateset_mcs_clear(struct brcms_c_rateset *rateset)
 		rateset->mcs[i] = 0;
 }
 
-void brcms_c_rateset_mcs_build(struct brcms_c_rateset *rateset, u8 txstreams)
+void brcms_c_rateset_mcs_build(struct brcms_c_rateset *rateset, uint8_t txstreams)
 {
 	memcpy(&rateset->mcs[0], &cck_ofdm_mimo_rates.mcs[0], MCSSET_LEN);
 	brcms_c_rateset_mcs_upd(rateset, txstreams);
 }
 
 /* Based on bandwidth passed, allow/disallow MCS 32 in the rateset */
-void brcms_c_rateset_bw_mcs_filter(struct brcms_c_rateset *rateset, u8 bw)
+void brcms_c_rateset_bw_mcs_filter(struct brcms_c_rateset *rateset, uint8_t bw)
 {
 	if (bw == BRCMS_40_MHZ)
 		setbit(rateset->mcs, 32);

@@ -106,17 +106,17 @@
 
 struct brcm_rateset {
 	/* # rates in this set */
-	u32 count;
+	uint32_t count;
 	/* rates in 500kbps units w/hi bit set if basic */
-	u8 rates[WL_NUMRATES];
+	uint8_t rates[WL_NUMRATES];
 };
 
 struct brcms_c_rateset {
 	uint count;		/* number of rates in rates[] */
 	 /* rates in 500kbps units w/hi bit set if basic */
-	u8 rates[BRCMS_NUMRATES];
-	u8 htphy_membership;	/* HT PHY Membership */
-	u8 mcs[MCSSET_LEN];	/* supported mcs index bit map */
+	uint8_t rates[BRCMS_NUMRATES];
+	uint8_t htphy_membership;	/* HT PHY Membership */
+	uint8_t mcs[MCSSET_LEN];	/* supported mcs index bit map */
 };
 
 /* All the HT-specific default advertised capabilities (including AMPDU)
@@ -126,14 +126,14 @@ struct brcms_c_rateset {
 
 /* wlc internal bss_info */
 struct brcms_bss_info {
-	u8 BSSID[ETH_ALEN];	/* network BSSID */
-	u16 flags;		/* flags for internal attributes */
-	u8 SSID_len;		/* the length of SSID */
-	u8 SSID[32];		/* SSID string */
+	uint8_t BSSID[ETH_ALEN];	/* network BSSID */
+	uint16_t flags;		/* flags for internal attributes */
+	uint8_t SSID_len;		/* the length of SSID */
+	uint8_t SSID[32];		/* SSID string */
 	s16 RSSI;		/* receive signal strength (in dBm) */
 	s16 SNR;		/* receive signal SNR in dB */
-	u16 beacon_period;	/* units are Kusec */
-	u16 chanspec;	/* Channel num, bw, ctrl_sb and band */
+	uint16_t beacon_period;	/* units are Kusec */
+	uint16_t chanspec;	/* Channel num, bw, ctrl_sb and band */
 	struct brcms_c_rateset rateset;	/* supported rates */
 };
 
@@ -163,17 +163,17 @@ struct brcms_pub {
 	bool associated;	/* true:part of [I]BSS, false: not */
 	/* (union of stas_associated, aps_associated) */
 	bool _ampdu;		/* ampdu enabled or not */
-	u8 _n_enab;		/* bitmap of 11N + HT support */
+	uint8_t _n_enab;		/* bitmap of 11N + HT support */
 
-	u8 cur_etheraddr[ETH_ALEN];	/* our local ethernet address */
+	uint8_t cur_etheraddr[ETH_ALEN];	/* our local ethernet address */
 
-	u32 radio_disabled;	/* bit vector for radio disabled reasons */
+	uint32_t radio_disabled;	/* bit vector for radio disabled reasons */
 
-	u16 boardrev;	/* version # of particular board */
-	u8 sromrev;		/* version # of the srom */
+	uint16_t boardrev;	/* version # of particular board */
+	uint8_t sromrev;		/* version # of the srom */
 	char srom_ccode[BRCM_CNTRY_BUF_SZ];	/* Country Code in SROM */
-	u32 boardflags;	/* Board specific flags from srom */
-	u32 boardflags2;	/* More board flags if sromrev >= 4 */
+	uint32_t boardflags;	/* Board specific flags from srom */
+	uint32_t boardflags2;	/* More board flags if sromrev >= 4 */
 	bool phy_11ncapable;	/* the PHY/HW is capable of 802.11N */
 
 	struct wl_cnt *_cnt;	/* low-level counters in driver */
@@ -264,8 +264,8 @@ enum wlc_par_id {
 #define ANT_SELCFG_MAX		4
 
 struct brcms_antselcfg {
-	u8 ant_config[ANT_SELCFG_MAX];	/* antenna configuration */
-	u8 num_antcfg;	/* number of available antenna configurations */
+	uint8_t ant_config[ANT_SELCFG_MAX];	/* antenna configuration */
+	uint8_t num_antcfg;	/* number of available antenna configurations */
 };
 
 /* common functions for every port */
@@ -281,26 +281,26 @@ void brcms_c_init(struct brcms_c_info *wlc, bool mute_tx);
 void brcms_c_reset(struct brcms_c_info *wlc);
 
 void brcms_c_intrson(struct brcms_c_info *wlc);
-u32 brcms_c_intrsoff(struct brcms_c_info *wlc);
-void brcms_c_intrsrestore(struct brcms_c_info *wlc, u32 macintmask);
+uint32_t brcms_c_intrsoff(struct brcms_c_info *wlc);
+void brcms_c_intrsrestore(struct brcms_c_info *wlc, uint32_t macintmask);
 bool brcms_c_intrsupd(struct brcms_c_info *wlc);
 bool brcms_c_isr(struct brcms_c_info *wlc);
 bool brcms_c_dpc(struct brcms_c_info *wlc, bool bounded);
 bool brcms_c_sendpkt_mac80211(struct brcms_c_info *wlc, struct sk_buff *sdu,
 			      struct ieee80211_hw *hw);
-bool brcms_c_aggregatable(struct brcms_c_info *wlc, u8 tid);
+bool brcms_c_aggregatable(struct brcms_c_info *wlc, uint8_t tid);
 void brcms_c_protection_upd(struct brcms_c_info *wlc, uint idx, int val);
 int brcms_c_get_header_len(void);
 void brcms_c_set_addrmatch(struct brcms_c_info *wlc, int match_reg_offset,
-			   const u8 *addr);
-void brcms_c_wme_setparams(struct brcms_c_info *wlc, u16 aci,
+			   const uint8_t *addr);
+void brcms_c_wme_setparams(struct brcms_c_info *wlc, uint16_t aci,
 			   const struct ieee80211_tx_queue_params *arg,
 			   bool suspend);
 struct brcms_pub *brcms_c_pub(struct brcms_c_info *wlc);
 void brcms_c_ampdu_flush(struct brcms_c_info *wlc, struct ieee80211_sta *sta,
-			 u16 tid);
-void brcms_c_ampdu_tx_operational(struct brcms_c_info *wlc, u8 tid,
-				  u8 ba_wsize, uint max_rx_ampdu_bytes);
+			 uint16_t tid);
+void brcms_c_ampdu_tx_operational(struct brcms_c_info *wlc, uint8_t tid,
+				  uint8_t ba_wsize, uint max_rx_ampdu_bytes);
 int brcms_c_module_register(struct brcms_pub *pub, const char *name,
 			    struct brcms_info *hdl,
 			    int (*down_fn)(void *handle));
@@ -312,16 +312,16 @@ void brcms_c_associate_upd(struct brcms_c_info *wlc, bool state);
 void brcms_c_scan_start(struct brcms_c_info *wlc);
 void brcms_c_scan_stop(struct brcms_c_info *wlc);
 int brcms_c_get_curband(struct brcms_c_info *wlc);
-int brcms_c_set_channel(struct brcms_c_info *wlc, u16 channel);
-int brcms_c_set_rate_limit(struct brcms_c_info *wlc, u16 srl, u16 lrl);
+int brcms_c_set_channel(struct brcms_c_info *wlc, uint16_t channel);
+int brcms_c_set_rate_limit(struct brcms_c_info *wlc, uint16_t srl, uint16_t lrl);
 void brcms_c_get_current_rateset(struct brcms_c_info *wlc,
 				 struct brcm_rateset *currs);
 int brcms_c_set_rateset(struct brcms_c_info *wlc, struct brcm_rateset *rs);
-int brcms_c_set_beacon_period(struct brcms_c_info *wlc, u16 period);
-u16 brcms_c_get_phy_type(struct brcms_c_info *wlc, int phyidx);
+int brcms_c_set_beacon_period(struct brcms_c_info *wlc, uint16_t period);
+uint16_t brcms_c_get_phy_type(struct brcms_c_info *wlc, int phyidx);
 void brcms_c_set_shortslot_override(struct brcms_c_info *wlc,
 				    s8 sslot_override);
-void brcms_c_set_beacon_listen_interval(struct brcms_c_info *wlc, u8 interval);
+void brcms_c_set_beacon_listen_interval(struct brcms_c_info *wlc, uint8_t interval);
 u64 brcms_c_tsf_get(struct brcms_c_info *wlc);
 void brcms_c_tsf_set(struct brcms_c_info *wlc, u64 tsf);
 int brcms_c_set_tx_power(struct brcms_c_info *wlc, int txpwr);
@@ -329,16 +329,16 @@ int brcms_c_get_tx_power(struct brcms_c_info *wlc);
 bool brcms_c_check_radio_disabled(struct brcms_c_info *wlc);
 void brcms_c_mute(struct brcms_c_info *wlc, bool on);
 bool brcms_c_tx_flush_completed(struct brcms_c_info *wlc);
-void brcms_c_start_station(struct brcms_c_info *wlc, u8 *addr);
-void brcms_c_start_ap(struct brcms_c_info *wlc, u8 *addr, const u8 *bssid,
-		      u8 *ssid, size_t ssid_len);
-void brcms_c_start_adhoc(struct brcms_c_info *wlc, u8 *addr);
+void brcms_c_start_station(struct brcms_c_info *wlc, uint8_t *addr);
+void brcms_c_start_ap(struct brcms_c_info *wlc, uint8_t *addr, const uint8_t *bssid,
+		      uint8_t *ssid, size_t ssid_len);
+void brcms_c_start_adhoc(struct brcms_c_info *wlc, uint8_t *addr);
 void brcms_c_update_beacon(struct brcms_c_info *wlc);
 void brcms_c_set_new_beacon(struct brcms_c_info *wlc, struct sk_buff *beacon,
-			    u16 tim_offset, u16 dtim_period);
+			    uint16_t tim_offset, uint16_t dtim_period);
 void brcms_c_set_new_probe_resp(struct brcms_c_info *wlc,
 				struct sk_buff *probe_resp);
 void brcms_c_enable_probe_resp(struct brcms_c_info *wlc, bool enable);
-void brcms_c_set_ssid(struct brcms_c_info *wlc, u8 *ssid, size_t ssid_len);
+void brcms_c_set_ssid(struct brcms_c_info *wlc, uint8_t *ssid, size_t ssid_len);
 
 #endif				/* _BRCM_PUB_H_ */

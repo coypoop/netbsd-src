@@ -71,14 +71,14 @@ TRACE_EVENT(brcms_dpc,
 );
 
 TRACE_EVENT(brcms_macintstatus,
-	TP_PROTO(const struct device *dev, int in_isr, u32 macintstatus,
-		 u32 mask),
+	TP_PROTO(const struct device *dev, int in_isr, uint32_t macintstatus,
+		 uint32_t mask),
 	TP_ARGS(dev, in_isr, macintstatus, mask),
 	TP_STRUCT__entry(
 		__string(dev, dev_name(dev))
 		__field(int, in_isr)
-		__field(u32, macintstatus)
-		__field(u32, mask)
+		__field(uint32_t, macintstatus)
+		__field(uint32_t, mask)
 	),
 	TP_fast_assign(
 		__assign_str(dev, dev_name(dev));

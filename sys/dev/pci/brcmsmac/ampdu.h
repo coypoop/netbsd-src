@@ -32,9 +32,9 @@ struct brcms_ampdu_session {
 	struct brcms_c_info *wlc;
 	struct sk_buff_head skb_list;
 	unsigned max_ampdu_len;
-	u16 max_ampdu_frames;
-	u16 ampdu_len;
-	u16 dma_len;
+	uint16_t max_ampdu_frames;
+	uint16_t ampdu_len;
+	uint16_t dma_len;
 };
 
 void brcms_c_ampdu_reset_session(struct brcms_ampdu_session *session,

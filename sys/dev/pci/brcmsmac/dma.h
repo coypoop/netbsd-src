@@ -37,22 +37,22 @@
 /* 32 bits addressing */
 
 struct dma32diag {	/* diag access */
-	u32 fifoaddr;	/* diag address */
-	u32 fifodatalow;	/* low 32bits of data */
-	u32 fifodatahigh;	/* high 32bits of data */
-	u32 pad;		/* reserved */
+	uint32_t fifoaddr;	/* diag address */
+	uint32_t fifodatalow;	/* low 32bits of data */
+	uint32_t fifodatahigh;	/* high 32bits of data */
+	uint32_t pad;		/* reserved */
 };
 
 /* 64 bits addressing */
 
 /* dma registers per channel(xmt or rcv) */
 struct dma64regs {
-	u32 control;	/* enable, et al */
-	u32 ptr;	/* last descriptor posted to chip */
-	u32 addrlow;	/* desc ring base address low 32-bits (8K aligned) */
-	u32 addrhigh;	/* desc ring base address bits 63:32 (8K aligned) */
-	u32 status0;	/* current descriptor, xmt state */
-	u32 status1;	/* active descriptor, xmt error */
+	uint32_t control;	/* enable, et al */
+	uint32_t ptr;	/* last descriptor posted to chip */
+	uint32_t addrlow;	/* desc ring base address low 32-bits (8K aligned) */
+	uint32_t addrhigh;	/* desc ring base address bits 63:32 (8K aligned) */
+	uint32_t status0;	/* current descriptor, xmt state */
+	uint32_t status1;	/* active descriptor, xmt error */
 };
 
 /* range param for dma_getnexttxp() and dma_txreclaim */
@@ -117,10 +117,10 @@ static inline void dma_spin_for_len(uint len, struct sk_buff *head)
 {
 #if defined(CONFIG_BCM47XX)
 	if (!len) {
-		while (!(len = *(u16 *) KSEG1ADDR(head->data)))
+		while (!(len = *(uint16_t *) KSEG1ADDR(head->data)))
 			udelay(1);
 
-		*(u16 *) (head->data) = cpu_to_le16((u16) len);
+		*(uint16_t *) (head->data) = cpu_to_le16((uint16_t) len);
 	}
 #endif				/* defined(CONFIG_BCM47XX) */
 }

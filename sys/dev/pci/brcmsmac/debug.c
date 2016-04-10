@@ -253,7 +253,7 @@ __brcms_fn(err)
 __brcms_fn(crit)
 
 #if defined(CONFIG_BRCMDBG) || defined(CONFIG_BRCM_TRACING)
-void __brcms_dbg(struct device *dev, u32 level, const char *func,
+void __brcms_dbg(struct device *dev, uint32_t level, const char *func,
 		 const char *fmt, ...)
 {
 	struct va_format vaf = {

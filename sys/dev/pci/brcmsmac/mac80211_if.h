@@ -56,16 +56,16 @@ struct brcms_if {
 
 #define MAX_FW_IMAGES		4
 struct brcms_firmware {
-	u32 fw_cnt;
+	uint32_t fw_cnt;
 	const struct firmware *fw_bin[MAX_FW_IMAGES];
 	const struct firmware *fw_hdr[MAX_FW_IMAGES];
-	u32 hdr_num_entries[MAX_FW_IMAGES];
+	uint32_t hdr_num_entries[MAX_FW_IMAGES];
 };
 
 struct brcms_info {
 	struct brcms_pub *pub;		/* pointer to public wlc state */
 	struct brcms_c_info *wlc;	/* pointer to private common data */
-	u32 magic;
+	uint32_t magic;
 
 	int irq;
 
@@ -93,8 +93,8 @@ struct brcms_info {
 void brcms_init(struct brcms_info *wl);
 uint brcms_reset(struct brcms_info *wl);
 void brcms_intrson(struct brcms_info *wl);
-u32 brcms_intrsoff(struct brcms_info *wl);
-void brcms_intrsrestore(struct brcms_info *wl, u32 macintmask);
+uint32_t brcms_intrsoff(struct brcms_info *wl);
+void brcms_intrsrestore(struct brcms_info *wl, uint32_t macintmask);
 int brcms_up(struct brcms_info *wl);
 void brcms_down(struct brcms_info *wl);
 void brcms_txflowcontrol(struct brcms_info *wl, struct brcms_if *wlif,

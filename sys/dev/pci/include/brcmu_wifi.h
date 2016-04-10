@@ -23,7 +23,7 @@
 #endif
 
 /*
- * A chanspec (u16) holds the channel number, band, bandwidth and control
+ * A chanspec (uint16_t) holds the channel number, band, bandwidth and control
  * sideband
  */
 
@@ -46,7 +46,7 @@
 /*
  * max # supported channels. The max channel no is 216, this is that + 1
  * rounded up to a multiple of NBBY (8). DO NOT MAKE it > 255: channels are
- * u8's all over
+ * uint8_t's all over
 */
 #define	MAXCHANNEL		224
 
@@ -105,7 +105,7 @@
 #define	WLC_BAND_2G			2	/* 2.4 Ghz */
 #define	WLC_BAND_ALL			3	/* all bands */
 
-#define CHSPEC_CHANNEL(chspec)	((u8)((chspec) & WL_CHANSPEC_CHAN_MASK))
+#define CHSPEC_CHANNEL(chspec)	((uint8_t)((chspec) & WL_CHANSPEC_CHAN_MASK))
 #define CHSPEC_BAND(chspec)	((chspec) & WL_CHANSPEC_BAND_MASK)
 
 #define CHSPEC_CTL_SB(chspec)	((chspec) & WL_CHANSPEC_CTL_SB_MASK)
@@ -158,17 +158,17 @@ static inline int upper_20_sb(int channel)
 	       channel + CH_10MHZ_APART : 0;
 }
 
-static inline int chspec_bandunit(u16 chspec)
+static inline int chspec_bandunit(uint16_t chspec)
 {
 	return CHSPEC_IS5G(chspec) ? BAND_5G_INDEX : BAND_2G_INDEX;
 }
 
-static inline u16 ch20mhz_chspec(int channel)
+static inline uint16_t ch20mhz_chspec(int channel)
 {
-	u16 rc = channel <= CH_MAX_2G_CHANNEL ?
+	uint16_t rc = channel <= CH_MAX_2G_CHANNEL ?
 		 WL_CHANSPEC_BAND_2G : WL_CHANSPEC_BAND_5G;
 
-	return	(u16)((u16)channel | WL_CHANSPEC_BW_20 |
+	return	(uint16_t)((uint16_t)channel | WL_CHANSPEC_BW_20 |
 		      WL_CHANSPEC_CTL_SB_NONE | rc);
 }
 
@@ -197,7 +197,7 @@ static inline int next_20mhz_chan(int channel)
 
 #define MCSSET_LEN	16
 
-static inline bool ac_bitmap_tst(u8 bitmap, int prec)
+static inline bool ac_bitmap_tst(uint8_t bitmap, int prec)
 {
 	return (bitmap & (1 << (prec))) != 0;
 }

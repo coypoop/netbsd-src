@@ -164,7 +164,7 @@
 struct brcms_protection {
 	bool _g;
 	s8 g_override;
-	u8 gmode_user;
+	uint8_t gmode_user;
 	s8 overlap;
 	s8 nmode_user;
 	s8 n_cfg;
@@ -197,21 +197,21 @@ struct brcms_protection {
  * spatial_policy:
  */
 struct brcms_stf {
-	u8 hw_txchain;
-	u8 txchain;
-	u8 txstreams;
-	u8 hw_rxchain;
-	u8 rxchain;
-	u8 rxstreams;
-	u8 ant_rx_ovr;
+	uint8_t hw_txchain;
+	uint8_t txchain;
+	uint8_t txstreams;
+	uint8_t hw_rxchain;
+	uint8_t rxchain;
+	uint8_t rxstreams;
+	uint8_t ant_rx_ovr;
 	s8 txant;
-	u16 phytxant;
-	u8 ss_opmode;
+	uint16_t phytxant;
+	uint8_t ss_opmode;
 	bool ss_algosel_auto;
-	u16 ss_algo_channel;
-	u8 rxchain_restore_delay;
+	uint16_t ss_algo_channel;
+	uint8_t rxchain_restore_delay;
 	s8 ldpc;
-	u8 txcore[MAX_STREAMS_SUPPORTED + 1];
+	uint8_t txcore[MAX_STREAMS_SUPPORTED + 1];
 	s8 spatial_policy;
 };
 
@@ -252,30 +252,30 @@ struct brcms_band {
 	int bandtype;		/* BRCM_BAND_2G, BRCM_BAND_5G */
 	uint bandunit;		/* bandstate[] index */
 
-	u16 phytype;		/* phytype */
-	u16 phyrev;
-	u16 radioid;
-	u16 radiorev;
+	uint16_t phytype;		/* phytype */
+	uint16_t phyrev;
+	uint16_t radioid;
+	uint16_t radiorev;
 	struct brcms_phy_pub *pi; /* pointer to phy specific information */
 	bool abgphy_encore;
 
-	u8 gmode;		/* currently active gmode */
+	uint8_t gmode;		/* currently active gmode */
 
 	struct scb *hwrs_scb;	/* permanent scb for hw rateset */
 
 	/* band-specific copy of default_bss.rateset */
 	struct brcms_c_rateset defrateset;
 
-	u8 band_stf_ss_mode;	/* Configured STF type, 0:siso; 1:cdd */
+	uint8_t band_stf_ss_mode;	/* Configured STF type, 0:siso; 1:cdd */
 	s8 band_stf_stbc_tx;	/* STBC TX 0:off; 1:force on; -1:auto */
 	/* rates supported by chip (phy-specific) */
 	struct brcms_c_rateset hw_rateset;
-	u8 basic_rate[BRCM_MAXRATE + 1]; /* basic rates indexed by rate */
+	uint8_t basic_rate[BRCM_MAXRATE + 1]; /* basic rates indexed by rate */
 	bool mimo_cap_40;	/* 40 MHz cap enabled on this band */
 	s8 antgain;		/* antenna gain from srom */
 
-	u16 CWmin; /* minimum size of contention window, in unit of aSlotTime */
-	u16 CWmax; /* maximum size of contention window, in unit of aSlotTime */
+	uint16_t CWmin; /* minimum size of contention window, in unit of aSlotTime */
+	uint16_t CWmax; /* maximum size of contention window, in unit of aSlotTime */
 	struct ieee80211_supported_band band;
 };
 
@@ -297,16 +297,16 @@ struct modulecb {
 struct brcms_hw_band {
 	int bandtype;		/* BRCM_BAND_2G, BRCM_BAND_5G */
 	uint bandunit;		/* bandstate[] index */
-	u16 mhfs[MHFMAX];	/* MHF array shadow */
-	u8 bandhw_stf_ss_mode;	/* HW configured STF type, 0:siso; 1:cdd */
-	u16 CWmin;
-	u16 CWmax;
-	u32 core_flags;
+	uint16_t mhfs[MHFMAX];	/* MHF array shadow */
+	uint8_t bandhw_stf_ss_mode;	/* HW configured STF type, 0:siso; 1:cdd */
+	uint16_t CWmin;
+	uint16_t CWmax;
+	uint32_t core_flags;
 
-	u16 phytype;		/* phytype */
-	u16 phyrev;
-	u16 radioid;
-	u16 radiorev;
+	uint16_t phytype;		/* phytype */
+	uint16_t phyrev;
+	uint16_t radioid;
+	uint16_t radiorev;
 	struct brcms_phy_pub *pi; /* pointer to phy specific information */
 	bool abgphy_encore;
 };
@@ -321,15 +321,15 @@ struct brcms_hardware {
 	uint unit;		/* device instance number */
 
 	/* version info */
-	u16 vendorid;	/* PCI vendor id */
-	u16 deviceid;	/* PCI device id */
+	uint16_t vendorid;	/* PCI vendor id */
+	uint16_t deviceid;	/* PCI device id */
 	uint corerev;		/* core revision */
-	u8 sromrev;		/* version # of the srom */
-	u16 boardrev;	/* version # of particular board */
-	u32 boardflags;	/* Board specific flags from srom */
-	u32 boardflags2;	/* More board flags if sromrev >= 4 */
-	u32 machwcap;	/* MAC capabilities */
-	u32 machwcap_backup;	/* backup of machwcap */
+	uint8_t sromrev;		/* version # of the srom */
+	uint16_t boardrev;	/* version # of particular board */
+	uint32_t boardflags;	/* Board specific flags from srom */
+	uint32_t boardflags2;	/* More board flags if sromrev >= 4 */
+	uint32_t machwcap;	/* MAC capabilities */
+	uint32_t machwcap_backup;	/* backup of machwcap */
 
 	struct si_pub *sih;	/* SI handle (cookie for siutils calls) */
 	struct bcma_device *d11core;	/* pointer to 802.11 core */
@@ -338,29 +338,29 @@ struct brcms_hardware {
 	struct brcms_hw_band *band;/* pointer to active per-band state */
 	/* band state per phy/radio */
 	struct brcms_hw_band *bandstate[MAXBANDS];
-	u16 bmac_phytxant;	/* cache of high phytxant state */
+	uint16_t bmac_phytxant;	/* cache of high phytxant state */
 	bool shortslot;		/* currently using 11g ShortSlot timing */
-	u16 SRL;		/* 802.11 dot11ShortRetryLimit */
-	u16 LRL;		/* 802.11 dot11LongRetryLimit */
-	u16 SFBL;		/* Short Frame Rate Fallback Limit */
-	u16 LFBL;		/* Long Frame Rate Fallback Limit */
+	uint16_t SRL;		/* 802.11 dot11ShortRetryLimit */
+	uint16_t LRL;		/* 802.11 dot11LongRetryLimit */
+	uint16_t SFBL;		/* Short Frame Rate Fallback Limit */
+	uint16_t LFBL;		/* Long Frame Rate Fallback Limit */
 
 	bool up;		/* d11 hardware up and running */
 	uint now;		/* # elapsed seconds */
 	uint _nbands;		/* # bands supported */
-	u16 chanspec;	/* bmac chanspec shadow */
+	uint16_t chanspec;	/* bmac chanspec shadow */
 
 	uint *txavail[NFIFO];	/* # tx descriptors available */
-	const u16 *xmtfifo_sz;	/* fifo size in 256B for each xmt fifo */
+	const uint16_t *xmtfifo_sz;	/* fifo size in 256B for each xmt fifo */
 
-	u32 pllreq;		/* pll requests to keep PLL on */
+	uint32_t pllreq;		/* pll requests to keep PLL on */
 
-	u8 suspended_fifos;	/* Which TX fifo to remain awake for */
-	u32 maccontrol;	/* Cached value of maccontrol */
+	uint8_t suspended_fifos;	/* Which TX fifo to remain awake for */
+	uint32_t maccontrol;	/* Cached value of maccontrol */
 	uint mac_suspend_depth;	/* current depth of mac_suspend levels */
-	u32 wake_override;	/* bit flags to force MAC to WAKE mode */
-	u32 mute_override;	/* Prevent ucode from sending beacons */
-	u8 etheraddr[ETH_ALEN];	/* currently configured ethernet address */
+	uint32_t wake_override;	/* bit flags to force MAC to WAKE mode */
+	uint32_t mute_override;	/* Prevent ucode from sending beacons */
+	uint8_t etheraddr[ETH_ALEN];	/* currently configured ethernet address */
 	bool noreset;		/* true= do not reset hw, used by WLC_OUT */
 	bool forcefastclk;	/* true if h/w is forcing to use fast clk */
 	bool clk;		/* core is out of reset and has clock */
@@ -370,11 +370,11 @@ struct brcms_hardware {
 	bool ucode_loaded;	/* true after ucode downloaded */
 
 
-	u8 hw_stf_ss_opmode;	/* STF single stream operation mode */
-	u8 antsel_type;	/* Type of boardlevel mimo antenna switch-logic
+	uint8_t hw_stf_ss_opmode;	/* STF single stream operation mode */
+	uint8_t antsel_type;	/* Type of boardlevel mimo antenna switch-logic
 				 * 0 = N/A, 1 = 2x4 board, 2 = 2x3 CB2 board
 				 */
-	u32 antsel_avail;	/*
+	uint32_t antsel_avail;	/*
 				 * put struct antsel_info here if more info is
 				 * needed
 				 */
@@ -460,12 +460,12 @@ struct brcms_c_info {
 	struct brcms_hardware *hw;
 
 	/* clock */
-	u16 fastpwrup_dly;
+	uint16_t fastpwrup_dly;
 
 	/* interrupt */
-	u32 macintstatus;
-	u32 macintmask;
-	u32 defmacintmask;
+	uint32_t macintstatus;
+	uint32_t macintmask;
+	uint32_t defmacintmask;
 
 	bool clk;
 
@@ -482,11 +482,11 @@ struct brcms_c_info {
 	struct antsel_info *asi;
 	struct brcms_cm_info *cmi;
 
-	u16 vendorid;
-	u16 deviceid;
+	uint16_t vendorid;
+	uint16_t deviceid;
 	uint ucode_rev;
 
-	u8 perm_etheraddr[ETH_ALEN];
+	uint8_t perm_etheraddr[ETH_ALEN];
 
 	bool bandlocked;
 	bool bandinit_pending;
@@ -506,45 +506,45 @@ struct brcms_c_info {
 	bool _rifs;
 
 	/* AP-STA synchronization, power save */
-	u8 bcn_li_bcn;
-	u8 bcn_li_dtim;
+	uint8_t bcn_li_bcn;
+	uint8_t bcn_li_dtim;
 
 	bool WDarmed;
-	u32 WDlast;
+	uint32_t WDlast;
 
 	/* WME */
-	u16 edcf_txop[IEEE80211_NUM_ACS];
+	uint16_t edcf_txop[IEEE80211_NUM_ACS];
 
-	u16 wme_retries[IEEE80211_NUM_ACS];
+	uint16_t wme_retries[IEEE80211_NUM_ACS];
 
 	struct brcms_bss_cfg *bsscfg;
 
 	struct modulecb *modulecb;
 
-	u8 mimoft;
+	uint8_t mimoft;
 	s8 cck_40txbw;
 	s8 ofdm_40txbw;
 	s8 mimo_40txbw;
 
 	struct brcms_bss_info *default_bss;
 
-	u16 mc_fid_counter;
+	uint16_t mc_fid_counter;
 
 	char country_default[BRCM_CNTRY_BUF_SZ];
 	char autocountry_default[BRCM_CNTRY_BUF_SZ];
-	u16 prb_resp_timeout;
+	uint16_t prb_resp_timeout;
 
-	u16 home_chanspec;
+	uint16_t home_chanspec;
 
 	/* PHY parameters */
-	u16 chanspec;
-	u16 usr_fragthresh;
-	u16 fragthresh[NFIFO];
-	u16 RTSThresh;
-	u16 SRL;
-	u16 LRL;
-	u16 SFBL;
-	u16 LFBL;
+	uint16_t chanspec;
+	uint16_t usr_fragthresh;
+	uint16_t fragthresh[NFIFO];
+	uint16_t RTSThresh;
+	uint16_t SRL;
+	uint16_t LRL;
+	uint16_t SFBL;
+	uint16_t LFBL;
 
 	/* network config */
 	bool shortslot;
@@ -556,19 +556,19 @@ struct brcms_c_info {
 
 	struct brcms_stf *stf;
 
-	u32 bcn_rspec;
+	uint32_t bcn_rspec;
 
 	uint tempsense_lasttime;
 
-	u16 tx_duty_cycle_ofdm;
-	u16 tx_duty_cycle_cck;
+	uint16_t tx_duty_cycle_ofdm;
+	uint16_t tx_duty_cycle_cck;
 
 	struct wiphy *wiphy;
 	struct scb pri_scb;
 
 	struct sk_buff *beacon;
-	u16 beacon_tim_offset;
-	u16 beacon_dtim_period;
+	uint16_t beacon_tim_offset;
+	uint16_t beacon_dtim_period;
 	struct sk_buff *probe_resp;
 };
 
@@ -576,10 +576,10 @@ struct brcms_c_info {
 struct antsel_info {
 	struct brcms_c_info *wlc;	/* pointer to main wlc structure */
 	struct brcms_pub *pub;		/* pointer to public fn */
-	u8 antsel_type;	/* Type of boardlevel mimo antenna switch-logic
+	uint8_t antsel_type;	/* Type of boardlevel mimo antenna switch-logic
 				 * 0 = N/A, 1 = 2x4 board, 2 = 2x3 CB2 board
 				 */
-	u8 antsel_antswitch;	/* board level antenna switch type */
+	uint8_t antsel_antswitch;	/* board level antenna switch type */
 	bool antsel_avail;	/* Ant selection availability (SROM based) */
 	struct brcms_antselcfg antcfg_11n; /* antenna configuration */
 	struct brcms_antselcfg antcfg_cur; /* current antenna config (auto) */
@@ -612,9 +612,9 @@ enum brcms_bss_type {
 struct brcms_bss_cfg {
 	struct brcms_c_info *wlc;
 	enum brcms_bss_type type;
-	u8 SSID_len;
-	u8 SSID[IEEE80211_MAX_SSID_LEN];
-	u8 BSSID[ETH_ALEN];
+	uint8_t SSID_len;
+	uint8_t SSID[IEEE80211_MAX_SSID_LEN];
+	uint8_t BSSID[ETH_ALEN];
 	struct brcms_bss_info *current_bss;
 };
 
@@ -622,50 +622,50 @@ int brcms_c_txfifo(struct brcms_c_info *wlc, uint fifo, struct sk_buff *p);
 int brcms_b_xmtfifo_sz_get(struct brcms_hardware *wlc_hw, uint fifo,
 			   uint *blocks);
 
-int brcms_c_set_gmode(struct brcms_c_info *wlc, u8 gmode, bool config);
+int brcms_c_set_gmode(struct brcms_c_info *wlc, uint8_t gmode, bool config);
 void brcms_c_mac_promisc(struct brcms_c_info *wlc, uint filter_flags);
-u16 brcms_c_calc_lsig_len(struct brcms_c_info *wlc, u32 ratespec, uint mac_len);
-u32 brcms_c_rspec_to_rts_rspec(struct brcms_c_info *wlc, u32 rspec,
-			       bool use_rspec, u16 mimo_ctlchbw);
-u16 brcms_c_compute_rtscts_dur(struct brcms_c_info *wlc, bool cts_only,
-			       u32 rts_rate, u32 frame_rate,
-			       u8 rts_preamble_type, u8 frame_preamble_type,
+uint16_t brcms_c_calc_lsig_len(struct brcms_c_info *wlc, uint32_t ratespec, uint mac_len);
+uint32_t brcms_c_rspec_to_rts_rspec(struct brcms_c_info *wlc, uint32_t rspec,
+			       bool use_rspec, uint16_t mimo_ctlchbw);
+uint16_t brcms_c_compute_rtscts_dur(struct brcms_c_info *wlc, bool cts_only,
+			       uint32_t rts_rate, uint32_t frame_rate,
+			       uint8_t rts_preamble_type, uint8_t frame_preamble_type,
 			       uint frame_len, bool ba);
 void brcms_c_inval_dma_pkts(struct brcms_hardware *hw,
 			    struct ieee80211_sta *sta, void (*dma_callback_fn));
 void brcms_c_update_probe_resp(struct brcms_c_info *wlc, bool suspend);
 int brcms_c_set_nmode(struct brcms_c_info *wlc);
-void brcms_c_beacon_phytxctl_txant_upd(struct brcms_c_info *wlc, u32 bcn_rate);
-void brcms_b_antsel_type_set(struct brcms_hardware *wlc_hw, u8 antsel_type);
-void brcms_b_set_chanspec(struct brcms_hardware *wlc_hw, u16 chanspec,
+void brcms_c_beacon_phytxctl_txant_upd(struct brcms_c_info *wlc, uint32_t bcn_rate);
+void brcms_b_antsel_type_set(struct brcms_hardware *wlc_hw, uint8_t antsel_type);
+void brcms_b_set_chanspec(struct brcms_hardware *wlc_hw, uint16_t chanspec,
 			  bool mute, struct txpwr_limits *txpwr);
-void brcms_b_write_shm(struct brcms_hardware *wlc_hw, uint offset, u16 v);
-u16 brcms_b_read_shm(struct brcms_hardware *wlc_hw, uint offset);
-void brcms_b_mhf(struct brcms_hardware *wlc_hw, u8 idx, u16 mask, u16 val,
+void brcms_b_write_shm(struct brcms_hardware *wlc_hw, uint offset, uint16_t v);
+uint16_t brcms_b_read_shm(struct brcms_hardware *wlc_hw, uint offset);
+void brcms_b_mhf(struct brcms_hardware *wlc_hw, uint8_t idx, uint16_t mask, uint16_t val,
 		 int bands);
-void brcms_b_corereset(struct brcms_hardware *wlc_hw, u32 flags);
-void brcms_b_mctrl(struct brcms_hardware *wlc_hw, u32 mask, u32 val);
+void brcms_b_corereset(struct brcms_hardware *wlc_hw, uint32_t flags);
+void brcms_b_mctrl(struct brcms_hardware *wlc_hw, uint32_t mask, uint32_t val);
 void brcms_b_phy_reset(struct brcms_hardware *wlc_hw);
-void brcms_b_bw_set(struct brcms_hardware *wlc_hw, u16 bw);
+void brcms_b_bw_set(struct brcms_hardware *wlc_hw, uint16_t bw);
 void brcms_b_core_phypll_reset(struct brcms_hardware *wlc_hw);
 void brcms_c_ucode_wake_override_set(struct brcms_hardware *wlc_hw,
-				     u32 override_bit);
+				     uint32_t override_bit);
 void brcms_c_ucode_wake_override_clear(struct brcms_hardware *wlc_hw,
-				       u32 override_bit);
+				       uint32_t override_bit);
 void brcms_b_write_template_ram(struct brcms_hardware *wlc_hw, int offset,
 				int len, void *buf);
-u16 brcms_b_rate_shm_offset(struct brcms_hardware *wlc_hw, u8 rate);
+uint16_t brcms_b_rate_shm_offset(struct brcms_hardware *wlc_hw, uint8_t rate);
 void brcms_b_copyto_objmem(struct brcms_hardware *wlc_hw, uint offset,
-			   const void *buf, int len, u32 sel);
+			   const void *buf, int len, uint32_t sel);
 void brcms_b_copyfrom_objmem(struct brcms_hardware *wlc_hw, uint offset,
-			     void *buf, int len, u32 sel);
-void brcms_b_switch_macfreq(struct brcms_hardware *wlc_hw, u8 spurmode);
-u16 brcms_b_get_txant(struct brcms_hardware *wlc_hw);
+			     void *buf, int len, uint32_t sel);
+void brcms_b_switch_macfreq(struct brcms_hardware *wlc_hw, uint8_t spurmode);
+uint16_t brcms_b_get_txant(struct brcms_hardware *wlc_hw);
 void brcms_b_phyclk_fgc(struct brcms_hardware *wlc_hw, bool clk);
 void brcms_b_macphyclk_set(struct brcms_hardware *wlc_hw, bool clk);
 void brcms_b_core_phypll_ctl(struct brcms_hardware *wlc_hw, bool on);
-void brcms_b_txant_set(struct brcms_hardware *wlc_hw, u16 phytxant);
-void brcms_b_band_stf_ss_set(struct brcms_hardware *wlc_hw, u8 stf_mode);
+void brcms_b_txant_set(struct brcms_hardware *wlc_hw, uint16_t phytxant);
+void brcms_b_band_stf_ss_set(struct brcms_hardware *wlc_hw, uint8_t stf_mode);
 void brcms_c_init_scb(struct scb *scb);
 
 #endif				/* _BRCM_MAIN_H_ */

@@ -59,10 +59,10 @@ DEFINE_EVENT(brcms_msg_event, brcms_crit,
 );
 
 TRACE_EVENT(brcms_dbg,
-	TP_PROTO(u32 level, const char *func, struct va_format *vaf),
+	TP_PROTO(uint32_t level, const char *func, struct va_format *vaf),
 	TP_ARGS(level, func, vaf),
 	TP_STRUCT__entry(
-		__field(u32, level)
+		__field(uint32_t, level)
 		__string(func, func)
 		__dynamic_array(char, msg, MAX_MSG_LEN)
 	),

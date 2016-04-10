@@ -28,7 +28,7 @@ TRACE_EVENT(brcms_txdesc,
 	TP_ARGS(dev, txh, txh_len),
 	TP_STRUCT__entry(
 		__string(dev, dev_name(dev))
-		__dynamic_array(u8, txh, txh_len)
+		__dynamic_array(uint8_t, txh, txh_len)
 	),
 	TP_fast_assign(
 		__assign_str(dev, dev_name(dev));
@@ -38,20 +38,20 @@ TRACE_EVENT(brcms_txdesc,
 );
 
 TRACE_EVENT(brcms_txstatus,
-	TP_PROTO(const struct device *dev, u16 framelen, u16 frameid,
-		 u16 status, u16 lasttxtime, u16 sequence, u16 phyerr,
-		 u16 ackphyrxsh),
+	TP_PROTO(const struct device *dev, uint16_t framelen, uint16_t frameid,
+		 uint16_t status, uint16_t lasttxtime, uint16_t sequence, uint16_t phyerr,
+		 uint16_t ackphyrxsh),
 	TP_ARGS(dev, framelen, frameid, status, lasttxtime, sequence, phyerr,
 		ackphyrxsh),
 	TP_STRUCT__entry(
 		__string(dev, dev_name(dev))
-		__field(u16, framelen)
-		__field(u16, frameid)
-		__field(u16, status)
-		__field(u16, lasttxtime)
-		__field(u16, sequence)
-		__field(u16, phyerr)
-		__field(u16, ackphyrxsh)
+		__field(uint16_t, framelen)
+		__field(uint16_t, frameid)
+		__field(uint16_t, status)
+		__field(uint16_t, lasttxtime)
+		__field(uint16_t, sequence)
+		__field(uint16_t, phyerr)
+		__field(uint16_t, ackphyrxsh)
 	),
 	TP_fast_assign(
 		__assign_str(dev, dev_name(dev));
@@ -72,17 +72,17 @@ TRACE_EVENT(brcms_txstatus,
 
 TRACE_EVENT(brcms_ampdu_session,
 	TP_PROTO(const struct device *dev, unsigned max_ampdu_len,
-		 u16 max_ampdu_frames, u16 ampdu_len, u16 ampdu_frames,
-		 u16 dma_len),
+		 uint16_t max_ampdu_frames, uint16_t ampdu_len, uint16_t ampdu_frames,
+		 uint16_t dma_len),
 	TP_ARGS(dev, max_ampdu_len, max_ampdu_frames, ampdu_len, ampdu_frames,
 		dma_len),
 	TP_STRUCT__entry(
 		__string(dev, dev_name(dev))
 		__field(unsigned, max_ampdu_len)
-		__field(u16, max_ampdu_frames)
-		__field(u16, ampdu_len)
-		__field(u16, ampdu_frames)
-		__field(u16, dma_len)
+		__field(uint16_t, max_ampdu_frames)
+		__field(uint16_t, ampdu_len)
+		__field(uint16_t, ampdu_frames)
+		__field(uint16_t, dma_len)
 	),
 	TP_fast_assign(
 		__assign_str(dev, dev_name(dev));

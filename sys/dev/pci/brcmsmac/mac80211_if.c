@@ -261,9 +261,9 @@ static const struct ieee80211_supported_band brcms_band_5GHz_nphy_template = {
 };
 
 /* flags the given rate in rateset as requested */
-static void brcms_set_basic_rate(struct brcm_rateset *rs, u16 rate, bool is_br)
+static void brcms_set_basic_rate(struct brcm_rateset *rs, uint16_t rate, bool is_br)
 {
-	u32 i;
+	uint32_t i;
 
 	for (i = 0; i < rs->count; i++) {
 		if (rate != (rs->rates[i] & 0x7f))
@@ -523,7 +523,7 @@ brcms_ops_remove_interface(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
 {
 }
 
-static int brcms_ops_config(struct ieee80211_hw *hw, u32 changed)
+static int brcms_ops_config(struct ieee80211_hw *hw, uint32_t changed)
 {
 	struct ieee80211_conf *conf = &hw->conf;
 	struct brcms_info *wl = hw->priv;
@@ -580,7 +580,7 @@ static int brcms_ops_config(struct ieee80211_hw *hw, u32 changed)
 static void
 brcms_ops_bss_info_changed(struct ieee80211_hw *hw,
 			struct ieee80211_vif *vif,
-			struct ieee80211_bss_conf *info, u32 changed)
+			struct ieee80211_bss_conf *info, uint32_t changed)
 {
 	struct brcms_info *wl = hw->priv;
 	struct bcma_device *core = wl->wlc->hw->d11core;
@@ -610,7 +610,7 @@ brcms_ops_bss_info_changed(struct ieee80211_hw *hw,
 
 	if (changed & BSS_CHANGED_HT) {
 		/* 802.11n parameters changed */
-		u16 mode = info->ht_operation_mode;
+		uint16_t mode = info->ht_operation_mode;
 
 		spin_lock_bh(&wl->lock);
 		brcms_c_protection_upd(wl->wlc, BRCMS_PROT_N_CFG,
@@ -623,8 +623,8 @@ brcms_ops_bss_info_changed(struct ieee80211_hw *hw,
 	}
 	if (changed & BSS_CHANGED_BASIC_RATES) {
 		struct ieee80211_supported_band *bi;
-		u32 br_mask, i;
-		u16 rate;
+		uint32_t br_mask, i;
+		uint16_t rate;
 		struct brcm_rateset rs;
 		int error;
 
@@ -673,7 +673,7 @@ brcms_ops_bss_info_changed(struct ieee80211_hw *hw,
 	if (changed & BSS_CHANGED_BEACON) {
 		/* Beacon data changed, retrieve new beacon (beaconing modes) */
 		struct sk_buff *beacon;
-		u16 tim_offset = 0;
+		uint16_t tim_offset = 0;
 
 		spin_lock_bh(&wl->lock);
 		beacon = ieee80211_beacon_get_tim(hw, vif, &tim_offset, NULL);
@@ -765,7 +765,7 @@ brcms_ops_configure_filter(struct ieee80211_hw *hw,
 
 static void brcms_ops_sw_scan_start(struct ieee80211_hw *hw,
 				    struct ieee80211_vif *vif,
-				    const u8 *mac_addr)
+				    const uint8_t *mac_addr)
 {
 	struct brcms_info *wl = hw->priv;
 	spin_lock_bh(&wl->lock);
@@ -785,7 +785,7 @@ static void brcms_ops_sw_scan_complete(struct ieee80211_hw *hw,
 }
 
 static int
-brcms_ops_conf_tx(struct ieee80211_hw *hw, struct ieee80211_vif *vif, u16 queue,
+brcms_ops_conf_tx(struct ieee80211_hw *hw, struct ieee80211_vif *vif, uint16_t queue,
 		  const struct ieee80211_tx_queue_params *params)
 {
 	struct brcms_info *wl = hw->priv;
@@ -821,8 +821,8 @@ static int
 brcms_ops_ampdu_action(struct ieee80211_hw *hw,
 		    struct ieee80211_vif *vif,
 		    enum ieee80211_ampdu_mlme_action action,
-		    struct ieee80211_sta *sta, u16 tid, u16 *ssn,
-		    u8 buf_size, bool amsdu)
+		    struct ieee80211_sta *sta, uint16_t tid, uint16_t *ssn,
+		    uint8_t buf_size, bool amsdu)
 {
 	struct brcms_info *wl = hw->priv;
 	struct scb *scb = &wl->wlc->pri_scb;
@@ -900,7 +900,7 @@ static bool brcms_tx_flush_completed(struct brcms_info *wl)
 }
 
 static void brcms_ops_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
-			    u32 queues, bool drop)
+			    uint32_t queues, bool drop)
 {
 	struct brcms_info *wl = hw->priv;
 	int ret;
@@ -1024,7 +1024,7 @@ static int ieee_hw_rate_init(struct ieee80211_hw *hw)
 	struct brcms_c_info *wlc = wl->wlc;
 	struct ieee80211_supported_band *band;
 	int has_5g = 0;
-	u16 phy_type;
+	uint16_t phy_type;
 
 	hw->wiphy->bands[IEEE80211_BAND_2GHZ] = NULL;
 	hw->wiphy->bands[IEEE80211_BAND_5GHZ] = NULL;
@@ -1101,7 +1101,7 @@ static struct brcms_info *brcms_attach(struct bcma_device *pdev)
 	struct brcms_info *wl = NULL;
 	int unit, err;
 	struct ieee80211_hw *hw;
-	u8 perm[ETH_ALEN];
+	uint8_t perm[ETH_ALEN];
 
 	unit = n_adapters_found;
 	err = 0;
@@ -1365,10 +1365,10 @@ void brcms_intrson(struct brcms_info *wl)
 	spin_unlock_irqrestore(&wl->isr_lock, flags);
 }
 
-u32 brcms_intrsoff(struct brcms_info *wl)
+uint32_t brcms_intrsoff(struct brcms_info *wl)
 {
 	unsigned long flags;
-	u32 status;
+	uint32_t status;
 
 	spin_lock_irqsave(&wl->isr_lock, flags);
 	status = brcms_c_intrsoff(wl->wlc);
@@ -1376,7 +1376,7 @@ u32 brcms_intrsoff(struct brcms_info *wl)
 	return status;
 }
 
-void brcms_intrsrestore(struct brcms_info *wl, u32 macintmask)
+void brcms_intrsrestore(struct brcms_info *wl, uint32_t macintmask)
 {
 	unsigned long flags;
 
@@ -1563,16 +1563,16 @@ void brcms_free_timer(struct brcms_timer *t)
 /*
  * precondition: perimeter lock has been acquired
  */
-int brcms_ucode_init_buf(struct brcms_info *wl, void **pbuf, u32 idx)
+int brcms_ucode_init_buf(struct brcms_info *wl, void **pbuf, uint32_t idx)
 {
 	int i, entry;
-	const u8 *pdata;
+	const uint8_t *pdata;
 	struct firmware_hdr *hdr;
 	for (i = 0; i < wl->fw.fw_cnt; i++) {
 		hdr = (struct firmware_hdr *)wl->fw.fw_hdr[i]->data;
 		for (entry = 0; entry < wl->fw.hdr_num_entries[i];
 		     entry++, hdr++) {
-			u32 len = le32_to_cpu(hdr->len);
+			uint32_t len = le32_to_cpu(hdr->len);
 			if (le32_to_cpu(hdr->idx) == idx) {
 				pdata = wl->fw.fw_bin[i]->data +
 					le32_to_cpu(hdr->offset);
@@ -1595,10 +1595,10 @@ fail:
  * Precondition: Since this function is called in brcms_bcma_probe() context,
  * no locking is required.
  */
-int brcms_ucode_init_uint(struct brcms_info *wl, size_t *n_bytes, u32 idx)
+int brcms_ucode_init_uint(struct brcms_info *wl, size_t *n_bytes, uint32_t idx)
 {
 	int i, entry;
-	const u8 *pdata;
+	const uint8_t *pdata;
 	struct firmware_hdr *hdr;
 	for (i = 0; i < wl->fw.fw_cnt; i++) {
 		hdr = (struct firmware_hdr *)wl->fw.fw_hdr[i]->data;

@@ -100,8 +100,8 @@ struct locale_mimo_info {
 
 /* Country names and abbreviations with locale defined from ISO 3166 */
 struct country_info {
-	const u8 locale_mimo_2G;	/* 2.4G mimo info */
-	const u8 locale_mimo_5G;	/* 5G mimo info */
+	const uint8_t locale_mimo_2G;	/* 2.4G mimo info */
+	const uint8_t locale_mimo_5G;	/* 5G mimo info */
 };
 
 struct brcms_regd {
@@ -151,7 +151,7 @@ static const struct brcms_regd cntry_locales[] = {
 	},
 };
 
-static const struct locale_mimo_info *brcms_c_get_mimo_2g(u8 locale_idx)
+static const struct locale_mimo_info *brcms_c_get_mimo_2g(uint8_t locale_idx)
 {
 	if (locale_idx >= ARRAY_SIZE(g_mimo_2g_table))
 		return NULL;
@@ -159,7 +159,7 @@ static const struct locale_mimo_info *brcms_c_get_mimo_2g(u8 locale_idx)
 	return g_mimo_2g_table[locale_idx];
 }
 
-static const struct locale_mimo_info *brcms_c_get_mimo_5g(u8 locale_idx)
+static const struct locale_mimo_info *brcms_c_get_mimo_5g(uint8_t locale_idx)
 {
 	if (locale_idx >= ARRAY_SIZE(g_mimo_5g_table))
 		return NULL;
@@ -230,7 +230,7 @@ static bool brcms_c_japan_ccode(const char *ccode)
 static void
 brcms_c_channel_min_txpower_limits_with_local_constraint(
 		struct brcms_cm_info *wlc_cm, struct txpwr_limits *txpwr,
-		u8 local_constraint_qdbm)
+		uint8_t local_constraint_qdbm)
 {
 	int j;
 
@@ -372,8 +372,8 @@ void brcms_c_channel_mgr_detach(struct brcms_cm_info *wlc_cm)
 }
 
 void
-brcms_c_channel_set_chanspec(struct brcms_cm_info *wlc_cm, u16 chanspec,
-			 u8 local_constraint_qdbm)
+brcms_c_channel_set_chanspec(struct brcms_cm_info *wlc_cm, uint16_t chanspec,
+			 uint8_t local_constraint_qdbm)
 {
 	struct brcms_c_info *wlc = wlc_cm->wlc;
 	struct ieee80211_channel *ch = wlc->pub->ieee_hw->conf.chandef.chan;
@@ -397,7 +397,7 @@ brcms_c_channel_set_chanspec(struct brcms_cm_info *wlc_cm, u16 chanspec,
 }
 
 void
-brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
+brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, uint16_t chanspec,
 		       struct txpwr_limits *txpwr)
 {
 	struct brcms_c_info *wlc = wlc_cm->wlc;
@@ -439,11 +439,11 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
 	/* CCK txpwr limits for 2.4G band */
 	if (band->bandtype == BRCM_BAND_2G) {
 		for (i = 0; i < BRCMS_NUM_RATES_CCK; i++)
-			txpwr->cck[i] = (u8) maxpwr;
+			txpwr->cck[i] = (uint8_t) maxpwr;
 	}
 
 	for (i = 0; i < BRCMS_NUM_RATES_OFDM; i++) {
-		txpwr->ofdm[i] = (u8) maxpwr;
+		txpwr->ofdm[i] = (uint8_t) maxpwr;
 
 		/*
 		 * OFDM 40 MHz SISO has the same power as the corresponding
@@ -454,7 +454,7 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
 		 */
 		txpwr->ofdm_40_siso[i] = 0;
 
-		txpwr->ofdm_cdd[i] = (u8) maxpwr;
+		txpwr->ofdm_cdd[i] = (uint8_t) maxpwr;
 
 		txpwr->ofdm_40_cdd[i] = 0;
 	}
@@ -489,8 +489,8 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
 
 	/* Fill in the MCS 0-7 CDD rates */
 	for (i = 0; i < BRCMS_NUM_RATES_MCS_1_STREAM; i++) {
-		txpwr->mcs_20_cdd[i] = (u8) maxpwr20;
-		txpwr->mcs_40_cdd[i] = (u8) maxpwr40;
+		txpwr->mcs_20_cdd[i] = (uint8_t) maxpwr20;
+		txpwr->mcs_40_cdd[i] = (uint8_t) maxpwr40;
 	}
 
 	/*
@@ -507,8 +507,8 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
 		}
 
 		for (i = 0; i < BRCMS_NUM_RATES_MCS_1_STREAM; i++) {
-			txpwr->mcs_20_siso[i] = (u8) maxpwr20;
-			txpwr->mcs_40_siso[i] = (u8) maxpwr40;
+			txpwr->mcs_20_siso[i] = (uint8_t) maxpwr20;
+			txpwr->mcs_40_siso[i] = (uint8_t) maxpwr40;
 		}
 	}
 
@@ -520,12 +520,12 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
 
 	/* Fill in the MCS 8-15 SDM rates */
 	for (i = 0; i < BRCMS_NUM_RATES_MCS_2_STREAM; i++) {
-		txpwr->mcs_20_mimo[i] = (u8) maxpwr20;
-		txpwr->mcs_40_mimo[i] = (u8) maxpwr40;
+		txpwr->mcs_20_mimo[i] = (uint8_t) maxpwr20;
+		txpwr->mcs_40_mimo[i] = (uint8_t) maxpwr40;
 	}
 
 	/* Fill in MCS32 */
-	txpwr->mcs32 = (u8) maxpwr40;
+	txpwr->mcs32 = (uint8_t) maxpwr40;
 
 	for (i = 0, j = 0; i < BRCMS_NUM_RATES_OFDM; i++, j++) {
 		if (txpwr->ofdm_40_cdd[i] == 0)
@@ -577,7 +577,7 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, u16 chanspec,
  * combination could be legal given any set of circumstances.
  * RETURNS: true is the chanspec is malformed, false if it looks good.
  */
-static bool brcms_c_chspec_malformed(u16 chanspec)
+static bool brcms_c_chspec_malformed(uint16_t chanspec)
 {
 	/* must be 2G or 5G band */
 	if (!CHSPEC_IS5G(chanspec) && !CHSPEC_IS2G(chanspec))
@@ -603,10 +603,10 @@ static bool brcms_c_chspec_malformed(u16 chanspec)
  * and they are also a legal HT combination
  */
 static bool
-brcms_c_valid_chanspec_ext(struct brcms_cm_info *wlc_cm, u16 chspec)
+brcms_c_valid_chanspec_ext(struct brcms_cm_info *wlc_cm, uint16_t chspec)
 {
 	struct brcms_c_info *wlc = wlc_cm->wlc;
-	u8 channel = CHSPEC_CHANNEL(chspec);
+	uint8_t channel = CHSPEC_CHANNEL(chspec);
 
 	/* check the chanspec */
 	if (brcms_c_chspec_malformed(chspec)) {
@@ -622,12 +622,12 @@ brcms_c_valid_chanspec_ext(struct brcms_cm_info *wlc_cm, u16 chspec)
 	return true;
 }
 
-bool brcms_c_valid_chanspec_db(struct brcms_cm_info *wlc_cm, u16 chspec)
+bool brcms_c_valid_chanspec_db(struct brcms_cm_info *wlc_cm, uint16_t chspec)
 {
 	return brcms_c_valid_chanspec_ext(wlc_cm, chspec);
 }
 
-static bool brcms_is_radar_freq(u16 center_freq)
+static bool brcms_is_radar_freq(uint16_t center_freq)
 {
 	return center_freq >= 5260 && center_freq <= 5700;
 }

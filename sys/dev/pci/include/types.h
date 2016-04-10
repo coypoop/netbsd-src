@@ -293,13 +293,13 @@ struct txpwr_limits;
 /* iovar structure */
 struct brcmu_iovar {
 	const char *name;	/* name for lookup and display */
-	u16 varid;	/* id for switch */
-	u16 flags;	/* driver-specific flag bits */
-	u16 type;	/* base type of argument */
-	u16 minlen;	/* min length for buffer vars */
+	uint16_t varid;	/* id for switch */
+	uint16_t flags;	/* driver-specific flag bits */
+	uint16_t type;	/* base type of argument */
+	uint16_t minlen;	/* min length for buffer vars */
 };
 
 /* brcm_msg_level is a bit vector with defs in defs.h */
-extern u32 brcm_msg_level;
+extern uint32_t brcm_msg_level;
 
 #endif				/* _BRCM_TYPES_H_ */
