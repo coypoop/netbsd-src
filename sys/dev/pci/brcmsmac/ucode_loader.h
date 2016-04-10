@@ -16,7 +16,7 @@
 #ifndef	_BRCM_UCODE_H_
 #define	_BRCM_UCODE_H_
 
-#include "types.h"		/* forward structure declarations */
+#include <types.h>		/* forward structure declarations */
 
 #define MIN_FW_SIZE 40000	/* minimum firmware file size in bytes */
 #define MAX_FW_SIZE 150000

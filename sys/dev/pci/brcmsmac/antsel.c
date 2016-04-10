@@ -19,7 +19,7 @@
 #include <net/mac80211.h>
 #endif
 
-#include "types.h"
+#include <types.h>
 #include "main.h"
 #include "phy/phy_shim.h"
 #include "antsel.h"

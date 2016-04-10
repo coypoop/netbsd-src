@@ -15,7 +15,7 @@
  */
 
 #include <defs.h>
-#include "types.h"
+#include <types.h>
 #include "ucode_loader.h"
 
 enum {

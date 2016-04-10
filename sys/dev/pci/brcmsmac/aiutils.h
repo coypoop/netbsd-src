@@ -21,7 +21,7 @@
 #include <linux/bcma/bcma.h>
 #endif
 
-#include "types.h"
+#include <types.h>
 
 /*
  * SOC Interconnect Address Map.

@@ -17,7 +17,7 @@
 #ifndef _BRCM_RATE_H_
 #define _BRCM_RATE_H_
 
-#include "types.h"
+#include <types.h>
 #include "d11.h"
 #include "phy/phy_hal.h"
 

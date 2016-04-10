@@ -23,7 +23,7 @@
 
 #include <brcmu_utils.h>
 #include <defs.h>
-#include "types.h"
+#include <types.h>
 
 #define AMPDU_TX_BA_MAX_WSIZE	64	/* max Tx ba window size (in pdu) */
 
