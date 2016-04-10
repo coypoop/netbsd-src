@@ -17,7 +17,9 @@
 #ifndef	_BRCM_AIUTILS_H_
 #define	_BRCM_AIUTILS_H_
 
+#ifndef __NetBSD__
 #include <linux/bcma/bcma.h>
+#endif
 
 #include "types.h"
 

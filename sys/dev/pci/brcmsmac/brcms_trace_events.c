@@ -13,11 +13,13 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-
+// XXX - muuuuch later....
+#if 0
 #include <linux/module.h> /* bug in tracepoint.h, it should include this */
 
 #ifndef __CHECKER__
 #include "mac80211_if.h"
 #define CREATE_TRACE_POINTS
 #include "brcms_trace_events.h"
+#endif
 #endif

@@ -17,8 +17,11 @@
 #ifndef	_BRCM_DMA_H_
 #define	_BRCM_DMA_H_
 
+#ifndef __NetBSD__
 #include <linux/delay.h>
 #include <linux/skbuff.h>
+#endif
+
 #include "types.h"		/* forward structure declarations */
 
 /* map/unmap direction */

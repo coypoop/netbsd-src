@@ -23,7 +23,7 @@
 
 #include <brcmu_utils.h>
 #include <brcmu_wifi.h>
-#include <phy_shim.h>
+#include "phy_shim.h"
 
 #define	IDCODE_VER_MASK		0x0000000f
 #define	IDCODE_VER_SHIFT	0

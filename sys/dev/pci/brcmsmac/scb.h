@@ -17,7 +17,10 @@
 #ifndef _BRCM_SCB_H_
 #define _BRCM_SCB_H_
 
+#ifndef __NetBSD__
 #include <linux/if_ether.h>
+#endif
+
 #include <brcmu_utils.h>
 #include <defs.h>
 #include "types.h"

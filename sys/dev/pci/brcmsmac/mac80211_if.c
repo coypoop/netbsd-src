@@ -18,6 +18,7 @@
 #define __UNDEF_NO_VERSION__
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
+#ifndef __NetBSD__
 #include <linux/etherdevice.h>
 #include <linux/sched.h>
 #include <linux/firmware.h>
@@ -25,6 +26,7 @@
 #include <linux/module.h>
 #include <linux/bcma/bcma.h>
 #include <net/mac80211.h>
+#endif
 #include <defs.h>
 #include "phy/phy_int.h"
 #include "d11.h"

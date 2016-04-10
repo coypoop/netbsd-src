@@ -17,7 +17,9 @@
 #ifndef	_BRCM_DEFS_H_
 #define	_BRCM_DEFS_H_
 
+#ifndef __NetBSD__
 #include <linux/types.h>
+#endif
 
 #define	SI_BUS			0
 #define	PCI_BUS			1

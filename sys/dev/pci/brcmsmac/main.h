@@ -17,7 +17,9 @@
 #ifndef _BRCM_MAIN_H_
 #define _BRCM_MAIN_H_
 
+#ifndef __NetBSD__
 #include <linux/etherdevice.h>
+#endif
 
 #include <brcmu_utils.h>
 #include "types.h"

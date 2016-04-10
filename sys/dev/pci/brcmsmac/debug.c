@@ -14,6 +14,8 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+
+#ifndef __NetBSD__
 #include <linux/debugfs.h>
 #include <linux/if_ether.h>
 #include <linux/if.h>
@@ -22,6 +24,7 @@
 #include <linux/ieee80211.h>
 #include <linux/module.h>
 #include <net/mac80211.h>
+#endif
 
 #include <defs.h>
 #include <brcmu_wifi.h>

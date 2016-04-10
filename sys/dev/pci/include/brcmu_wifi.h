@@ -17,8 +17,10 @@
 #ifndef	_BRCMU_WIFI_H_
 #define	_BRCMU_WIFI_H_
 
+#ifndef __NetBSD__
 #include <linux/if_ether.h>		/* for ETH_ALEN */
 #include <linux/ieee80211.h>		/* for WLAN_PMKID_LEN */
+#endif
 
 /*
  * A chanspec (u16) holds the channel number, band, bandwidth and control

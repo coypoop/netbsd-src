@@ -17,8 +17,10 @@
 #ifndef	_BRCM_HW_IDS_H_
 #define	_BRCM_HW_IDS_H_
 
+#ifndef __NetBSD__
 #include <linux/pci_ids.h>
 #include <linux/mmc/sdio_ids.h>
+#endif
 
 #define BRCM_USB_VENDOR_ID_BROADCOM	0x0a5c
 #define BRCM_USB_VENDOR_ID_LG		0x043e

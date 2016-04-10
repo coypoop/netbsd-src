@@ -17,7 +17,9 @@
 #ifndef	_BRCM_D11_H_
 #define	_BRCM_D11_H_
 
+#ifndef __NetBSD__
 #include <linux/ieee80211.h>
+#endif
 
 #include <defs.h>
 #include "pub.h"

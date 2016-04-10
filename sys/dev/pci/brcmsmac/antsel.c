@@ -14,12 +14,14 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef __NetBSD__
 #include <linux/slab.h>
 #include <net/mac80211.h>
+#endif
 
 #include "types.h"
 #include "main.h"
-#include "phy_shim.h"
+#include "phy/phy_shim.h"
 #include "antsel.h"
 #include "debug.h"
 

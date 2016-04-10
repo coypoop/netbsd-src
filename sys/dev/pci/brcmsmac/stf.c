@@ -14,7 +14,9 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef __NetBSD__
 #include <net/mac80211.h>
+#endif
 
 #include "types.h"
 #include "d11.h"

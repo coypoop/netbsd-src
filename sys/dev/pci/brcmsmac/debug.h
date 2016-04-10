@@ -17,10 +17,13 @@
 #ifndef _BRCMS_DEBUG_H_
 #define _BRCMS_DEBUG_H_
 
+#ifndef __NetBSD__
 #include <linux/device.h>
 #include <linux/bcma/bcma.h>
 #include <net/cfg80211.h>
 #include <net/mac80211.h>
+#endif
+
 #include "main.h"
 #include "mac80211_if.h"
 

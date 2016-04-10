@@ -14,10 +14,12 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef __NetBSD__
 #include <linux/types.h>
 #include <net/cfg80211.h>
 #include <net/mac80211.h>
 #include <net/regulatory.h>
+#endif
 
 #include <defs.h>
 #include "pub.h"

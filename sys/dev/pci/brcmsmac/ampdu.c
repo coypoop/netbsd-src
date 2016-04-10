@@ -13,7 +13,9 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+#ifndef __NetBSD__
 #include <net/mac80211.h>
+#endif
 
 #include "rate.h"
 #include "scb.h"

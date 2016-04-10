@@ -19,7 +19,7 @@
 
 #include "types.h"
 #include "d11.h"
-#include "phy_hal.h"
+#include "phy/phy_hal.h"
 
 extern const u8 rate_info[];
 extern const struct brcms_c_rateset cck_ofdm_mimo_rates;

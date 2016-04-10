@@ -21,8 +21,10 @@
  * all calls go through this layer since PHY doesn't have access to the
  * driver's brcms_hardware pointer.
  */
+#ifndef __NetBSD__
 #include <linux/slab.h>
 #include <net/mac80211.h>
+#endif
 
 #include "main.h"
 #include "mac80211_if.h"

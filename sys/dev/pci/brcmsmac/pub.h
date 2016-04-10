@@ -17,7 +17,10 @@
 #ifndef _BRCM_PUB_H_
 #define _BRCM_PUB_H_
 
+#ifndef __NetBSD__
 #include <linux/bcma/bcma.h>
+#endif
+
 #include <brcmu_wifi.h>
 #include "types.h"
 #include "defs.h"

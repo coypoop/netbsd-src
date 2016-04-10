@@ -14,11 +14,13 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#ifndef __NetBSD__
 #include <linux/slab.h>
 #include <linux/delay.h>
 #include <linux/pci.h>
 #include <net/cfg80211.h>
 #include <net/mac80211.h>
+#endif
 
 #include <brcmu_utils.h>
 #include <aiutils.h>

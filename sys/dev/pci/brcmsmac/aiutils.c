@@ -18,7 +18,9 @@
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
+#ifndef __NetBSD__
 #include <linux/delay.h>
+#endif
 
 #include <defs.h>
 #include <chipcommon.h>
