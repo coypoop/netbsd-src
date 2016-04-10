@@ -1057,6 +1057,11 @@ include "dev/pci/n8/files.n8"
 attach	bwi at pci with bwi_pci
 file	dev/pci/if_bwi_pci.c		bwi_pci
 
+#
+# Broadcom software MAC
+#
+include "dev/pci/brcmsmac/files.brcmsmac"
+
 # Marvell Serial-ATA Host Controller
 attach	mvsata at pci with mvsata_pci
 file	dev/pci/mvsata_pci.c		mvsata_pci

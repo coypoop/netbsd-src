@@ -1,0 +1,28 @@
+#	$NetBSD: files.brcmsmac,v 1.1 2008/10/30 12:02:14 darran Exp $
+device	brcmsmac
+attach	brcmsmac at pci
+
+# Broadcom software MAC driver
+file	dev/pci/brcmsmac/main.c					brcmsmac
+file	dev/pci/brcmsmac/aiutils.c				brcmsmac
+file	dev/pci/brcmsmac/ampdu.c				brcmsmac
+file	dev/pci/brcmsmac/antsel.c				brcmsmac
+file	dev/pci/brcmsmac/brcms_trace_events.c			brcmsmac
+file	dev/pci/brcmsmac/channel.c				brcmsmac
+file	dev/pci/brcmsmac/debug.c				brcmsmac
+file	dev/pci/brcmsmac/dma.c					brcmsmac
+file	dev/pci/brcmsmac/led.c					brcmsmac
+file	dev/pci/brcmsmac/mac80211_if.c				brcmsmac
+file	dev/pci/brcmsmac/phy_shim.c				brcmsmac
+file	dev/pci/brcmsmac/pmu.c					brcmsmac
+file	dev/pci/brcmsmac/rate.c					brcmsmac
+file	dev/pci/brcmsmac/stf.c					brcmsmac
+file	dev/pci/brcmsmac/ucode_loader.c				brcmsmac
+
+
+
+#makeoptions	brcmsmac	CPPFLAGS+="-I$S/dev/pci/brcmsmac -I$S/dev/pci/n8/common -I$S/dev/pci/n8/QMgr -I$S/dev/pci/n8/include_private -I$S/dev/pci/n8/include_public -I$S/dev/pci/n8/common/api -I$S/dev/pci/n8/common/api/commands"
+#makeoptions	brcmsmac	CPPFLAGS+="-DMAX_NSP_INSTANCES=1 -DSUPPORT_CALLBACKS -DKOFF -DKERNEL"
+
+# Uncomment this line to enable detailed debugging in the driver
+#makeoptions	brcmsmac	CPPFLAGS+="-DbrcmsmacDEBUG"
