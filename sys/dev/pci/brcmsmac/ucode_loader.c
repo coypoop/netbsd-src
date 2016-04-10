@@ -62,13 +62,13 @@ int brcms_ucode_data_init(struct brcms_info *wl, struct brcms_ucode *ucode)
 	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->d11lcn2initvals24,
 				       D11LCN2INITVALS24);
 	rc = rc < 0 ?
-	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->d11n0absinitvals16,
+	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->d11n0absinitvalint16_t,
 				       D11N0ABSINITVALS16);
 	rc = rc < 0 ?
-	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->d11n0bsinitvals16,
+	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->d11n0bsinitvalint16_t,
 				       D11N0BSINITVALS16);
 	rc = rc < 0 ?
-	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->d11n0initvals16,
+	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->d11n0initvalint16_t,
 				       D11N0INITVALS16);
 	rc = rc < 0 ?
 	     rc : brcms_ucode_init_buf(wl, (void **)&ucode->bcm43xx_16_mimo,
@@ -99,9 +99,9 @@ void brcms_ucode_data_free(struct brcms_ucode *ucode)
 	brcms_ucode_free_buf((void *)ucode->d11lcn1initvals24);
 	brcms_ucode_free_buf((void *)ucode->d11lcn2bsinitvals24);
 	brcms_ucode_free_buf((void *)ucode->d11lcn2initvals24);
-	brcms_ucode_free_buf((void *)ucode->d11n0absinitvals16);
-	brcms_ucode_free_buf((void *)ucode->d11n0bsinitvals16);
-	brcms_ucode_free_buf((void *)ucode->d11n0initvals16);
+	brcms_ucode_free_buf((void *)ucode->d11n0absinitvalint16_t);
+	brcms_ucode_free_buf((void *)ucode->d11n0bsinitvalint16_t);
+	brcms_ucode_free_buf((void *)ucode->d11n0initvalint16_t);
 	brcms_ucode_free_buf((void *)ucode->bcm43xx_16_mimo);
 	brcms_ucode_free_buf((void *)ucode->bcm43xx_24_lcn);
 	brcms_ucode_free_buf((void *)ucode->bcm43xx_bommajor);

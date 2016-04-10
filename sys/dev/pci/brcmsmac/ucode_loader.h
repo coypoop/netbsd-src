@@ -32,9 +32,9 @@ struct brcms_ucode {
 	struct d11init *d11lcn1initvals24;
 	struct d11init *d11lcn2bsinitvals24;
 	struct d11init *d11lcn2initvals24;
-	struct d11init *d11n0absinitvals16;
-	struct d11init *d11n0bsinitvals16;
-	struct d11init *d11n0initvals16;
+	struct d11init *d11n0absinitvalint16_t;
+	struct d11init *d11n0bsinitvalint16_t;
+	struct d11init *d11n0initvalint16_t;
 	__le32 *bcm43xx_16_mimo;
 	size_t bcm43xx_16_mimosz;
 	__le32 *bcm43xx_24_lcn;

@@ -163,15 +163,15 @@
 */
 struct brcms_protection {
 	bool _g;
-	s8 g_override;
+	int8_t g_override;
 	uint8_t gmode_user;
-	s8 overlap;
-	s8 nmode_user;
-	s8 n_cfg;
-	s8 n_cfg_override;
+	int8_t overlap;
+	int8_t nmode_user;
+	int8_t n_cfg;
+	int8_t n_cfg_override;
 	bool nongf;
-	s8 nongf_override;
-	s8 n_pam_override;
+	int8_t nongf_override;
+	int8_t n_pam_override;
 	bool n_obss;
 };
 
@@ -204,15 +204,15 @@ struct brcms_stf {
 	uint8_t rxchain;
 	uint8_t rxstreams;
 	uint8_t ant_rx_ovr;
-	s8 txant;
+	int8_t txant;
 	uint16_t phytxant;
 	uint8_t ss_opmode;
 	bool ss_algosel_auto;
 	uint16_t ss_algo_channel;
 	uint8_t rxchain_restore_delay;
-	s8 ldpc;
+	int8_t ldpc;
 	uint8_t txcore[MAX_STREAMS_SUPPORTED + 1];
-	s8 spatial_policy;
+	int8_t spatial_policy;
 };
 
 #define BRCMS_STF_SS_STBC_TX(wlc, scb) \
@@ -267,12 +267,12 @@ struct brcms_band {
 	struct brcms_c_rateset defrateset;
 
 	uint8_t band_stf_ss_mode;	/* Configured STF type, 0:siso; 1:cdd */
-	s8 band_stf_stbc_tx;	/* STBC TX 0:off; 1:force on; -1:auto */
+	int8_t band_stf_stbc_tx;	/* STBC TX 0:off; 1:force on; -1:auto */
 	/* rates supported by chip (phy-specific) */
 	struct brcms_c_rateset hw_rateset;
 	uint8_t basic_rate[BRCM_MAXRATE + 1]; /* basic rates indexed by rate */
 	bool mimo_cap_40;	/* 40 MHz cap enabled on this band */
-	s8 antgain;		/* antenna gain from srom */
+	int8_t antgain;		/* antenna gain from srom */
 
 	uint16_t CWmin; /* minimum size of contention window, in unit of aSlotTime */
 	uint16_t CWmax; /* maximum size of contention window, in unit of aSlotTime */
@@ -522,9 +522,9 @@ struct brcms_c_info {
 	struct modulecb *modulecb;
 
 	uint8_t mimoft;
-	s8 cck_40txbw;
-	s8 ofdm_40txbw;
-	s8 mimo_40txbw;
+	int8_t cck_40txbw;
+	int8_t ofdm_40txbw;
+	int8_t mimo_40txbw;
 
 	struct brcms_bss_info *default_bss;
 
@@ -548,11 +548,11 @@ struct brcms_c_info {
 
 	/* network config */
 	bool shortslot;
-	s8 shortslot_override;
+	int8_t shortslot_override;
 	bool include_legacy_erp;
 
 	struct brcms_protection *protection;
-	s8 PLCPHdr_override;
+	int8_t PLCPHdr_override;
 
 	struct brcms_stf *stf;
 

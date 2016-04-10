@@ -235,7 +235,7 @@ void brcms_c_rateset_default(struct brcms_c_rateset *rs_tgt,
 			     int bandtype, bool cck_only, uint rate_mask,
 			     bool mcsallow, uint8_t bw, uint8_t txstreams);
 
-s16 brcms_c_rate_legacy_phyctl(uint rate);
+int16_t brcms_c_rate_legacy_phyctl(uint rate);
 
 void brcms_c_rateset_mcs_upd(struct brcms_c_rateset *rs, uint8_t txstreams);
 void brcms_c_rateset_mcs_clear(struct brcms_c_rateset *rateset);

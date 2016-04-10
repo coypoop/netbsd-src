@@ -135,7 +135,7 @@ struct ampdu_info {
 	uint8_t retry_limit_tid[AMPDU_MAX_SCB_TID];
 	uint8_t rr_retry_limit_tid[AMPDU_MAX_SCB_TID];
 	uint8_t mpdu_density;
-	s8 max_pdu;
+	int8_t max_pdu;
 	uint8_t dur;
 	uint8_t rx_factor;
 	uint32_t ffpld_rsvd;

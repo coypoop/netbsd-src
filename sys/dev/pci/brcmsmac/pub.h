@@ -51,7 +51,7 @@
 #define	BRCMS_RSSI_EXCELLENT	-57	/* Excellent quality cutoffs */
 
 /* a large TX Power as an init value to factor out of min() calculations,
- * keep low enough to fit in an s8, units are .25 dBm
+ * keep low enough to fit in an int8_t, units are .25 dBm
  */
 #define BRCMS_TXPWR_MAX		(127)	/* ~32 dBm = 1,500 mW */
 
@@ -130,8 +130,8 @@ struct brcms_bss_info {
 	uint16_t flags;		/* flags for internal attributes */
 	uint8_t SSID_len;		/* the length of SSID */
 	uint8_t SSID[32];		/* SSID string */
-	s16 RSSI;		/* receive signal strength (in dBm) */
-	s16 SNR;		/* receive signal SNR in dB */
+	int16_t RSSI;		/* receive signal strength (in dBm) */
+	int16_t SNR;		/* receive signal SNR in dB */
 	uint16_t beacon_period;	/* units are Kusec */
 	uint16_t chanspec;	/* Channel num, bw, ctrl_sb and band */
 	struct brcms_c_rateset rateset;	/* supported rates */
@@ -320,7 +320,7 @@ int brcms_c_set_rateset(struct brcms_c_info *wlc, struct brcm_rateset *rs);
 int brcms_c_set_beacon_period(struct brcms_c_info *wlc, uint16_t period);
 uint16_t brcms_c_get_phy_type(struct brcms_c_info *wlc, int phyidx);
 void brcms_c_set_shortslot_override(struct brcms_c_info *wlc,
-				    s8 sslot_override);
+				    int8_t sslot_override);
 void brcms_c_set_beacon_listen_interval(struct brcms_c_info *wlc, uint8_t interval);
 uint64_t brcms_c_tsf_get(struct brcms_c_info *wlc);
 void brcms_c_tsf_set(struct brcms_c_info *wlc, uint64_t tsf);

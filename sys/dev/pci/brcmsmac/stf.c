@@ -130,7 +130,7 @@ brcms_c_stf_ss_algo_channel_get(struct brcms_c_info *wlc, uint16_t *ss_algo_chan
 		setbit(ss_algo_channel, PHY_TXC1_MODE_STBC);
 }
 
-static bool brcms_c_stf_stbc_tx_set(struct brcms_c_info *wlc, s32 int_val)
+static bool brcms_c_stf_stbc_tx_set(struct brcms_c_info *wlc, int32_t int_val)
 {
 	if ((int_val != AUTO) && (int_val != OFF) && (int_val != ON))
 		return false;
@@ -138,13 +138,13 @@ static bool brcms_c_stf_stbc_tx_set(struct brcms_c_info *wlc, s32 int_val)
 	if ((int_val == ON) && (wlc->stf->txstreams == 1))
 		return false;
 
-	wlc->bandstate[BAND_2G_INDEX]->band_stf_stbc_tx = (s8) int_val;
-	wlc->bandstate[BAND_5G_INDEX]->band_stf_stbc_tx = (s8) int_val;
+	wlc->bandstate[BAND_2G_INDEX]->band_stf_stbc_tx = (int8_t) int_val;
+	wlc->bandstate[BAND_5G_INDEX]->band_stf_stbc_tx = (int8_t) int_val;
 
 	return true;
 }
 
-bool brcms_c_stf_stbc_rx_set(struct brcms_c_info *wlc, s32 int_val)
+bool brcms_c_stf_stbc_rx_set(struct brcms_c_info *wlc, int32_t int_val)
 {
 	if ((int_val != HT_CAP_RX_STBC_NO)
 	    && (int_val != HT_CAP_RX_STBC_ONE_STREAM))
@@ -200,7 +200,7 @@ static int brcms_c_stf_spatial_policy_set(struct brcms_c_info *wlc, int val)
 	brcms_dbg_ht(wlc->hw->d11core, "wl%d: val %x\n", wlc->pub->unit,
 		     val);
 
-	wlc->stf->spatial_policy = (s8) val;
+	wlc->stf->spatial_policy = (int8_t) val;
 	for (i = 1; i <= MAX_STREAMS_SUPPORTED; i++) {
 		core_mask = (val == MAX_SPATIAL_EXPANSION) ?
 		    wlc->stf->txchain : txcore_default[i];
@@ -227,9 +227,9 @@ static int brcms_c_stf_spatial_policy_set(struct brcms_c_info *wlc, int val)
 */
 static void _brcms_c_stf_phy_txant_upd(struct brcms_c_info *wlc)
 {
-	s8 txant;
+	int8_t txant;
 
-	txant = (s8) wlc->stf->txant;
+	txant = (int8_t) wlc->stf->txant;
 	if (BRCMS_PHY_11N_CAP(wlc->band)) {
 		if (txant == ANT_TX_FORCE_0) {
 			wlc->stf->phytxant = PHY_TXC_ANT_0;
@@ -263,7 +263,7 @@ static void _brcms_c_stf_phy_txant_upd(struct brcms_c_info *wlc)
 	brcms_b_txant_set(wlc->hw, wlc->stf->phytxant);
 }
 
-int brcms_c_stf_txchain_set(struct brcms_c_info *wlc, s32 int_val, bool force)
+int brcms_c_stf_txchain_set(struct brcms_c_info *wlc, int32_t int_val, bool force)
 {
 	uint8_t txchain = (uint8_t) int_val;
 	uint8_t txstreams;

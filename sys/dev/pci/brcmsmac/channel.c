@@ -93,9 +93,9 @@ static const struct ieee80211_regdomain brcms_regdom_x2 = {
   */
 struct locale_mimo_info {
 	/* tx 20 MHz power limits, qdBm units */
-	s8 maxpwr20[BRCMS_MAXPWR_MIMO_TBL_SIZE];
+	int8_t maxpwr20[BRCMS_MAXPWR_MIMO_TBL_SIZE];
 	/* tx 40 MHz power limits, qdBm units */
-	s8 maxpwr40[BRCMS_MAXPWR_MIMO_TBL_SIZE];
+	int8_t maxpwr40[BRCMS_MAXPWR_MIMO_TBL_SIZE];
 };
 
 /* Country names and abbreviations with locale defined from ISO 3166 */
@@ -298,7 +298,7 @@ brcms_c_channel_min_txpower_limits_with_local_constraint(
 		    min(txpwr->mcs_40_mimo[j], local_constraint_qdbm);
 
 	/* 40MHz MCS 32 */
-	txpwr->mcs32 = min(txpwr->mcs32, local_constraint_qdbm);
+	txpwr->mcint32_t = min(txpwr->mcint32_t, local_constraint_qdbm);
 
 }
 
@@ -525,7 +525,7 @@ brcms_c_channel_reg_limits(struct brcms_cm_info *wlc_cm, uint16_t chanspec,
 	}
 
 	/* Fill in MCS32 */
-	txpwr->mcs32 = (uint8_t) maxpwr40;
+	txpwr->mcint32_t = (uint8_t) maxpwr40;
 
 	for (i = 0, j = 0; i < BRCMS_NUM_RATES_OFDM; i++, j++) {
 		if (txpwr->ofdm_40_cdd[i] == 0)

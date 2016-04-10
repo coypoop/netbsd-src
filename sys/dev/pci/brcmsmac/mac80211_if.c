@@ -596,7 +596,7 @@ brcms_ops_bss_info_changed(struct ieee80211_hw *hw,
 		spin_unlock_bh(&wl->lock);
 	}
 	if (changed & BSS_CHANGED_ERP_SLOT) {
-		s8 val;
+		int8_t val;
 
 		/* slot timing changed */
 		if (info->use_short_slot)

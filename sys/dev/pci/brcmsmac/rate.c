@@ -481,7 +481,7 @@ brcms_c_rateset_default(struct brcms_c_rateset *rs_tgt,
 					   mcsallow ? txstreams : 1);
 }
 
-s16 brcms_c_rate_legacy_phyctl(uint rate)
+int16_t brcms_c_rate_legacy_phyctl(uint rate)
 {
 	uint i;
 	for (i = 0; i < LEGACY_PHYCFG_TABLE_SIZE; i++)

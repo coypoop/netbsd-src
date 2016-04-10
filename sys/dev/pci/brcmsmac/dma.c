@@ -519,7 +519,7 @@ static bool dma64_alloc(struct dma_info *di, uint direction)
 		align = (1 << align_bits);
 		di->txd64 = (struct dma64desc *)
 					roundup((unsigned long)va, align);
-		di->txdalign = (uint) ((s8 *)di->txd64 - (s8 *) va);
+		di->txdalign = (uint) ((int8_t *)di->txd64 - (int8_t *) va);
 		di->txdpa = di->txdpaorig + di->txdalign;
 		di->txdalloc = alloced;
 	} else {
@@ -534,7 +534,7 @@ static bool dma64_alloc(struct dma_info *di, uint direction)
 		align = (1 << align_bits);
 		di->rxd64 = (struct dma64desc *)
 					roundup((unsigned long)va, align);
-		di->rxdalign = (uint) ((s8 *)di->rxd64 - (s8 *) va);
+		di->rxdalign = (uint) ((int8_t *)di->rxd64 - (int8_t *) va);
 		di->rxdpa = di->rxdpaorig + di->rxdalign;
 		di->rxdalloc = alloced;
 	}
@@ -755,11 +755,11 @@ void dma_detach(struct dma_pub *pub)
 	/* free dma descriptor rings */
 	if (di->txd64)
 		dma_free_coherent(di->dmadev, di->txdalloc,
-				  ((s8 *)di->txd64 - di->txdalign),
+				  ((int8_t *)di->txd64 - di->txdalign),
 				  (di->txdpaorig));
 	if (di->rxd64)
 		dma_free_coherent(di->dmadev, di->rxdalloc,
-				  ((s8 *)di->rxd64 - di->rxdalign),
+				  ((int8_t *)di->rxd64 - di->rxdalign),
 				  (di->rxdpaorig));
 
 	/* free packet pointer vectors */

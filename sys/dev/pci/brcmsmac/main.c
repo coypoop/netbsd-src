@@ -725,7 +725,7 @@ static void brcms_c_ucode_bsinit(struct brcms_hardware *wlc_hw)
 	/* do band-specific ucode IHR, SHM, and SCR inits */
 	if (D11REV_IS(wlc_hw->corerev, 17) || D11REV_IS(wlc_hw->corerev, 23)) {
 		if (BRCMS_ISNPHY(wlc_hw->band))
-			brcms_c_write_inits(wlc_hw, ucode->d11n0bsinitvals16);
+			brcms_c_write_inits(wlc_hw, ucode->d11n0bsinitvalint16_t);
 		else
 			brcms_err(wlc_hw->d11core,
 				  "%s: wl%d: unsupported phy in corerev %d\n",
@@ -3220,7 +3220,7 @@ static void brcms_b_coreinit(struct brcms_c_info *wlc)
 
 	if (D11REV_IS(wlc_hw->corerev, 17) || D11REV_IS(wlc_hw->corerev, 23)) {
 		if (BRCMS_ISNPHY(wlc_hw->band))
-			brcms_c_write_inits(wlc_hw, ucode->d11n0initvals16);
+			brcms_c_write_inits(wlc_hw, ucode->d11n0initvalint16_t);
 		else
 			brcms_err(core, "%s: wl%d: unsupported phy in corerev"
 				  " %d\n", __func__, wlc_hw->unit,
@@ -4003,31 +4003,31 @@ void brcms_c_protection_upd(struct brcms_c_info *wlc, uint idx, int val)
 		wlc->protection->_g = (bool) val;
 		break;
 	case BRCMS_PROT_G_OVR:
-		wlc->protection->g_override = (s8) val;
+		wlc->protection->g_override = (int8_t) val;
 		break;
 	case BRCMS_PROT_G_USER:
 		wlc->protection->gmode_user = (uint8_t) val;
 		break;
 	case BRCMS_PROT_OVERLAP:
-		wlc->protection->overlap = (s8) val;
+		wlc->protection->overlap = (int8_t) val;
 		break;
 	case BRCMS_PROT_N_USER:
-		wlc->protection->nmode_user = (s8) val;
+		wlc->protection->nmode_user = (int8_t) val;
 		break;
 	case BRCMS_PROT_N_CFG:
-		wlc->protection->n_cfg = (s8) val;
+		wlc->protection->n_cfg = (int8_t) val;
 		break;
 	case BRCMS_PROT_N_CFG_OVR:
-		wlc->protection->n_cfg_override = (s8) val;
+		wlc->protection->n_cfg_override = (int8_t) val;
 		break;
 	case BRCMS_PROT_N_NONGF:
 		wlc->protection->nongf = (bool) val;
 		break;
 	case BRCMS_PROT_N_NONGF_OVR:
-		wlc->protection->nongf_override = (s8) val;
+		wlc->protection->nongf_override = (int8_t) val;
 		break;
 	case BRCMS_PROT_N_PAM_OVR:
-		wlc->protection->n_pam_override = (s8) val;
+		wlc->protection->n_pam_override = (int8_t) val;
 		break;
 	case BRCMS_PROT_N_OBSS:
 		wlc->protection->n_obss = (bool) val;
@@ -4047,7 +4047,7 @@ static void brcms_c_ht_update_sgi_rx(struct brcms_c_info *wlc, int val)
 	}
 }
 
-static void brcms_c_ht_update_ldpc(struct brcms_c_info *wlc, s8 val)
+static void brcms_c_ht_update_ldpc(struct brcms_c_info *wlc, int8_t val)
 {
 	wlc->stf->ldpc = val;
 
@@ -5249,7 +5249,7 @@ int brcms_c_set_gmode(struct brcms_c_info *wlc, uint8_t gmode, bool config)
 	struct brcms_c_rateset rs;
 	/* Default to 54g Auto */
 	/* Advertise and use shortslot (-1/0/1 Auto/Off/On) */
-	s8 shortslot = BRCMS_SHORTSLOT_AUTO;
+	int8_t shortslot = BRCMS_SHORTSLOT_AUTO;
 	bool shortslot_restrict = false; /* Restrict association to stations
 					  * that support shortslot
 					  */
@@ -5346,7 +5346,7 @@ int brcms_c_set_gmode(struct brcms_c_info *wlc, uint8_t gmode, bool config)
 int brcms_c_set_nmode(struct brcms_c_info *wlc)
 {
 	uint i;
-	s32 nmode = AUTO;
+	int32_t nmode = AUTO;
 
 	if (wlc->stf->txstreams == WL_11N_3x3)
 		nmode = WL_11N_3x3;
@@ -5566,7 +5566,7 @@ uint16_t brcms_c_get_phy_type(struct brcms_c_info *wlc, int phyidx)
 	return wlc->band->phytype;
 }
 
-void brcms_c_set_shortslot_override(struct brcms_c_info *wlc, s8 sslot_override)
+void brcms_c_set_shortslot_override(struct brcms_c_info *wlc, int8_t sslot_override)
 {
 	wlc->shortslot_override = sslot_override;
 
@@ -6195,7 +6195,7 @@ static uint16_t brcms_c_phytxctl1_calc(struct brcms_c_info *wlc, uint32_t rspec)
 		/* 0 = 1Mbps; 1 = 2Mbps; 2 = 5.5Mbps; 3 = 11Mbps */
 		phyctl1 = (bw | (rspec_stf(rspec) << PHY_TXC1_MODE_SHIFT));
 	} else {		/* legacy OFDM/CCK */
-		s16 phycfg;
+		int16_t phycfg;
 		/* get the phyctl byte from rate phycfg table */
 		phycfg = brcms_c_rate_legacy_phyctl(rspec2rate(rspec));
 		if (phycfg == -1) {
@@ -6424,7 +6424,7 @@ brcms_c_d11hdrs_mac80211(struct brcms_c_info *wlc, struct ieee80211_hw *hw,
 				}
 			} else {
 				/*
-				 * mcs32 is 40 b/w only.
+				 * mcint32_t is 40 b/w only.
 				 * This is possible for probe packets on
 				 * a STA during SCAN
 				 */
