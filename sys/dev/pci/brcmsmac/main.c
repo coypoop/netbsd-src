@@ -17,12 +17,15 @@
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
+#ifndef __NetBSD__
 #include <linux/pci_ids.h>
 #include <linux/if_ether.h>
 #include <net/cfg80211.h>
 #include <net/mac80211.h>
+#endif
+
 #include <brcm_hw_ids.h>
-#include <aiutils.h>
+#include "aiutils.h"
 #include <chipcommon.h>
 #include "rate.h"
 #include "scb.h"
