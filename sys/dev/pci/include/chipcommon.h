@@ -17,6 +17,7 @@
 #ifndef	_SBCHIPC_H
 #define	_SBCHIPC_H
 
+#include <types.h>
 #include "defs.h"		/* for PAD macro */
 
 #define CHIPCREGOFFS(field)	offsetof(struct chipcregs, field)

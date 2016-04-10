@@ -21,6 +21,7 @@
 #include <linux/types.h>
 #include <linux/io.h>
 #endif
+#include <sys/types.h>
 
 #define WL_CHAN_FREQ_RANGE_2G      0
 #define WL_CHAN_FREQ_RANGE_5GL     1
