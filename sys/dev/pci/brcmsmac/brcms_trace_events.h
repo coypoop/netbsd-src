@@ -14,6 +14,8 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+// XXX - not anytime soon
+#if 0
 #ifndef __BRCMS_TRACE_EVENTS_H
 #define __BRCMS_TRACE_EVENTS_H
 
@@ -38,3 +40,4 @@ static inline void trace_ ## name(proto) {}
 #include "brcms_trace_brcmsmac_msg.h"
 
 #endif /* __TRACE_BRCMSMAC_H */
+#endif
