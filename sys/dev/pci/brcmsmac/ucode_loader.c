@@ -16,7 +16,7 @@
 
 #include <defs.h>
 #include "types.h"
-#include <ucode_loader.h>
+#include "ucode_loader.h"
 
 enum {
 	D11UCODE_NAMETAG_START = 0,
