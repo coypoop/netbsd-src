@@ -13,14 +13,13 @@ file	dev/pci/brcmsmac/debug.c				brcmsmac
 file	dev/pci/brcmsmac/dma.c					brcmsmac
 file	dev/pci/brcmsmac/led.c					brcmsmac
 file	dev/pci/brcmsmac/mac80211_if.c				brcmsmac
-file	dev/pci/brcmsmac/phy_shim.c				brcmsmac
+file	dev/pci/brcmsmac/phy/phy_shim.c				brcmsmac
 file	dev/pci/brcmsmac/pmu.c					brcmsmac
 file	dev/pci/brcmsmac/rate.c					brcmsmac
 file	dev/pci/brcmsmac/stf.c					brcmsmac
 file	dev/pci/brcmsmac/ucode_loader.c				brcmsmac
 
-
-
+makeoptions	brcmsmac	CPPFLAGS+="-I$S/dev/pci/include"
 #makeoptions	brcmsmac	CPPFLAGS+="-I$S/dev/pci/brcmsmac -I$S/dev/pci/n8/common -I$S/dev/pci/n8/QMgr -I$S/dev/pci/n8/include_private -I$S/dev/pci/n8/include_public -I$S/dev/pci/n8/common/api -I$S/dev/pci/n8/common/api/commands"
 #makeoptions	brcmsmac	CPPFLAGS+="-DMAX_NSP_INSTANCES=1 -DSUPPORT_CALLBACKS -DKOFF -DKERNEL"
 
