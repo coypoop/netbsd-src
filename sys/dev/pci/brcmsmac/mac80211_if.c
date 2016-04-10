@@ -736,7 +736,7 @@ brcms_ops_bss_info_changed(struct ieee80211_hw *hw,
 static void
 brcms_ops_configure_filter(struct ieee80211_hw *hw,
 			unsigned int changed_flags,
-			unsigned int *total_flags, u64 multicast)
+			unsigned int *total_flags, uint64_t multicast)
 {
 	struct brcms_info *wl = hw->priv;
 	struct bcma_device *core = wl->wlc->hw->d11core;
@@ -915,10 +915,10 @@ static void brcms_ops_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
 			   "ret=%d\n", jiffies_to_msecs(ret));
 }
 
-static u64 brcms_ops_get_tsf(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
+static uint64_t brcms_ops_get_tsf(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
 {
 	struct brcms_info *wl = hw->priv;
-	u64 tsf;
+	uint64_t tsf;
 
 	spin_lock_bh(&wl->lock);
 	tsf = brcms_c_tsf_get(wl->wlc);
@@ -928,7 +928,7 @@ static u64 brcms_ops_get_tsf(struct ieee80211_hw *hw, struct ieee80211_vif *vif)
 }
 
 static void brcms_ops_set_tsf(struct ieee80211_hw *hw,
-			   struct ieee80211_vif *vif, u64 tsf)
+			   struct ieee80211_vif *vif, uint64_t tsf)
 {
 	struct brcms_info *wl = hw->priv;
 

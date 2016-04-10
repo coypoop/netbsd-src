@@ -322,8 +322,8 @@ uint16_t brcms_c_get_phy_type(struct brcms_c_info *wlc, int phyidx);
 void brcms_c_set_shortslot_override(struct brcms_c_info *wlc,
 				    s8 sslot_override);
 void brcms_c_set_beacon_listen_interval(struct brcms_c_info *wlc, uint8_t interval);
-u64 brcms_c_tsf_get(struct brcms_c_info *wlc);
-void brcms_c_tsf_set(struct brcms_c_info *wlc, u64 tsf);
+uint64_t brcms_c_tsf_get(struct brcms_c_info *wlc);
+void brcms_c_tsf_set(struct brcms_c_info *wlc, uint64_t tsf);
 int brcms_c_set_tx_power(struct brcms_c_info *wlc, int txpwr);
 int brcms_c_get_tx_power(struct brcms_c_info *wlc);
 bool brcms_c_check_radio_disabled(struct brcms_c_info *wlc);

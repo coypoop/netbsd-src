@@ -7039,7 +7039,7 @@ brcms_b_read_tsf(struct brcms_hardware *wlc_hw, uint32_t *tsf_l_ptr,
  * receive call sequence after rx interrupt. Only the higher 16 bits
  * are used. Finally, the tsf_h is read from the tsf register.
  */
-static u64 brcms_c_recover_tsf64(struct brcms_c_info *wlc,
+static uint64_t brcms_c_recover_tsf64(struct brcms_c_info *wlc,
 				 struct d11rxhdr *rxh)
 {
 	uint32_t tsf_h, tsf_l;
@@ -7060,7 +7060,7 @@ static u64 brcms_c_recover_tsf64(struct brcms_c_info *wlc,
 			tsf_h -= 1;
 	}
 
-	return ((u64)tsf_h << 32) | (((uint32_t)rx_tsf_16_31 << 16) + rx_tsf_0_15);
+	return ((uint64_t)tsf_h << 32) | (((uint32_t)rx_tsf_16_31 << 16) + rx_tsf_0_15);
 }
 
 static void
@@ -7610,10 +7610,10 @@ void brcms_c_set_beacon_listen_interval(struct brcms_c_info *wlc, uint8_t interv
 		brcms_c_bcn_li_upd(wlc);
 }
 
-u64 brcms_c_tsf_get(struct brcms_c_info *wlc)
+uint64_t brcms_c_tsf_get(struct brcms_c_info *wlc)
 {
 	uint32_t tsf_h, tsf_l;
-	u64 tsf;
+	uint64_t tsf;
 
 	brcms_b_read_tsf(wlc->hw, &tsf_l, &tsf_h);
 
@@ -7624,7 +7624,7 @@ u64 brcms_c_tsf_get(struct brcms_c_info *wlc)
 	return tsf;
 }
 
-void brcms_c_tsf_set(struct brcms_c_info *wlc, u64 tsf)
+void brcms_c_tsf_set(struct brcms_c_info *wlc, uint64_t tsf)
 {
 	uint32_t tsf_h, tsf_l;
 
