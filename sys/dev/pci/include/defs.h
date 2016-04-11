@@ -19,6 +19,8 @@
 
 #ifndef __NetBSD__
 #include <linux/types.h>
+#else
+#include <sys/types.h>
 #endif
 
 #define	SI_BUS			0
