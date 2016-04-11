@@ -313,7 +313,7 @@ static void brcmf_fweh_event_worker(struct work_struct *work)
 			err = 0;
 		}
 event_free:
-		kfree(event);
+		kmem_free(event);
 	}
 }
 

@@ -933,7 +933,7 @@ static void brcmf_sdiod_freezer_detach(struct brcmf_sdio_dev *sdiodev)
 {
 	if (sdiodev->freezer) {
 		WARN_ON(atomic_read(&sdiodev->freezer->freezing));
-		kfree(sdiodev->freezer);
+		kmem_free(sdiodev->freezer);
 	}
 }
 
@@ -1149,7 +1149,7 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
 		return -ENOMEM;
 	sdiodev = kmem_zalloc(sizeof(struct brcmf_sdio_dev), KM_SLEEP);
 	if (!sdiodev) {
-		kfree(bus_if);
+		kmem_free(bus_if);
 		return -ENOMEM;
 	}
 
@@ -1197,9 +1197,9 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
 fail:
 	dev_set_drvdata(&func->dev, NULL);
 	dev_set_drvdata(&sdiodev->func[1]->dev, NULL);
-	kfree(sdiodev->func[0]);
-	kfree(sdiodev);
-	kfree(bus_if);
+	kmem_free(sdiodev->func[0]);
+	kmem_free(sdiodev);
+	kmem_free(bus_if);
 	return err;
 }
 
@@ -1224,9 +1224,9 @@ static void brcmf_ops_sdio_remove(struct sdio_func *func)
 		dev_set_drvdata(&sdiodev->func[1]->dev, NULL);
 		dev_set_drvdata(&sdiodev->func[2]->dev, NULL);
 
-		kfree(bus_if);
-		kfree(sdiodev->func[0]);
-		kfree(sdiodev);
+		kmem_free(bus_if);
+		kmem_free(sdiodev->func[0]);
+		kmem_free(sdiodev);
 	}
 
 	brcmf_dbg(SDIO, "Exit\n");

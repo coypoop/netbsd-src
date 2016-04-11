@@ -2232,7 +2232,7 @@ void brcmf_fws_deinit(struct brcmf_pub *drvr)
 	brcmf_fws_unlock(fws);
 
 	/* free top structure */
-	kfree(fws);
+	kmem_free(fws);
 }
 
 bool brcmf_fws_fc_active(struct brcmf_fws_info *fws)

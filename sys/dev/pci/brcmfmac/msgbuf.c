@@ -296,7 +296,7 @@ brcmf_msgbuf_init_pktids(u32 nr_array_entries,
 
 	pktids = kmem_zalloc(sizeof(*pktids), KM_SLEEP);
 	if (!pktids) {
-		kfree(array);
+		kmem_free(array);
 		return NULL;
 	}
 	pktids->array = array;
@@ -400,8 +400,8 @@ brcmf_msgbuf_release_array(struct device *dev,
 		count++;
 	} while (count < pktids->array_size);
 
-	kfree(array);
-	kfree(pktids);
+	kmem_free(array);
+	kmem_free(pktids);
 }
 
 
@@ -639,7 +639,7 @@ static void brcmf_msgbuf_flowring_worker(struct work_struct *work)
 
 	while ((create = brcmf_msgbuf_dequeue_work(msgbuf))) {
 		brcmf_msgbuf_flowring_create_worker(msgbuf, create);
-		kfree(create);
+		kmem_free(create);
 	}
 }
 
@@ -659,7 +659,7 @@ static u32 brcmf_msgbuf_flowring_create(struct brcmf_msgbuf *msgbuf, int ifidx,
 	flowid = brcmf_flowring_create(msgbuf->flow, eh->h_dest,
 				       skb->priority, ifidx);
 	if (flowid == BRCMF_FLOWRING_INVALID_ID) {
-		kfree(create);
+		kmem_free(create);
 		return flowid;
 	}
 
@@ -1512,16 +1512,16 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 
 fail:
 	if (msgbuf) {
-		kfree(msgbuf->flow_map);
-		kfree(msgbuf->txstatus_done_map);
+		kmem_free(msgbuf->flow_map);
+		kmem_free(msgbuf->txstatus_done_map);
 		brcmf_msgbuf_release_pktids(msgbuf);
-		kfree(msgbuf->flowring_dma_handle);
+		kmem_free(msgbuf->flowring_dma_handle);
 		if (msgbuf->ioctbuf)
 			dma_free_coherent(drvr->bus_if->dev,
 					  BRCMF_TX_IOCTL_MAX_MSG_SIZE,
 					  msgbuf->ioctbuf,
 					  msgbuf->ioctbuf_handle);
-		kfree(msgbuf);
+		kmem_free(msgbuf);
 	}
 	return -ENOMEM;
 }
@@ -1541,10 +1541,10 @@ void brcmf_proto_msgbuf_detach(struct brcmf_pub *drvr)
 						struct brcmf_msgbuf_work_item,
 						queue);
 			list_del(&work->queue);
-			kfree(work);
+			kmem_free(work);
 		}
-		kfree(msgbuf->flow_map);
-		kfree(msgbuf->txstatus_done_map);
+		kmem_free(msgbuf->flow_map);
+		kmem_free(msgbuf->txstatus_done_map);
 		if (msgbuf->txflow_wq)
 			destroy_workqueue(msgbuf->txflow_wq);
 
@@ -1553,8 +1553,8 @@ void brcmf_proto_msgbuf_detach(struct brcmf_pub *drvr)
 				  BRCMF_TX_IOCTL_MAX_MSG_SIZE,
 				  msgbuf->ioctbuf, msgbuf->ioctbuf_handle);
 		brcmf_msgbuf_release_pktids(msgbuf);
-		kfree(msgbuf->flowring_dma_handle);
-		kfree(msgbuf);
+		kmem_free(msgbuf->flowring_dma_handle);
+		kmem_free(msgbuf);
 		drvr->proto->pd = NULL;
 	}
 }

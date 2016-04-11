@@ -296,13 +296,13 @@ static void brcmf_fw_strip_multi_v1(struct nvram_parser *nvp, u16 domain_nr,
 			i++;
 		i++;
 	}
-	kfree(nvp->nvram);
+	kmem_free(nvp->nvram);
 	nvp->nvram = nvram;
 	nvp->nvram_len = j;
 	return;
 
 fail:
-	kfree(nvram);
+	kmem_free(nvram);
 	nvp->nvram_len = 0;
 }
 
@@ -347,12 +347,12 @@ static void brcmf_fw_strip_multi_v2(struct nvram_parser *nvp, u16 domain_nr,
 			i++;
 		i++;
 	}
-	kfree(nvp->nvram);
+	kmem_free(nvp->nvram);
 	nvp->nvram = nvram;
 	nvp->nvram_len = j;
 	return;
 fail:
-	kfree(nvram);
+	kmem_free(nvram);
 	nvp->nvram_len = 0;
 }
 
@@ -383,7 +383,7 @@ static void *brcmf_fw_nvram_strip(const u8 *data, size_t data_len,
 		brcmf_fw_strip_multi_v2(&nvp, domain_nr, bus_nr);
 
 	if (nvp.nvram_len == 0) {
-		kfree(nvp.nvram);
+		kmem_free(nvp.nvram);
 		return NULL;
 	}
 
@@ -406,7 +406,7 @@ static void *brcmf_fw_nvram_strip(const u8 *data, size_t data_len,
 
 void brcmf_fw_nvram_free(void *nvram)
 {
-	kfree(nvram);
+	kmem_free(nvram);
 }
 
 struct brcmf_fw {
@@ -452,14 +452,14 @@ static void brcmf_fw_request_nvram_done(const struct firmware *fw, void *ctx)
 		goto fail;
 
 	fwctx->done(fwctx->dev, fwctx->code, nvram, nvram_length);
-	kfree(fwctx);
+	kmem_free(fwctx);
 	return;
 
 fail:
 	brcmf_dbg(TRACE, "failed: dev=%s\n", dev_name(fwctx->dev));
 	release_firmware(fwctx->code);
 	device_release_driver(fwctx->dev);
-	kfree(fwctx);
+	kmem_free(fwctx);
 }
 
 static void brcmf_fw_request_code_done(const struct firmware *fw, void *ctx)
@@ -474,7 +474,7 @@ static void brcmf_fw_request_code_done(const struct firmware *fw, void *ctx)
 	/* only requested code so done here */
 	if (!(fwctx->flags & BRCMF_FW_REQUEST_NVRAM)) {
 		fwctx->done(fwctx->dev, fw, NULL, 0);
-		kfree(fwctx);
+		kmem_free(fwctx);
 		return;
 	}
 	fwctx->code = fw;
@@ -491,7 +491,7 @@ static void brcmf_fw_request_code_done(const struct firmware *fw, void *ctx)
 fail:
 	brcmf_dbg(TRACE, "failed: dev=%s\n", dev_name(fwctx->dev));
 	device_release_driver(fwctx->dev);
-	kfree(fwctx);
+	kmem_free(fwctx);
 }
 
 int brcmf_fw_get_firmwares_pcie(struct device *dev, u16 flags,

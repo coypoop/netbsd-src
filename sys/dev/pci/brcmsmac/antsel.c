@@ -172,7 +172,7 @@ struct antsel_info *brcms_c_antsel_attach(struct brcms_c_info *wlc)
 
 void brcms_c_antsel_detach(struct antsel_info *asi)
 {
-	kfree(asi);
+	kmem_free(asi);
 }
 
 /*

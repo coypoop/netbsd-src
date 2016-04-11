@@ -519,7 +519,7 @@ ai_attach(struct bcma_bus *pbus)
 		return NULL;
 
 	if (ai_doattach(sii, pbus) == NULL) {
-		kfree(sii);
+		kmem_free(sii);
 		return NULL;
 	}
 
@@ -536,7 +536,7 @@ void ai_detach(struct si_pub *sih)
 	if (sii == NULL)
 		return;
 
-	kfree(sii);
+	kmem_free(sii);
 }
 
 /*

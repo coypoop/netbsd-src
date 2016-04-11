@@ -580,7 +580,7 @@ wlc_phy_attach(struct shared_phy *sh, struct bcma_device *d11core,
 	return &pi->pubpi_ro;
 
 err:
-	kfree(pi);
+	kmem_free(pi);
 	return NULL;
 }
 
@@ -605,7 +605,7 @@ void wlc_phy_detach(struct brcms_phy_pub *pih)
 		if (pi->pi_fptr.detach)
 			(pi->pi_fptr.detach)(pi);
 
-		kfree(pi);
+		kmem_free(pi);
 	}
 }
 

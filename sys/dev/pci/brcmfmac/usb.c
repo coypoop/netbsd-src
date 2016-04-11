@@ -756,7 +756,7 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
 	}
 
 finalize:
-	kfree(tmpbuf);
+	kmem_free(tmpbuf);
 	return ret;
 }
 
@@ -935,7 +935,7 @@ brcmf_usb_dl_writeimage(struct brcmf_usbdev_info *devinfo, u8 *fw, int fwlen)
 	}
 
 fail:
-	kfree(bulkchunk);
+	kmem_free(bulkchunk);
 	brcmf_dbg(USB, "Exit, err=%d\n", err);
 	return err;
 }
@@ -1025,8 +1025,8 @@ static void brcmf_usb_detach(struct brcmf_usbdev_info *devinfo)
 	usb_free_urb(devinfo->ctl_urb);
 	usb_free_urb(devinfo->bulk_urb);
 
-	kfree(devinfo->tx_reqs);
-	kfree(devinfo->rx_reqs);
+	kmem_free(devinfo->tx_reqs);
+	kmem_free(devinfo->rx_reqs);
 }
 
 
@@ -1253,7 +1253,7 @@ static int brcmf_usb_probe_cb(struct brcmf_usbdev_info *devinfo)
 
 fail:
 	/* Release resources in reverse order */
-	kfree(bus);
+	kmem_free(bus);
 	brcmf_usb_detach(devinfo);
 	return ret;
 }
@@ -1266,7 +1266,7 @@ brcmf_usb_disconnect_cb(struct brcmf_usbdev_info *devinfo)
 	brcmf_dbg(USB, "Enter, bus_pub %p\n", devinfo);
 
 	brcmf_detach(devinfo->dev);
-	kfree(devinfo->bus_pub.bus);
+	kmem_free(devinfo->bus_pub.bus);
 	brcmf_usb_detach(devinfo);
 }
 
@@ -1370,7 +1370,7 @@ brcmf_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
 
 fail:
 	mutex_unlock(&devinfo->dev_init_lock);
-	kfree(devinfo);
+	kmem_free(devinfo);
 	usb_set_intfdata(intf, NULL);
 	return ret;
 }
@@ -1392,7 +1392,7 @@ brcmf_usb_disconnect(struct usb_interface *intf)
 			goto done;
 
 		brcmf_usb_disconnect_cb(devinfo);
-		kfree(devinfo);
+		kmem_free(devinfo);
 	}
 done:
 	brcmf_dbg(USB, "Exit\n");

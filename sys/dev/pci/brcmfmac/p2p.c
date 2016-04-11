@@ -745,7 +745,7 @@ static s32 brcmf_p2p_escan(struct brcmf_p2p_info *p2p, u32 num_chans,
 	if (!ret)
 		set_bit(BRCMF_SCAN_STATUS_BUSY, &p2p->cfg->scan_status);
 exit:
-	kfree(memblk);
+	kmem_free(memblk);
 	return ret;
 }
 
@@ -823,7 +823,7 @@ static s32 brcmf_p2p_run_escan(struct brcmf_cfg80211_info *cfg,
 		}
 		err = brcmf_p2p_escan(p2p, num_nodfs, chanspecs, search_state,
 				      P2PAPI_BSSCFG_DEVICE);
-		kfree(chanspecs);
+		kmem_free(chanspecs);
 	}
 exit:
 	if (err)
@@ -1092,7 +1092,7 @@ static s32 brcmf_p2p_act_frm_search(struct brcmf_p2p_info *p2p, u16 channel)
 	}
 	err = brcmf_p2p_escan(p2p, channel_cnt, default_chan_list,
 			      WL_P2P_DISC_ST_SEARCH, P2PAPI_BSSCFG_DEVICE);
-	kfree(default_chan_list);
+	kmem_free(default_chan_list);
 exit:
 	return err;
 }
@@ -1431,7 +1431,7 @@ int brcmf_p2p_notify_action_frame_rx(struct brcmf_if *ifp,
 	wdev = &ifp->vif->wdev;
 	cfg80211_rx_mgmt(wdev, freq, 0, (u8 *)mgmt_frame, mgmt_frame_len, 0);
 
-	kfree(mgmt_frame);
+	kmem_free(mgmt_frame);
 	return 0;
 }
 
@@ -1928,10 +1928,10 @@ static void brcmf_p2p_get_current_chanspec(struct brcmf_p2p_info *p2p,
 						   buf, WL_BSS_INFO_MAX) == 0) {
 				bi = (struct brcmf_bss_info_le *)(buf + 4);
 				*chanspec = le16_to_cpu(bi->chanspec);
-				kfree(buf);
+				kmem_free(buf);
 				return;
 			}
-			kfree(buf);
+			kmem_free(buf);
 		}
 	}
 	/* Use default channel for P2P */

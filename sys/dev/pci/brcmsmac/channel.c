@@ -368,7 +368,7 @@ struct brcms_cm_info *brcms_c_channel_mgr_attach(struct brcms_c_info *wlc)
 
 void brcms_c_channel_mgr_detach(struct brcms_cm_info *wlc_cm)
 {
-	kfree(wlc_cm);
+	kmem_free(wlc_cm);
 }
 
 void

@@ -55,7 +55,7 @@ struct phy_shim_info *wlc_phy_shim_attach(struct brcms_hardware *wlc_hw,
 
 void wlc_phy_shim_detach(struct phy_shim_info *physhim)
 {
-	kfree(physhim);
+	kmem_free(physhim);
 }
 
 struct wlapi_timer *wlapi_init_timer(struct phy_shim_info *physhim,

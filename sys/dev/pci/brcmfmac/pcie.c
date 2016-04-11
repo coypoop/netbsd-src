@@ -1108,7 +1108,7 @@ static void brcmf_pcie_release_ringbuffer(struct device *dev,
 		size = ring->commonring.depth * ring->commonring.item_len;
 		dma_free_coherent(dev, size, dma_buf, ring->dma_handle);
 	}
-	kfree(ring);
+	kmem_free(ring);
 }
 
 
@@ -1121,7 +1121,7 @@ static void brcmf_pcie_release_ringbuffers(struct brcmf_pciedev_info *devinfo)
 					      devinfo->shared.commonrings[i]);
 		devinfo->shared.commonrings[i] = NULL;
 	}
-	kfree(devinfo->shared.flowrings);
+	kmem_free(devinfo->shared.flowrings);
 	devinfo->shared.flowrings = NULL;
 	if (devinfo->idxbuf) {
 		dma_free_coherent(&devinfo->pdev->dev,
@@ -1786,7 +1786,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	bus->msgbuf = kmem_zalloc(sizeof(*bus->msgbuf), KM_SLEEP);
 	if (!bus->msgbuf) {
 		ret = -ENOMEM;
-		kfree(bus);
+		kmem_free(bus);
 		goto fail;
 	}
 
@@ -1815,15 +1815,15 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (ret == 0)
 		return 0;
 fail_bus:
-	kfree(bus->msgbuf);
-	kfree(bus);
+	kmem_free(bus->msgbuf);
+	kmem_free(bus);
 fail:
 	brcmf_err("failed %x:%x\n", pdev->vendor, pdev->device);
 	brcmf_pcie_release_resource(devinfo);
 	if (devinfo->ci)
 		brcmf_chip_detach(devinfo->ci);
-	kfree(pcie_bus_dev);
-	kfree(devinfo);
+	kmem_free(pcie_bus_dev);
+	kmem_free(devinfo);
 	return ret;
 }
 
@@ -1848,10 +1848,10 @@ brcmf_pcie_remove(struct pci_dev *pdev)
 
 	brcmf_detach(&pdev->dev);
 
-	kfree(bus->bus_priv.pcie);
-	kfree(bus->msgbuf->flowrings);
-	kfree(bus->msgbuf);
-	kfree(bus);
+	kmem_free(bus->bus_priv.pcie);
+	kmem_free(bus->msgbuf->flowrings);
+	kmem_free(bus->msgbuf);
+	kmem_free(bus);
 
 	brcmf_pcie_release_irq(devinfo);
 	brcmf_pcie_release_scratchbuffers(devinfo);
@@ -1862,7 +1862,7 @@ brcmf_pcie_remove(struct pci_dev *pdev)
 	if (devinfo->ci)
 		brcmf_chip_detach(devinfo->ci);
 
-	kfree(devinfo);
+	kmem_free(devinfo);
 	dev_set_drvdata(&pdev->dev, NULL);
 }
 

@@ -321,9 +321,9 @@ static void brcms_free(struct brcms_info *wl)
 	for (t = wl->timers; t; t = next) {
 		next = t->next;
 #ifdef DEBUG
-		kfree(t->name);
+		kmem_free(t->name);
 #endif
-		kfree(t);
+		kmem_free(t);
 	}
 }
 
@@ -1538,9 +1538,9 @@ void brcms_free_timer(struct brcms_timer *t)
 	if (wl->timers == t) {
 		wl->timers = wl->timers->next;
 #ifdef DEBUG
-		kfree(t->name);
+		kmem_free(t->name);
 #endif
-		kfree(t);
+		kmem_free(t);
 		return;
 
 	}
@@ -1550,9 +1550,9 @@ void brcms_free_timer(struct brcms_timer *t)
 		if (tmp->next == t) {
 			tmp->next = t->next;
 #ifdef DEBUG
-			kfree(t->name);
+			kmem_free(t->name);
 #endif
-			kfree(t);
+			kmem_free(t);
 			return;
 		}
 		tmp = tmp->next;
@@ -1627,7 +1627,7 @@ int brcms_ucode_init_uint(struct brcms_info *wl, size_t *n_bytes, uint32_t idx)
  */
 void brcms_ucode_free_buf(void *p)
 {
-	kfree(p);
+	kmem_free(p);
 }
 
 /*

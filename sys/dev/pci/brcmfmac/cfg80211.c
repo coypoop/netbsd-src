@@ -991,7 +991,7 @@ brcmf_run_escan(struct brcmf_cfg80211_info *cfg, struct brcmf_if *ifp,
 			brcmf_err("error (%d)\n", err);
 	}
 
-	kfree(params);
+	kmem_free(params);
 exit:
 	return err;
 }
@@ -1895,7 +1895,7 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 
 	err  = brcmf_fil_bsscfg_data_set(ifp, "join", ext_join_params,
 					 join_params_size);
-	kfree(ext_join_params);
+	kmem_free(ext_join_params);
 	if (!err)
 		/* This is it. join command worked, we are done */
 		goto done;
@@ -2826,7 +2826,7 @@ static s32 brcmf_inform_ibss(struct brcmf_cfg80211_info *cfg,
 
 CleanUp:
 
-	kfree(buf);
+	kmem_free(buf);
 
 	brcmf_dbg(TRACE, "Exit\n");
 
@@ -3176,15 +3176,15 @@ brcmf_notify_sched_scan_results(struct brcmf_if *ifp,
 		goto out_err;
 	}
 
-	kfree(ssid);
-	kfree(channel);
-	kfree(request);
+	kmem_free(ssid);
+	kmem_free(channel);
+	kmem_free(request);
 	return 0;
 
 out_err:
-	kfree(ssid);
-	kfree(channel);
-	kfree(request);
+	kmem_free(ssid);
+	kmem_free(channel);
+	kmem_free(request);
 	cfg80211_sched_scan_stopped(wiphy);
 	return err;
 }
@@ -3404,7 +3404,7 @@ static s32 brcmf_config_wowl_pattern(struct brcmf_if *ifp, u8 cmd[4],
 
 	ret = brcmf_fil_iovar_data_set(ifp, "wowl_pattern", buf, bufsize);
 
-	kfree(buf);
+	kmem_free(buf);
 	return ret;
 }
 
@@ -4225,7 +4225,7 @@ s32 brcmf_vif_set_mgmt_ie(struct brcmf_cfg80211_vif *vif, s32 pktflag,
 	}
 
 exit:
-	kfree(iovar_ie_buf);
+	kmem_free(iovar_ie_buf);
 	return err;
 }
 
@@ -4724,7 +4724,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
 
 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
 					KM_SLEEP);
-		kfree(af_params);
+		kmem_free(af_params);
 	} else {
 		brcmf_dbg(TRACE, "Unhandled, fc=%04x!!\n", mgmt->frame_control);
 		brcmf_dbg_hex_dump(true, buf, len, "payload, len=%Zu\n", len);
@@ -4940,7 +4940,7 @@ struct brcmf_cfg80211_vif *brcmf_alloc_vif(struct brcmf_cfg80211_info *cfg,
 void brcmf_free_vif(struct brcmf_cfg80211_vif *vif)
 {
 	list_del(&vif->list);
-	kfree(vif);
+	kmem_free(vif);
 }
 
 void brcmf_cfg80211_free_netdev(struct net_device *ndev)
@@ -5007,10 +5007,10 @@ static void brcmf_clear_assoc_ies(struct brcmf_cfg80211_info *cfg)
 {
 	struct brcmf_cfg80211_connect_info *conn_info = cfg_to_conn(cfg);
 
-	kfree(conn_info->req_ie);
+	kmem_free(conn_info->req_ie);
 	conn_info->req_ie = NULL;
 	conn_info->req_ie_len = 0;
-	kfree(conn_info->resp_ie);
+	kmem_free(conn_info->resp_ie);
 	conn_info->resp_ie = NULL;
 	conn_info->resp_ie_len = 0;
 }
@@ -5124,7 +5124,7 @@ brcmf_bss_roaming_done(struct brcmf_cfg80211_info *cfg,
 	notify_channel = ieee80211_get_channel(wiphy, freq);
 
 done:
-	kfree(buf);
+	kmem_free(buf);
 	cfg80211_roamed(ndev, notify_channel, (u8 *)profile->bssid,
 			conn_info->req_ie, conn_info->req_ie_len,
 			conn_info->resp_ie, conn_info->resp_ie_len, KM_SLEEP);
@@ -5403,15 +5403,15 @@ static void brcmf_register_event_handlers(struct brcmf_cfg80211_info *cfg)
 
 static void brcmf_deinit_priv_mem(struct brcmf_cfg80211_info *cfg)
 {
-	kfree(cfg->conf);
+	kmem_free(cfg->conf);
 	cfg->conf = NULL;
-	kfree(cfg->escan_ioctl_buf);
+	kmem_free(cfg->escan_ioctl_buf);
 	cfg->escan_ioctl_buf = NULL;
-	kfree(cfg->extra_buf);
+	kmem_free(cfg->extra_buf);
 	cfg->extra_buf = NULL;
-	kfree(cfg->wowl.nd);
+	kmem_free(cfg->wowl.nd);
 	cfg->wowl.nd = NULL;
-	kfree(cfg->wowl.nd_info);
+	kmem_free(cfg->wowl.nd_info);
 	cfg->wowl.nd_info = NULL;
 }
 
@@ -5683,7 +5683,7 @@ static int brcmf_construct_chaninfo(struct brcmf_cfg80211_info *cfg,
 	}
 
 fail_pbuf:
-	kfree(pbuf);
+	kmem_free(pbuf);
 	return err;
 }
 
@@ -5736,7 +5736,7 @@ static int brcmf_enable_bw40_2g(struct brcmf_cfg80211_info *cfg)
 					       BRCMF_DCMD_MEDLEN);
 		if (err) {
 			brcmf_err("get chanspecs error (%d)\n", err);
-			kfree(pbuf);
+			kmem_free(pbuf);
 			return err;
 		}
 
@@ -5759,7 +5759,7 @@ static int brcmf_enable_bw40_2g(struct brcmf_cfg80211_info *cfg)
 
 			brcmf_update_bw40_channel_flag(&band->channels[j], &ch);
 		}
-		kfree(pbuf);
+		kmem_free(pbuf);
 	}
 	return err;
 }
@@ -6093,10 +6093,10 @@ static int brcmf_setup_ifmodes(struct wiphy *wiphy, struct brcmf_if *ifp)
 	return 0;
 
 err:
-	kfree(c0_limits);
-	kfree(p2p_limits);
-	kfree(mbss_limits);
-	kfree(combo);
+	kmem_free(c0_limits);
+	kmem_free(p2p_limits);
+	kmem_free(mbss_limits);
+	kmem_free(combo);
 	return -ENOMEM;
 }
 
@@ -6216,7 +6216,7 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
 						 sizeof(__wl_2ghz_channels),
 						 KM_SLEEP);
 			if (!band->channels) {
-				kfree(band);
+				kmem_free(band);
 				return -ENOMEM;
 			}
 
@@ -6233,7 +6233,7 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
 						 sizeof(__wl_5ghz_channels),
 						 KM_SLEEP);
 			if (!band->channels) {
-				kfree(band);
+				kmem_free(band);
 				return -ENOMEM;
 			}
 
@@ -6443,16 +6443,16 @@ static void brcmf_free_wiphy(struct wiphy *wiphy)
 
 	if (wiphy->iface_combinations) {
 		for (i = 0; i < wiphy->n_iface_combinations; i++)
-			kfree(wiphy->iface_combinations[i].limits);
+			kmem_free(wiphy->iface_combinations[i].limits);
 	}
-	kfree(wiphy->iface_combinations);
+	kmem_free(wiphy->iface_combinations);
 	if (wiphy->bands[IEEE80211_BAND_2GHZ]) {
-		kfree(wiphy->bands[IEEE80211_BAND_2GHZ]->channels);
-		kfree(wiphy->bands[IEEE80211_BAND_2GHZ]);
+		kmem_free(wiphy->bands[IEEE80211_BAND_2GHZ]->channels);
+		kmem_free(wiphy->bands[IEEE80211_BAND_2GHZ]);
 	}
 	if (wiphy->bands[IEEE80211_BAND_5GHZ]) {
-		kfree(wiphy->bands[IEEE80211_BAND_5GHZ]->channels);
-		kfree(wiphy->bands[IEEE80211_BAND_5GHZ]);
+		kmem_free(wiphy->bands[IEEE80211_BAND_5GHZ]->channels);
+		kmem_free(wiphy->bands[IEEE80211_BAND_5GHZ]);
 	}
 	wiphy_free(wiphy);
 }

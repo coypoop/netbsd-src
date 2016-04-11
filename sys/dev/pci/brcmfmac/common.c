@@ -248,6 +248,6 @@ int brcmf_mp_device_attach(struct brcmf_pub *drvr)
 
 void brcmf_mp_device_detach(struct brcmf_pub *drvr)
 {
-	kfree(drvr->settings);
+	kmem_free(drvr->settings);
 }
 

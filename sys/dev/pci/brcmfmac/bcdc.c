@@ -380,12 +380,12 @@ int brcmf_proto_bcdc_attach(struct brcmf_pub *drvr)
 	return 0;
 
 fail:
-	kfree(bcdc);
+	kmem_free(bcdc);
 	return -ENOMEM;
 }
 
 void brcmf_proto_bcdc_detach(struct brcmf_pub *drvr)
 {
-	kfree(drvr->proto->pd);
+	kmem_free(drvr->proto->pd);
 	drvr->proto->pd = NULL;
 }

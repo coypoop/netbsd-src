@@ -1090,9 +1090,9 @@ void brcmf_chip_detach(struct brcmf_chip *pub)
 	chip = container_of(pub, struct brcmf_chip_priv, pub);
 	list_for_each_entry_safe(core, tmp, &chip->cores, list) {
 		list_del(&core->list);
-		kfree(core);
+		kmem_free(core);
 	}
-	kfree(chip);
+	kmem_free(chip);
 }
 
 struct brcmf_core *brcmf_chip_get_core(struct brcmf_chip *pub, u16 coreid)

@@ -249,7 +249,7 @@ void brcmf_flowring_delete(struct brcmf_flowring *flow, u8 flowid)
 		skb = skb_dequeue(&ring->skblist);
 	}
 
-	kfree(ring);
+	kmem_free(ring);
 }
 
 
@@ -369,7 +369,7 @@ struct brcmf_flowring *brcmf_flowring_attach(struct device *dev, u16 nrofrings)
 		flow->rings = kcalloc(nrofrings, sizeof(*flow->rings),
 				      KM_SLEEP);
 		if (!flow->rings) {
-			kfree(flow);
+			kmem_free(flow);
 			flow = NULL;
 		}
 	}
@@ -395,10 +395,10 @@ void brcmf_flowring_detach(struct brcmf_flowring *flow)
 	while (search) {
 		remove = search;
 		search = search->next;
-		kfree(remove);
+		kmem_free(remove);
 	}
-	kfree(flow->rings);
-	kfree(flow);
+	kmem_free(flow->rings);
+	kmem_free(flow);
 }
 
 
@@ -467,7 +467,7 @@ void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
 			prev->next = search->next;
 		else
 			flow->tdls_entry = search->next;
-		kfree(search);
+		kmem_free(search);
 		if (flow->tdls_entry == NULL)
 			flow->tdls_active = false;
 	}

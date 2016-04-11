@@ -414,7 +414,7 @@ void brcmf_btcoex_detach(struct brcmf_cfg80211_info *cfg)
 	brcmf_btcoex_boost_wifi(cfg->btcoex, false);
 	brcmf_btcoex_restore_part1(cfg->btcoex);
 
-	kfree(cfg->btcoex);
+	kmem_free(cfg->btcoex);
 	cfg->btcoex = NULL;
 }
 

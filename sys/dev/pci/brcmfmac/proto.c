@@ -61,7 +61,7 @@ int brcmf_proto_attach(struct brcmf_pub *drvr)
 	return 0;
 
 fail:
-	kfree(proto);
+	kmem_free(proto);
 	drvr->proto = NULL;
 	return -ENOMEM;
 }
@@ -75,7 +75,7 @@ void brcmf_proto_detach(struct brcmf_pub *drvr)
 			brcmf_proto_bcdc_detach(drvr);
 		else if (drvr->bus_if->proto_type == BRCMF_PROTO_MSGBUF)
 			brcmf_proto_msgbuf_detach(drvr);
-		kfree(drvr->proto);
+		kmem_free(drvr->proto);
 		drvr->proto = NULL;
 	}
 }

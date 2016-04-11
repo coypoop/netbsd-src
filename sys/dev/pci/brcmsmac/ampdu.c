@@ -279,7 +279,7 @@ struct ampdu_info *brcms_c_ampdu_attach(struct brcms_c_info *wlc)
 
 void brcms_c_ampdu_detach(struct ampdu_info *ampdu)
 {
-	kfree(ampdu);
+	kmem_free(ampdu);
 }
 
 static void brcms_c_scb_ampdu_update_config(struct ampdu_info *ampdu,

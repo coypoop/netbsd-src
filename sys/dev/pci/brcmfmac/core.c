@@ -132,7 +132,7 @@ static void _brcmf_set_multicast_list(struct work_struct *work)
 		cmd_value = cnt ? true : cmd_value;
 	}
 
-	kfree(buf);
+	kmem_free(buf);
 
 	/*
 	 * Now send the allmulti setting.  This is based on the setting in the
@@ -374,7 +374,7 @@ static void brcmf_rxreorder_process_info(struct brcmf_if *ifp, u8 *reorder_data,
 					     &reorder_list);
 		/* add the last packet */
 		__skb_queue_tail(&reorder_list, pkt);
-		kfree(rfi);
+		kmem_free(rfi);
 		ifp->drvr->reorder_flows[flow_id] = NULL;
 		goto netif_rx;
 	}
@@ -895,7 +895,7 @@ static void brcmf_del_if(struct brcmf_pub *drvr, s32 bsscfgidx)
 		 * up the ifp if needed.
 		 */
 		brcmf_p2p_ifp_removed(ifp);
-		kfree(ifp);
+		kmem_free(ifp);
 	}
 }
 
@@ -1260,7 +1260,7 @@ void brcmf_detach(struct device *dev)
 
 	brcmf_debug_detach(drvr);
 	bus_if->drvr = NULL;
-	kfree(drvr);
+	kmem_free(drvr);
 }
 
 s32 brcmf_iovar_data_set(struct device *dev, char *name, void *data, u32 len)

@@ -3204,7 +3204,7 @@ brcmf_sdio_verifymemory(struct brcmf_sdio_dev *sdiodev, u32 ram_addr,
 		address += len;
 	}
 
-	kfree(ram_cmp);
+	kmem_free(ram_cmp);
 
 	return ret;
 }
@@ -4213,9 +4213,9 @@ void brcmf_sdio_remove(struct brcmf_sdio *bus)
 			brcmf_chip_detach(bus->ci);
 		}
 
-		kfree(bus->rxbuf);
-		kfree(bus->hdrbuf);
-		kfree(bus);
+		kmem_free(bus->rxbuf);
+		kmem_free(bus->hdrbuf);
+		kmem_free(bus);
 	}
 
 	brcmf_dbg(TRACE, "Disconnected\n");

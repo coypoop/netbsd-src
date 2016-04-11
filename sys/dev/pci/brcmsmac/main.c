@@ -432,8 +432,8 @@ static void brcms_c_bsscfg_mfree(struct brcms_bss_cfg *cfg)
 	if (cfg == NULL)
 		return;
 
-	kfree(cfg->current_bss);
-	kfree(cfg);
+	kmem_free(cfg->current_bss);
+	kmem_free(cfg);
 }
 
 static void brcms_c_detach_mfree(struct brcms_c_info *wlc)
@@ -442,24 +442,24 @@ static void brcms_c_detach_mfree(struct brcms_c_info *wlc)
 		return;
 
 	brcms_c_bsscfg_mfree(wlc->bsscfg);
-	kfree(wlc->pub);
-	kfree(wlc->modulecb);
-	kfree(wlc->default_bss);
-	kfree(wlc->protection);
-	kfree(wlc->stf);
-	kfree(wlc->bandstate[0]);
+	kmem_free(wlc->pub);
+	kmem_free(wlc->modulecb);
+	kmem_free(wlc->default_bss);
+	kmem_free(wlc->protection);
+	kmem_free(wlc->stf);
+	kmem_free(wlc->bandstate[0]);
 	if (wlc->corestate)
-		kfree(wlc->corestate->macstat_snapshot);
-	kfree(wlc->corestate);
+		kmem_free(wlc->corestate->macstat_snapshot);
+	kmem_free(wlc->corestate);
 	if (wlc->hw)
-		kfree(wlc->hw->bandstate[0]);
-	kfree(wlc->hw);
+		kmem_free(wlc->hw->bandstate[0]);
+	kmem_free(wlc->hw);
 	if (wlc->beacon)
 		dev_kfree_skb_any(wlc->beacon);
 	if (wlc->probe_resp)
 		dev_kfree_skb_any(wlc->probe_resp);
 
-	kfree(wlc);
+	kmem_free(wlc);
 }
 
 static struct brcms_bss_cfg *brcms_c_bsscfg_malloc(uint unit)
@@ -4854,7 +4854,7 @@ static void brcms_b_detach(struct brcms_c_info *wlc)
 	}
 
 	/* Free shared phy state */
-	kfree(wlc_hw->phy_sh);
+	kmem_free(wlc_hw->phy_sh);
 
 	wlc_phy_shim_detach(wlc_hw->physhim);
 

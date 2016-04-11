@@ -1527,7 +1527,7 @@ stop_tone:
 	wlc_lcnphy_rx_gain_override_enable(pi, false);
 
 cal_done:
-	kfree(ptr);
+	kmem_free(ptr);
 	return result;
 }
 
@@ -2843,7 +2843,7 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
 
 cleanup:
 	wlc_lcnphy_tx_iqlo_loopback_cleanup(pi, values_to_save);
-	kfree(values_to_save);
+	kmem_free(values_to_save);
 
 	if (!keep_tone)
 		wlc_lcnphy_stop_tx_tone(pi);
@@ -3689,7 +3689,7 @@ wlc_lcnphy_a1(struct brcms_phy *pi, int cal_type, int num_levels,
 
 	phy_c32 = kmem_alloc(sizeof(uint16_t) * 20, KM_NOSLEEP);
 	if (NULL == phy_c32) {
-		kfree(ptr);
+		kmem_free(ptr);
 		return;
 	}
 	phy_c26 = read_phy_reg(pi, 0x6da);
@@ -3855,8 +3855,8 @@ cleanup:
 	write_phy_reg(pi, 0x4d8, phy_c30);
 	write_radio_reg(pi, RADIO_2064_REG026, phy_c31);
 
-	kfree(phy_c32);
-	kfree(ptr);
+	kmem_free(phy_c32);
+	kmem_free(ptr);
 }
 
 void wlc_lcnphy_get_tx_iqcc(struct brcms_phy *pi, uint16_t *a, uint16_t *b)
@@ -5059,7 +5059,7 @@ void wlc_phy_chanspec_set_lcnphy(struct brcms_phy *pi, uint16_t chanspec)
 
 void wlc_phy_detach_lcnphy(struct brcms_phy *pi)
 {
-	kfree(pi->u.pi_lcnphy);
+	kmem_free(pi->u.pi_lcnphy);
 }
 
 bool wlc_phy_attach_lcnphy(struct brcms_phy *pi)

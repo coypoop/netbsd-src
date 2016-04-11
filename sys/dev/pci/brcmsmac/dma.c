@@ -763,11 +763,11 @@ void dma_detach(struct dma_pub *pub)
 				  (di->rxdpaorig));
 
 	/* free packet pointer vectors */
-	kfree(di->txp);
-	kfree(di->rxp);
+	kmem_free(di->txp);
+	kmem_free(di->rxp);
 
 	/* free our private info structure */
-	kfree(di);
+	kmem_free(di);
 
 }
 
