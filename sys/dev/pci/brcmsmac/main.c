@@ -36,7 +36,7 @@
 #include "ampdu.h"
 #include "mac80211_if.h"
 #include "ucode_loader.h"
-#include "main.h"
+#include <main.h>
 #include "soc.h"
 #include "dma.h"
 #include "debug.h"

@@ -25,7 +25,7 @@
 #include <brcmu_utils.h>
 #include "aiutils.h"
 #include <types.h>
-#include "main.h"
+#include <main.h>
 #include "dma.h"
 #include "soc.h"
 #include "scb.h"

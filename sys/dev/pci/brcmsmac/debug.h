@@ -24,7 +24,7 @@
 #include <net/mac80211.h>
 #endif
 
-#include "main.h"
+#include <main.h>
 #include "mac80211_if.h"
 
 __printf(2, 3)

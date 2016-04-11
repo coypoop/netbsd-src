@@ -20,7 +20,7 @@
 #endif
 
 #include <types.h>
-#include "main.h"
+#include <main.h>
 #include "phy/phy_shim.h"
 #include "antsel.h"
 #include "debug.h"

@@ -21,7 +21,7 @@
 #include "scb.h"
 #include "phy/phy_hal.h"
 #include "antsel.h"
-#include "main.h"
+#include <main.h>
 #include "ampdu.h"
 #include "debug.h"
 #include "brcms_trace_events.h"

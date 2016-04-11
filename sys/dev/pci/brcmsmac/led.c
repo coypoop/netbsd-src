@@ -6,7 +6,7 @@
 
 #include "mac80211_if.h"
 #include "pub.h"
-#include "main.h"
+#include <main.h>
 #include "led.h"
 
 	/* number of leds */

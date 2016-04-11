@@ -24,7 +24,7 @@
 #include <defs.h>
 #include "pub.h"
 #include "phy/phy_hal.h"
-#include "main.h"
+#include <main.h>
 #include "stf.h"
 #include "channel.h"
 #include "mac80211_if.h"
