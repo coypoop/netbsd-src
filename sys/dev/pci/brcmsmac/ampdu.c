@@ -227,7 +227,7 @@ struct ampdu_info *brcms_c_ampdu_attach(struct brcms_c_info *wlc)
 	struct ampdu_info *ampdu;
 	int i;
 
-	ampdu = kzalloc(sizeof(struct ampdu_info), KM_NOSLEEP);
+	ampdu = kmem_zalloc(sizeof(struct ampdu_info), KM_NOSLEEP);
 	if (!ampdu)
 		return NULL;
 

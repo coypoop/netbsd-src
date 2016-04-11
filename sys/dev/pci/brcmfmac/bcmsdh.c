@@ -919,7 +919,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
 #ifdef CONFIG_PM_SLEEP
 static int brcmf_sdiod_freezer_attach(struct brcmf_sdio_dev *sdiodev)
 {
-	sdiodev->freezer = kzalloc(sizeof(*sdiodev->freezer), KM_SLEEP);
+	sdiodev->freezer = kmem_zalloc(sizeof(*sdiodev->freezer), KM_SLEEP);
 	if (!sdiodev->freezer)
 		return -ENOMEM;
 	atomic_set(&sdiodev->freezer->thread_count, 0);
@@ -1144,10 +1144,10 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
 	if (func->num != 2)
 		return -ENODEV;
 
-	bus_if = kzalloc(sizeof(struct brcmf_bus), KM_SLEEP);
+	bus_if = kmem_zalloc(sizeof(struct brcmf_bus), KM_SLEEP);
 	if (!bus_if)
 		return -ENOMEM;
-	sdiodev = kzalloc(sizeof(struct brcmf_sdio_dev), KM_SLEEP);
+	sdiodev = kmem_zalloc(sizeof(struct brcmf_sdio_dev), KM_SLEEP);
 	if (!sdiodev) {
 		kfree(bus_if);
 		return -ENOMEM;

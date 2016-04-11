@@ -213,7 +213,7 @@ static int brcmf_init_nvram_parser(struct nvram_parser *nvp,
 		size = data_len;
 	/* Alloc for extra 0 byte + roundup by 4 + length field */
 	size += 1 + 3 + sizeof(u32);
-	nvp->nvram = kzalloc(size, KM_SLEEP);
+	nvp->nvram = kmem_zalloc(size, KM_SLEEP);
 	if (!nvp->nvram)
 		return -ENOMEM;
 
@@ -241,7 +241,7 @@ static void brcmf_fw_strip_multi_v1(struct nvram_parser *nvp, u16 domain_nr,
 	u8 *nvram;
 	u8 id;
 
-	nvram = kzalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), KM_SLEEP);
+	nvram = kmem_zalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), KM_SLEEP);
 	if (!nvram)
 		goto fail;
 
@@ -320,7 +320,7 @@ static void brcmf_fw_strip_multi_v2(struct nvram_parser *nvp, u16 domain_nr,
 	u32 i, j;
 	u8 *nvram;
 
-	nvram = kzalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), KM_SLEEP);
+	nvram = kmem_zalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), KM_SLEEP);
 	if (!nvram)
 		goto fail;
 
@@ -510,7 +510,7 @@ int brcmf_fw_get_firmwares_pcie(struct device *dev, u16 flags,
 	if ((flags & BRCMF_FW_REQUEST_NVRAM) && !nvram)
 		return -EINVAL;
 
-	fwctx = kzalloc(sizeof(*fwctx), KM_SLEEP);
+	fwctx = kmem_zalloc(sizeof(*fwctx), KM_SLEEP);
 	if (!fwctx)
 		return -ENOMEM;
 

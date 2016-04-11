@@ -2766,7 +2766,7 @@ static int brcmf_sdio_readconsole(struct brcmf_sdio *bus)
 	/* Allocate console buffer (one time only) */
 	if (c->buf == NULL) {
 		c->bufsize = le32_to_cpu(c->log_le.buf_size);
-		c->buf = kmalloc(c->bufsize, KM_NOSLEEP);
+		c->buf = kmem_alloc(c->bufsize, KM_NOSLEEP);
 		if (c->buf == NULL)
 			return -ENOMEM;
 	}
@@ -3178,7 +3178,7 @@ brcmf_sdio_verifymemory(struct brcmf_sdio_dev *sdiodev, u32 ram_addr,
 	/* read back and verify */
 	brcmf_dbg(INFO, "Compare RAM dl & ul at 0x%08x; size=%d\n", ram_addr,
 		  ram_sz);
-	ram_cmp = kmalloc(MEMBLOCK, KM_SLEEP);
+	ram_cmp = kmem_alloc(MEMBLOCK, KM_SLEEP);
 	/* do not proceed while no memory but  */
 	if (!ram_cmp)
 		return true;
@@ -3852,7 +3852,7 @@ brcmf_sdio_probe_attach(struct brcmf_sdio *bus)
 	brcmu_pktq_init(&bus->txq, (PRIOMASK + 1), TXQLEN);
 
 	/* allocate header buffer */
-	bus->hdrbuf = kzalloc(MAX_HDR_READ + bus->head_align, KM_SLEEP);
+	bus->hdrbuf = kmem_zalloc(MAX_HDR_READ + bus->head_align, KM_SLEEP);
 	if (!bus->hdrbuf)
 		return false;
 	/* Locate an appropriately-aligned portion of hdrbuf */
@@ -4034,7 +4034,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
 	brcmf_dbg(TRACE, "Enter\n");
 
 	/* Allocate private bus interface state */
-	bus = kzalloc(sizeof(struct brcmf_sdio), KM_NOSLEEP);
+	bus = kmem_zalloc(sizeof(struct brcmf_sdio), KM_NOSLEEP);
 	if (!bus)
 		goto fail;
 
@@ -4129,7 +4129,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
 		bus->rxblen =
 		    roundup((bus->sdiodev->bus_if->maxctl + SDPCM_HDRLEN),
 			    ALIGNMENT) + bus->head_align;
-		bus->rxbuf = kmalloc(bus->rxblen, KM_NOSLEEP);
+		bus->rxbuf = kmem_alloc(bus->rxblen, KM_NOSLEEP);
 		if (!(bus->rxbuf)) {
 			brcmf_err("rxbuf allocation failed\n");
 			goto fail;

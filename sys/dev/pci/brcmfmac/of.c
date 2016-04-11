@@ -35,7 +35,7 @@ void brcmf_of_probe(struct brcmf_sdio_dev *sdiodev)
 	if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
 		return;
 
-	sdiodev->pdata = devm_kzalloc(dev, sizeof(*sdiodev->pdata), KM_SLEEP);
+	sdiodev->pdata = devm_kmem_zalloc(dev, sizeof(*sdiodev->pdata), KM_SLEEP);
 	if (!sdiodev->pdata)
 		return;
 

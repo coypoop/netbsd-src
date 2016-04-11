@@ -355,7 +355,7 @@ int brcmf_proto_bcdc_attach(struct brcmf_pub *drvr)
 {
 	struct brcmf_bcdc *bcdc;
 
-	bcdc = kzalloc(sizeof(*bcdc), KM_NOSLEEP);
+	bcdc = kmem_zalloc(sizeof(*bcdc), KM_NOSLEEP);
 	if (!bcdc)
 		goto fail;
 

@@ -34,7 +34,7 @@ int brcmf_proto_attach(struct brcmf_pub *drvr)
 
 	brcmf_dbg(TRACE, "Enter\n");
 
-	proto = kzalloc(sizeof(*proto), KM_NOSLEEP);
+	proto = kmem_zalloc(sizeof(*proto), KM_NOSLEEP);
 	if (!proto)
 		goto fail;
 

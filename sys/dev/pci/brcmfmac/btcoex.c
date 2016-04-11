@@ -371,7 +371,7 @@ int brcmf_btcoex_attach(struct brcmf_cfg80211_info *cfg)
 	struct brcmf_btcoex_info *btci = NULL;
 	brcmf_dbg(TRACE, "enter\n");
 
-	btci = kmalloc(sizeof(struct brcmf_btcoex_info), KM_SLEEP);
+	btci = kmem_alloc(sizeof(struct brcmf_btcoex_info), KM_SLEEP);
 	if (!btci)
 		return -ENOMEM;
 

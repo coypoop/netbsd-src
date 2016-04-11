@@ -722,7 +722,7 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
 	if ((!devinfo) || (devinfo->ctl_urb == NULL))
 		return -EINVAL;
 
-	tmpbuf = kmalloc(buflen, KM_NOSLEEP);
+	tmpbuf = kmem_alloc(buflen, KM_NOSLEEP);
 	if (!tmpbuf)
 		return -ENOMEM;
 
@@ -864,7 +864,7 @@ brcmf_usb_dl_writeimage(struct brcmf_usbdev_info *devinfo, u8 *fw, int fwlen)
 
 	brcmf_dbg(USB, "Enter, fw %p, len %d\n", fw, fwlen);
 
-	bulkchunk = kmalloc(TRX_RDL_CHUNK, KM_NOSLEEP);
+	bulkchunk = kmem_alloc(TRX_RDL_CHUNK, KM_NOSLEEP);
 	if (bulkchunk == NULL) {
 		err = -ENOMEM;
 		goto fail;
@@ -1206,7 +1206,7 @@ static int brcmf_usb_probe_cb(struct brcmf_usbdev_info *devinfo)
 	if (!bus_pub)
 		return -ENODEV;
 
-	bus = kzalloc(sizeof(struct brcmf_bus), KM_NOSLEEP);
+	bus = kmem_zalloc(sizeof(struct brcmf_bus), KM_NOSLEEP);
 	if (!bus) {
 		ret = -ENOMEM;
 		goto fail;
@@ -1283,7 +1283,7 @@ brcmf_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
 
 	brcmf_dbg(USB, "Enter 0x%04x:0x%04x\n", id->idVendor, id->idProduct);
 
-	devinfo = kzalloc(sizeof(*devinfo), KM_NOSLEEP);
+	devinfo = kmem_zalloc(sizeof(*devinfo), KM_NOSLEEP);
 	if (devinfo == NULL)
 		return -ENOMEM;
 

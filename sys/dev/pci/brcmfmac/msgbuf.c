@@ -294,7 +294,7 @@ brcmf_msgbuf_init_pktids(u32 nr_array_entries,
 	if (!array)
 		return NULL;
 
-	pktids = kzalloc(sizeof(*pktids), KM_SLEEP);
+	pktids = kmem_zalloc(sizeof(*pktids), KM_SLEEP);
 	if (!pktids) {
 		kfree(array);
 		return NULL;
@@ -652,7 +652,7 @@ static u32 brcmf_msgbuf_flowring_create(struct brcmf_msgbuf *msgbuf, int ifidx,
 	u32 flowid;
 	ulong flags;
 
-	create = kzalloc(sizeof(*create), KM_NOSLEEP);
+	create = kmem_zalloc(sizeof(*create), KM_NOSLEEP);
 	if (create == NULL)
 		return BRCMF_FLOWRING_INVALID_ID;
 
@@ -1415,7 +1415,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 	u32 count;
 
 	if_msgbuf = drvr->bus_if->msgbuf;
-	msgbuf = kzalloc(sizeof(*msgbuf), KM_SLEEP);
+	msgbuf = kmem_zalloc(sizeof(*msgbuf), KM_SLEEP);
 	if (!msgbuf)
 		goto fail;
 
@@ -1427,11 +1427,11 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 	INIT_WORK(&msgbuf->txflow_work, brcmf_msgbuf_txflow_worker);
 	count = BITS_TO_LONGS(if_msgbuf->nrof_flowrings);
 	count = count * sizeof(unsigned long);
-	msgbuf->flow_map = kzalloc(count, KM_SLEEP);
+	msgbuf->flow_map = kmem_zalloc(count, KM_SLEEP);
 	if (!msgbuf->flow_map)
 		goto fail;
 
-	msgbuf->txstatus_done_map = kzalloc(count, KM_SLEEP);
+	msgbuf->txstatus_done_map = kmem_zalloc(count, KM_SLEEP);
 	if (!msgbuf->txstatus_done_map)
 		goto fail;
 
@@ -1461,7 +1461,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 		(struct brcmf_commonring **)if_msgbuf->commonrings;
 	msgbuf->flowrings = (struct brcmf_commonring **)if_msgbuf->flowrings;
 	msgbuf->nrof_flowrings = if_msgbuf->nrof_flowrings;
-	msgbuf->flowring_dma_handle = kzalloc(msgbuf->nrof_flowrings *
+	msgbuf->flowring_dma_handle = kmem_zalloc(msgbuf->nrof_flowrings *
 		sizeof(*msgbuf->flowring_dma_handle), KM_SLEEP);
 	if (!msgbuf->flowring_dma_handle)
 		goto fail;

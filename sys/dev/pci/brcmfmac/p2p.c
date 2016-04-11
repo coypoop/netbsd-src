@@ -644,7 +644,7 @@ static s32 brcmf_p2p_escan(struct brcmf_p2p_info *p2p, u32 num_chans,
 	struct brcmf_scan_params_le *sparams;
 
 	memsize += num_chans * sizeof(__le16);
-	memblk = kzalloc(memsize, KM_SLEEP);
+	memblk = kmem_zalloc(memsize, KM_SLEEP);
 	if (!memblk)
 		return -ENOMEM;
 
@@ -662,7 +662,7 @@ static s32 brcmf_p2p_escan(struct brcmf_p2p_info *p2p, u32 num_chans,
 		/*
 		 * If we in SEARCH STATE, we don't need to set SSID explictly
 		 * because dongle use P2P WILDCARD internally by default, use
-		 * null ssid, which it is already due to kzalloc.
+		 * null ssid, which it is already due to kmem_zalloc.
 		 */
 		break;
 	case WL_P2P_DISC_ST_SCAN:
@@ -1065,7 +1065,7 @@ static s32 brcmf_p2p_act_frm_search(struct brcmf_p2p_info *p2p, u16 channel)
 		channel_cnt = AF_PEER_SEARCH_CNT;
 	else
 		channel_cnt = SOCIAL_CHAN_CNT;
-	default_chan_list = kzalloc(channel_cnt * sizeof(*default_chan_list),
+	default_chan_list = kmem_zalloc(channel_cnt * sizeof(*default_chan_list),
 				    KM_SLEEP);
 	if (default_chan_list == NULL) {
 		brcmf_err("channel list allocation failed\n");
@@ -1409,7 +1409,7 @@ int brcmf_p2p_notify_action_frame_rx(struct brcmf_if *ifp,
 		brcmf_p2p_stop_wait_next_action_frame(cfg);
 	}
 
-	mgmt_frame = kzalloc(offsetof(struct ieee80211_mgmt, u) +
+	mgmt_frame = kmem_zalloc(offsetof(struct ieee80211_mgmt, u) +
 			     mgmt_frame_len, KM_SLEEP);
 	if (!mgmt_frame) {
 		brcmf_err("No memory available for action frame\n");
@@ -1921,7 +1921,7 @@ static void brcmf_p2p_get_current_chanspec(struct brcmf_p2p_info *p2p,
 
 	if (brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSSID, mac_addr,
 				   ETH_ALEN) == 0) {
-		buf = kzalloc(WL_BSS_INFO_MAX, KM_SLEEP);
+		buf = kmem_zalloc(WL_BSS_INFO_MAX, KM_SLEEP);
 		if (buf != NULL) {
 			*(__le32 *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
 			if (brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSS_INFO,

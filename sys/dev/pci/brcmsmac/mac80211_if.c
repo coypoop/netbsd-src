@@ -1462,7 +1462,7 @@ struct brcms_timer *brcms_init_timer(struct brcms_info *wl,
 {
 	struct brcms_timer *t;
 
-	t = kzalloc(sizeof(struct brcms_timer), KM_NOSLEEP);
+	t = kmem_zalloc(sizeof(struct brcms_timer), KM_NOSLEEP);
 	if (!t)
 		return NULL;
 

@@ -1073,7 +1073,7 @@ brcmf_pcie_alloc_dma_and_ring(struct brcmf_pciedev_info *devinfo, u32 ring_id,
 	addr = tcm_ring_phys_addr + BRCMF_RING_LEN_ITEMS_OFFSET;
 	brcmf_pcie_write_tcm16(devinfo, addr, brcmf_ring_itemsize[ring_id]);
 
-	ring = kzalloc(sizeof(*ring), KM_SLEEP);
+	ring = kmem_zalloc(sizeof(*ring), KM_SLEEP);
 	if (!ring) {
 		dma_free_coherent(&devinfo->pdev->dev, size, dma_buf,
 				  dma_handle);
@@ -1759,7 +1759,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		  domain_nr, bus_nr);
 
 	ret = -ENOMEM;
-	devinfo = kzalloc(sizeof(*devinfo), KM_SLEEP);
+	devinfo = kmem_zalloc(sizeof(*devinfo), KM_SLEEP);
 	if (devinfo == NULL)
 		return ret;
 
@@ -1772,18 +1772,18 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		goto fail;
 	}
 
-	pcie_bus_dev = kzalloc(sizeof(*pcie_bus_dev), KM_SLEEP);
+	pcie_bus_dev = kmem_zalloc(sizeof(*pcie_bus_dev), KM_SLEEP);
 	if (pcie_bus_dev == NULL) {
 		ret = -ENOMEM;
 		goto fail;
 	}
 
-	bus = kzalloc(sizeof(*bus), KM_SLEEP);
+	bus = kmem_zalloc(sizeof(*bus), KM_SLEEP);
 	if (!bus) {
 		ret = -ENOMEM;
 		goto fail;
 	}
-	bus->msgbuf = kzalloc(sizeof(*bus->msgbuf), KM_SLEEP);
+	bus->msgbuf = kmem_zalloc(sizeof(*bus->msgbuf), KM_SLEEP);
 	if (!bus->msgbuf) {
 		ret = -ENOMEM;
 		kfree(bus);

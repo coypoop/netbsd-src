@@ -560,7 +560,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	struct si_info *sii = container_of(sih, struct si_info, pub);
 
 	/* allocate private info structure */
-	di = kzalloc(sizeof(struct dma_info), KM_NOSLEEP);
+	di = kmem_zalloc(sizeof(struct dma_info), KM_NOSLEEP);
 	if (di == NULL)
 		return NULL;
 
@@ -651,7 +651,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	/* allocate tx packet pointer vector */
 	if (ntxd) {
 		size = ntxd * sizeof(void *);
-		di->txp = kzalloc(size, KM_NOSLEEP);
+		di->txp = kmem_zalloc(size, KM_NOSLEEP);
 		if (di->txp == NULL)
 			goto fail;
 	}
@@ -659,7 +659,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	/* allocate rx packet pointer vector */
 	if (nrxd) {
 		size = nrxd * sizeof(void *);
-		di->rxp = kzalloc(size, KM_NOSLEEP);
+		di->rxp = kmem_zalloc(size, KM_NOSLEEP);
 		if (di->rxp == NULL)
 			goto fail;
 	}
