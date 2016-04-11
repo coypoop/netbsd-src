@@ -33,7 +33,7 @@
 #include "channel.h"
 #include <scb.h>
 #include <pub.h>
-#include "ucode_loader.h"
+#include <ucode_loader.h>
 #include <mac80211_if.h>
 #include <main.h>
 #include "debug.h"
