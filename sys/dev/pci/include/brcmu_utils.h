@@ -210,10 +210,10 @@ void brcmu_prpkt(const char *msg, struct sk_buff *p0);
 #endif				/* DEBUG */
 
 #ifdef DEBUG
-__printf(3, 4)
+
 void brcmu_dbg_hex_dump(const void *data, size_t size, const char *fmt, ...);
 #else
-__printf(3, 4)
+
 static inline
 void brcmu_dbg_hex_dump(const void *data, size_t size, const char *fmt, ...)
 {

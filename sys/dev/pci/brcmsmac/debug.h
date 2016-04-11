@@ -27,21 +27,21 @@
 #include <main.h>
 #include <mac80211_if.h>
 
-__printf(2, 3)
+
 void __brcms_info(struct device *dev, const char *fmt, ...);
-__printf(2, 3)
+
 void __brcms_warn(struct device *dev, const char *fmt, ...);
-__printf(2, 3)
+
 void __brcms_err(struct device *dev, const char *fmt, ...);
-__printf(2, 3)
+
 void __brcms_crit(struct device *dev, const char *fmt, ...);
 
 #if defined(CONFIG_BRCMDBG) || defined(CONFIG_BRCM_TRACING)
-__printf(4, 5)
+
 void __brcms_dbg(struct device *dev, uint32_t level, const char *func,
 		 const char *fmt, ...);
 #else
-static inline __printf(4, 5)
+
 void __brcms_dbg(struct device *dev, uint32_t level, const char *func,
 		 const char *fmt, ...)
 {
