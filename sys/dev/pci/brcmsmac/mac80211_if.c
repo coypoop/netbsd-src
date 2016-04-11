@@ -32,7 +32,7 @@
 #include <d11.h>
 #include "channel.h"
 #include "scb.h"
-#include "pub.h"
+#include <pub.h>
 #include "ucode_loader.h"
 #include "mac80211_if.h"
 #include <main.h>

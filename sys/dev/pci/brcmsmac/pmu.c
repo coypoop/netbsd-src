@@ -20,7 +20,7 @@
 #include <brcm_hw_ids.h>
 #include <chipcommon.h>
 #include <brcmu_utils.h>
-#include "pub.h"
+#include <pub.h>
 #include "aiutils.h"
 #include "pmu.h"
 #include "soc.h"

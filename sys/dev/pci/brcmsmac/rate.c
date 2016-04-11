@@ -18,7 +18,7 @@
 #include <brcmu_utils.h>
 
 #include <d11.h>
-#include "pub.h"
+#include <pub.h>
 #include "rate.h"
 
 /*
