@@ -38,7 +38,7 @@
 #include "ucode_loader.h"
 #include <main.h>
 #include "soc.h"
-#include "dma.h"
+#include <dma.h>
 #include "debug.h"
 #include "brcms_trace_events.h"
 

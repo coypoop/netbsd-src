@@ -26,7 +26,7 @@
 #include "aiutils.h"
 #include <types.h>
 #include <main.h>
-#include "dma.h"
+#include <dma.h>
 #include "soc.h"
 #include "scb.h"
 #include "ampdu.h"
