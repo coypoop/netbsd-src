@@ -18,7 +18,7 @@
 #define _BRCM_RATE_H_
 
 #include <types.h>
-#include "d11.h"
+#include <d11.h>
 #include "phy/phy_hal.h"
 
 extern const uint8_t rate_info[];
