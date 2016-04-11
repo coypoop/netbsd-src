@@ -210,7 +210,7 @@ brcms_debugfs_add_entry(struct brcms_pub *drvr, const char *fn,
 	if (IS_ERR_OR_NULL(dentry))
 		return -ENOENT;
 
-	entry = devm_kmem_zalloc(dev, sizeof(*entry), KM_SLEEP);
+	entry = devm_kzalloc(dev, sizeof(*entry), KM_SLEEP);
 	if (!entry)
 		return -ENOMEM;
 
