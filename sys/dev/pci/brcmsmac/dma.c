@@ -28,7 +28,7 @@
 #include <main.h>
 #include <dma.h>
 #include "soc.h"
-#include "scb.h"
+#include <scb.h>
 #include "ampdu.h"
 #include "debug.h"
 #include "brcms_trace_events.h"

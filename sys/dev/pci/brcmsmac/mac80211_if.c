@@ -31,7 +31,7 @@
 #include "phy/phy_int.h"
 #include <d11.h>
 #include "channel.h"
-#include "scb.h"
+#include <scb.h>
 #include <pub.h>
 #include "ucode_loader.h"
 #include "mac80211_if.h"
