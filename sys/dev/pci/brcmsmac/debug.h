@@ -25,7 +25,7 @@
 #endif
 
 #include <main.h>
-#include "mac80211_if.h"
+#include <mac80211_if.h>
 
 __printf(2, 3)
 void __brcms_info(struct device *dev, const char *fmt, ...);

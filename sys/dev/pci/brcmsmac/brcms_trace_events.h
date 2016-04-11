@@ -22,7 +22,7 @@
 #include <linux/types.h>
 #include <linux/device.h>
 #include <linux/tracepoint.h>
-#include "mac80211_if.h"
+#include <mac80211_if.h>
 
 #ifndef CONFIG_BRCM_TRACING
 #undef TRACE_EVENT

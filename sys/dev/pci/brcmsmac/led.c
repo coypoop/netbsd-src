@@ -4,7 +4,7 @@
 #include <linux/gpio.h>
 #endif
 
-#include "mac80211_if.h"
+#include <mac80211_if.h>
 #include <pub.h>
 #include <main.h>
 #include "led.h"

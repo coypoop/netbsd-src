@@ -27,7 +27,7 @@
 #include <main.h>
 #include "stf.h"
 #include "channel.h"
-#include "mac80211_if.h"
+#include <mac80211_if.h>
 #include "debug.h"
 
 /* QDB() macro takes a dB value and converts to a quarter dB value */

@@ -18,7 +18,7 @@
 #include <linux/module.h> /* bug in tracepoint.h, it should include this */
 
 #ifndef __CHECKER__
-#include "mac80211_if.h"
+#include <mac80211_if.h>
 #define CREATE_TRACE_POINTS
 #include "brcms_trace_events.h"
 #endif
