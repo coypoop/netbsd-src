@@ -820,7 +820,7 @@ struct brcmf_if *brcmf_add_if(struct brcmf_pub *drvr, s32 bsscfgidx, s32 ifidx,
 	if (!drvr->settings->p2p_enable && is_p2pdev) {
 		/* this is P2P_DEVICE interface */
 		brcmf_dbg(INFO, "allocate non-netdev interface\n");
-		ifp = kzalloc(sizeof(*ifp), GFP_KERNEL);
+		ifp = kzalloc(sizeof(*ifp), KM_SLEEP);
 		if (!ifp)
 			return ERR_PTR(-ENOMEM);
 	} else {

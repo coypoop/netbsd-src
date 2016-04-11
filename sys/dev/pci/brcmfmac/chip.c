@@ -479,7 +479,7 @@ static struct brcmf_core *brcmf_chip_add_core(struct brcmf_chip_priv *ci,
 {
 	struct brcmf_core_priv *core;
 
-	core = kzalloc(sizeof(*core), GFP_KERNEL);
+	core = kzalloc(sizeof(*core), KM_SLEEP);
 	if (!core)
 		return ERR_PTR(-ENOMEM);
 
@@ -1053,7 +1053,7 @@ struct brcmf_chip *brcmf_chip_attach(void *ctx,
 	if (err < 0)
 		return ERR_PTR(-EINVAL);
 
-	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+	chip = kzalloc(sizeof(*chip), KM_SLEEP);
 	if (!chip)
 		return ERR_PTR(-ENOMEM);
 

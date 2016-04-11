@@ -1036,7 +1036,7 @@ brcmf_pcie_init_dmabuffer_for_device(struct brcmf_pciedev_info *devinfo,
 	u64 address;
 
 	ring = dma_alloc_coherent(&devinfo->pdev->dev, size, dma_handle,
-				  GFP_KERNEL);
+				  KM_SLEEP);
 	if (!ring)
 		return NULL;
 
@@ -1073,7 +1073,7 @@ brcmf_pcie_alloc_dma_and_ring(struct brcmf_pciedev_info *devinfo, u32 ring_id,
 	addr = tcm_ring_phys_addr + BRCMF_RING_LEN_ITEMS_OFFSET;
 	brcmf_pcie_write_tcm16(devinfo, addr, brcmf_ring_itemsize[ring_id]);
 
-	ring = kzalloc(sizeof(*ring), GFP_KERNEL);
+	ring = kzalloc(sizeof(*ring), KM_SLEEP);
 	if (!ring) {
 		dma_free_coherent(&devinfo->pdev->dev, size, dma_buf,
 				  dma_handle);
@@ -1160,7 +1160,7 @@ static int brcmf_pcie_init_ringbuffers(struct brcmf_pciedev_info *devinfo)
 			devinfo->dma_idx_sz * 2;
 		devinfo->idxbuf = dma_alloc_coherent(&devinfo->pdev->dev, bufsz,
 						     &devinfo->idxbuf_dmahandle,
-						     GFP_KERNEL);
+						     KM_SLEEP);
 		if (!devinfo->idxbuf)
 			devinfo->dma_idx_sz = 0;
 	}
@@ -1247,7 +1247,7 @@ static int brcmf_pcie_init_ringbuffers(struct brcmf_pciedev_info *devinfo)
 	devinfo->shared.nrof_flowrings =
 			max_sub_queues - BRCMF_NROF_H2D_COMMON_MSGRINGS;
 	rings = kcalloc(devinfo->shared.nrof_flowrings, sizeof(*ring),
-			GFP_KERNEL);
+			KM_SLEEP);
 	if (!rings)
 		goto fail;
 
@@ -1303,7 +1303,7 @@ static int brcmf_pcie_init_scratchbuffers(struct brcmf_pciedev_info *devinfo)
 
 	devinfo->shared.scratch = dma_alloc_coherent(&devinfo->pdev->dev,
 		BRCMF_DMA_D2H_SCRATCH_BUF_LEN,
-		&devinfo->shared.scratch_dmahandle, GFP_KERNEL);
+		&devinfo->shared.scratch_dmahandle, KM_SLEEP);
 	if (!devinfo->shared.scratch)
 		goto fail;
 
@@ -1320,7 +1320,7 @@ static int brcmf_pcie_init_scratchbuffers(struct brcmf_pciedev_info *devinfo)
 
 	devinfo->shared.ringupd = dma_alloc_coherent(&devinfo->pdev->dev,
 		BRCMF_DMA_D2H_RINGUPD_BUF_LEN,
-		&devinfo->shared.ringupd_dmahandle, GFP_KERNEL);
+		&devinfo->shared.ringupd_dmahandle, KM_SLEEP);
 	if (!devinfo->shared.ringupd)
 		goto fail;
 
@@ -1719,7 +1719,7 @@ static void brcmf_pcie_setup(struct device *dev, const struct firmware *fw,
 				&devinfo->shared.commonrings[i]->commonring;
 
 	flowrings = kcalloc(devinfo->shared.nrof_flowrings, sizeof(*flowrings),
-			    GFP_KERNEL);
+			    KM_SLEEP);
 	if (!flowrings)
 		goto fail;
 
@@ -1759,7 +1759,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		  domain_nr, bus_nr);
 
 	ret = -ENOMEM;
-	devinfo = kzalloc(sizeof(*devinfo), GFP_KERNEL);
+	devinfo = kzalloc(sizeof(*devinfo), KM_SLEEP);
 	if (devinfo == NULL)
 		return ret;
 
@@ -1772,18 +1772,18 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		goto fail;
 	}
 
-	pcie_bus_dev = kzalloc(sizeof(*pcie_bus_dev), GFP_KERNEL);
+	pcie_bus_dev = kzalloc(sizeof(*pcie_bus_dev), KM_SLEEP);
 	if (pcie_bus_dev == NULL) {
 		ret = -ENOMEM;
 		goto fail;
 	}
 
-	bus = kzalloc(sizeof(*bus), GFP_KERNEL);
+	bus = kzalloc(sizeof(*bus), KM_SLEEP);
 	if (!bus) {
 		ret = -ENOMEM;
 		goto fail;
 	}
-	bus->msgbuf = kzalloc(sizeof(*bus->msgbuf), GFP_KERNEL);
+	bus->msgbuf = kzalloc(sizeof(*bus->msgbuf), KM_SLEEP);
 	if (!bus->msgbuf) {
 		ret = -ENOMEM;
 		kfree(bus);

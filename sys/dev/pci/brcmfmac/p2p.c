@@ -644,7 +644,7 @@ static s32 brcmf_p2p_escan(struct brcmf_p2p_info *p2p, u32 num_chans,
 	struct brcmf_scan_params_le *sparams;
 
 	memsize += num_chans * sizeof(__le16);
-	memblk = kzalloc(memsize, GFP_KERNEL);
+	memblk = kzalloc(memsize, KM_SLEEP);
 	if (!memblk)
 		return -ENOMEM;
 
@@ -781,7 +781,7 @@ static s32 brcmf_p2p_run_escan(struct brcmf_cfg80211_info *cfg,
 
 	if (request->n_channels) {
 		chanspecs = kcalloc(request->n_channels, sizeof(*chanspecs),
-				    GFP_KERNEL);
+				    KM_SLEEP);
 		if (!chanspecs) {
 			err = -ENOMEM;
 			goto exit;
@@ -985,7 +985,7 @@ int brcmf_p2p_remain_on_channel(struct wiphy *wiphy, struct wireless_dev *wdev,
 
 	memcpy(&p2p->remain_on_channel, channel, sizeof(*channel));
 	*cookie = p2p->remain_on_channel_cookie;
-	cfg80211_ready_on_channel(wdev, *cookie, channel, duration, GFP_KERNEL);
+	cfg80211_ready_on_channel(wdev, *cookie, channel, duration, KM_SLEEP);
 
 exit:
 	return err;
@@ -1021,7 +1021,7 @@ int brcmf_p2p_notify_listen_complete(struct brcmf_if *ifp,
 		cfg80211_remain_on_channel_expired(&ifp->vif->wdev,
 						   p2p->remain_on_channel_cookie,
 						   &p2p->remain_on_channel,
-						   GFP_KERNEL);
+						   KM_SLEEP);
 	}
 	return 0;
 }
@@ -1066,7 +1066,7 @@ static s32 brcmf_p2p_act_frm_search(struct brcmf_p2p_info *p2p, u16 channel)
 	else
 		channel_cnt = SOCIAL_CHAN_CNT;
 	default_chan_list = kzalloc(channel_cnt * sizeof(*default_chan_list),
-				    GFP_KERNEL);
+				    KM_SLEEP);
 	if (default_chan_list == NULL) {
 		brcmf_err("channel list allocation failed\n");
 		err = -ENOMEM;
@@ -1410,7 +1410,7 @@ int brcmf_p2p_notify_action_frame_rx(struct brcmf_if *ifp,
 	}
 
 	mgmt_frame = kzalloc(offsetof(struct ieee80211_mgmt, u) +
-			     mgmt_frame_len, GFP_KERNEL);
+			     mgmt_frame_len, KM_SLEEP);
 	if (!mgmt_frame) {
 		brcmf_err("No memory available for action frame\n");
 		return -ENOMEM;
@@ -1921,7 +1921,7 @@ static void brcmf_p2p_get_current_chanspec(struct brcmf_p2p_info *p2p,
 
 	if (brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSSID, mac_addr,
 				   ETH_ALEN) == 0) {
-		buf = kzalloc(WL_BSS_INFO_MAX, GFP_KERNEL);
+		buf = kzalloc(WL_BSS_INFO_MAX, KM_SLEEP);
 		if (buf != NULL) {
 			*(__le32 *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
 			if (brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSS_INFO,

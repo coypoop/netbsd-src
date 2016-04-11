@@ -2119,7 +2119,7 @@ int brcmf_fws_init(struct brcmf_pub *drvr)
 	int rc;
 	u32 mode;
 
-	drvr->fws = kzalloc(sizeof(*(drvr->fws)), GFP_KERNEL);
+	drvr->fws = kzalloc(sizeof(*(drvr->fws)), KM_SLEEP);
 	if (!drvr->fws) {
 		rc = -ENOMEM;
 		goto fail;

@@ -3178,7 +3178,7 @@ brcmf_sdio_verifymemory(struct brcmf_sdio_dev *sdiodev, u32 ram_addr,
 	/* read back and verify */
 	brcmf_dbg(INFO, "Compare RAM dl & ul at 0x%08x; size=%d\n", ram_addr,
 		  ram_sz);
-	ram_cmp = kmalloc(MEMBLOCK, GFP_KERNEL);
+	ram_cmp = kmalloc(MEMBLOCK, KM_SLEEP);
 	/* do not proceed while no memory but  */
 	if (!ram_cmp)
 		return true;
@@ -3852,7 +3852,7 @@ brcmf_sdio_probe_attach(struct brcmf_sdio *bus)
 	brcmu_pktq_init(&bus->txq, (PRIOMASK + 1), TXQLEN);
 
 	/* allocate header buffer */
-	bus->hdrbuf = kzalloc(MAX_HDR_READ + bus->head_align, GFP_KERNEL);
+	bus->hdrbuf = kzalloc(MAX_HDR_READ + bus->head_align, KM_SLEEP);
 	if (!bus->hdrbuf)
 		return false;
 	/* Locate an appropriately-aligned portion of hdrbuf */

@@ -972,7 +972,7 @@ brcmf_run_escan(struct brcmf_cfg80211_info *cfg, struct brcmf_if *ifp,
 		params_size += sizeof(struct brcmf_ssid_le) * request->n_ssids;
 	}
 
-	params = kzalloc(params_size, GFP_KERNEL);
+	params = kzalloc(params_size, KM_SLEEP);
 	if (!params) {
 		err = -ENOMEM;
 		goto exit;
@@ -1280,7 +1280,7 @@ static void brcmf_link_down(struct brcmf_cfg80211_vif *vif, u16 reason)
 		if ((vif->wdev.iftype == NL80211_IFTYPE_STATION) ||
 		    (vif->wdev.iftype == NL80211_IFTYPE_P2P_CLIENT))
 			cfg80211_disconnected(vif->wdev.netdev, reason, NULL, 0,
-					      true, GFP_KERNEL);
+					      true, KM_SLEEP);
 	}
 	clear_bit(BRCMF_VIF_STATUS_CONNECTING, &vif->sme_state);
 	clear_bit(BRCMF_SCAN_STATUS_SUPPRESS, &cfg->scan_status);
@@ -1846,7 +1846,7 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 		offsetof(struct brcmf_assoc_params_le, chanspec_list);
 	if (cfg->channel)
 		join_params_size += sizeof(u16);
-	ext_join_params = kzalloc(join_params_size, GFP_KERNEL);
+	ext_join_params = kzalloc(join_params_size, KM_SLEEP);
 	if (ext_join_params == NULL) {
 		err = -ENOMEM;
 		goto done;
@@ -1944,7 +1944,7 @@ brcmf_cfg80211_disconnect(struct wiphy *wiphy, struct net_device *ndev,
 
 	clear_bit(BRCMF_VIF_STATUS_CONNECTED, &ifp->vif->sme_state);
 	clear_bit(BRCMF_VIF_STATUS_CONNECTING, &ifp->vif->sme_state);
-	cfg80211_disconnected(ndev, reason_code, NULL, 0, true, GFP_KERNEL);
+	cfg80211_disconnected(ndev, reason_code, NULL, 0, true, KM_SLEEP);
 
 	memcpy(&scbval.ea, &profile->bssid, ETH_ALEN);
 	scbval.val = cpu_to_le32(reason_code);
@@ -2408,7 +2408,7 @@ static void brcmf_fill_bss_param(struct brcmf_if *ifp, struct station_info *si)
 	u16 capability;
 	int err;
 
-	buf = kzalloc(WL_BSS_INFO_MAX, GFP_KERNEL);
+	buf = kzalloc(WL_BSS_INFO_MAX, KM_SLEEP);
 	if (!buf)
 		return;
 
@@ -2708,7 +2708,7 @@ static s32 brcmf_inform_single_bss(struct brcmf_cfg80211_info *cfg,
 				  0, notify_capability,
 				  notify_interval, notify_ie,
 				  notify_ielen, notify_signal,
-				  GFP_KERNEL);
+				  KM_SLEEP);
 
 	if (!bss)
 		return -ENOMEM;
@@ -2771,7 +2771,7 @@ static s32 brcmf_inform_ibss(struct brcmf_cfg80211_info *cfg,
 
 	brcmf_dbg(TRACE, "Enter\n");
 
-	buf = kzalloc(WL_BSS_INFO_MAX, GFP_KERNEL);
+	buf = kzalloc(WL_BSS_INFO_MAX, KM_SLEEP);
 	if (buf == NULL) {
 		err = -ENOMEM;
 		goto CleanUp;
@@ -2815,7 +2815,7 @@ static s32 brcmf_inform_ibss(struct brcmf_cfg80211_info *cfg,
 				  CFG80211_BSS_FTYPE_UNKNOWN, bssid, 0,
 				  notify_capability, notify_interval,
 				  notify_ie, notify_ielen, notify_signal,
-				  GFP_KERNEL);
+				  KM_SLEEP);
 
 	if (!bss) {
 		err = -ENOMEM;
@@ -3112,9 +3112,9 @@ brcmf_notify_sched_scan_results(struct brcmf_if *ifp,
 	if (result_count > 0) {
 		int i;
 
-		request = kzalloc(sizeof(*request), GFP_KERNEL);
-		ssid = kcalloc(result_count, sizeof(*ssid), GFP_KERNEL);
-		channel = kcalloc(result_count, sizeof(*channel), GFP_KERNEL);
+		request = kzalloc(sizeof(*request), KM_SLEEP);
+		ssid = kcalloc(result_count, sizeof(*ssid), KM_SLEEP);
+		channel = kcalloc(result_count, sizeof(*channel), KM_SLEEP);
 		if (!request || !ssid || !channel) {
 			err = -ENOMEM;
 			goto out_err;
@@ -3385,7 +3385,7 @@ static s32 brcmf_config_wowl_pattern(struct brcmf_if *ifp, u8 cmd[4],
 	patternoffset = sizeof(*filter) - sizeof(filter->cmd) + masksize;
 
 	bufsize = sizeof(*filter) + patternsize + masksize;
-	buf = kzalloc(bufsize, GFP_KERNEL);
+	buf = kzalloc(bufsize, KM_SLEEP);
 	if (!buf)
 		return -ENOMEM;
 	filter = (struct brcmf_fil_wowl_pattern_le *)buf;
@@ -3513,7 +3513,7 @@ static void brcmf_report_wowl_wakeind(struct wiphy *wiphy, struct brcmf_if *ifp)
 	} else {
 		wakeup = NULL;
 	}
-	cfg80211_report_wowlan_wakeup(&ifp->vif->wdev, wakeup, GFP_KERNEL);
+	cfg80211_report_wowlan_wakeup(&ifp->vif->wdev, wakeup, KM_SLEEP);
 }
 
 #else
@@ -4095,7 +4095,7 @@ s32 brcmf_vif_set_mgmt_ie(struct brcmf_cfg80211_vif *vif, s32 pktflag,
 
 	brcmf_dbg(TRACE, "bsscfgidx %d, pktflag : 0x%02X\n", ifp->bsscfgidx,
 		  pktflag);
-	iovar_ie_buf = kzalloc(WL_EXTRA_BUF_MAX, GFP_KERNEL);
+	iovar_ie_buf = kzalloc(WL_EXTRA_BUF_MAX, KM_SLEEP);
 	if (!iovar_ie_buf)
 		return -ENOMEM;
 	curr_ie_buf = iovar_ie_buf;
@@ -4686,9 +4686,9 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
 					    &buf[ie_offset],
 					    ie_len);
 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, true,
-					GFP_KERNEL);
+					KM_SLEEP);
 	} else if (ieee80211_is_action(mgmt->frame_control)) {
-		af_params = kzalloc(sizeof(*af_params), GFP_KERNEL);
+		af_params = kzalloc(sizeof(*af_params), KM_SLEEP);
 		if (af_params == NULL) {
 			brcmf_err("unable to allocate frame\n");
 			err = -ENOMEM;
@@ -4723,7 +4723,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
 						  af_params);
 
 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
-					GFP_KERNEL);
+					KM_SLEEP);
 		kfree(af_params);
 	} else {
 		brcmf_dbg(TRACE, "Unhandled, fc=%04x!!\n", mgmt->frame_control);
@@ -4911,7 +4911,7 @@ struct brcmf_cfg80211_vif *brcmf_alloc_vif(struct brcmf_cfg80211_info *cfg,
 
 	brcmf_dbg(TRACE, "allocating virtual interface (size=%zu)\n",
 		  sizeof(*vif));
-	vif = kzalloc(sizeof(*vif), GFP_KERNEL);
+	vif = kzalloc(sizeof(*vif), KM_SLEEP);
 	if (!vif)
 		return ERR_PTR(-ENOMEM);
 
@@ -5047,7 +5047,7 @@ static s32 brcmf_get_assoc_ies(struct brcmf_cfg80211_info *cfg,
 		conn_info->req_ie_len = req_len;
 		conn_info->req_ie =
 		    kmemdup(cfg->extra_buf, conn_info->req_ie_len,
-			    GFP_KERNEL);
+			    KM_SLEEP);
 	} else {
 		conn_info->req_ie_len = 0;
 		conn_info->req_ie = NULL;
@@ -5063,7 +5063,7 @@ static s32 brcmf_get_assoc_ies(struct brcmf_cfg80211_info *cfg,
 		conn_info->resp_ie_len = resp_len;
 		conn_info->resp_ie =
 		    kmemdup(cfg->extra_buf, conn_info->resp_ie_len,
-			    GFP_KERNEL);
+			    KM_SLEEP);
 	} else {
 		conn_info->resp_ie_len = 0;
 		conn_info->resp_ie = NULL;
@@ -5097,7 +5097,7 @@ brcmf_bss_roaming_done(struct brcmf_cfg80211_info *cfg,
 	memcpy(profile->bssid, e->addr, ETH_ALEN);
 	brcmf_update_bss_info(cfg, ifp);
 
-	buf = kzalloc(WL_BSS_INFO_MAX, GFP_KERNEL);
+	buf = kzalloc(WL_BSS_INFO_MAX, KM_SLEEP);
 	if (buf == NULL) {
 		err = -ENOMEM;
 		goto done;
@@ -5127,7 +5127,7 @@ done:
 	kfree(buf);
 	cfg80211_roamed(ndev, notify_channel, (u8 *)profile->bssid,
 			conn_info->req_ie, conn_info->req_ie_len,
-			conn_info->resp_ie, conn_info->resp_ie_len, GFP_KERNEL);
+			conn_info->resp_ie, conn_info->resp_ie_len, KM_SLEEP);
 	brcmf_dbg(CONN, "Report roaming result\n");
 
 	set_bit(BRCMF_VIF_STATUS_CONNECTED, &ifp->vif->sme_state);
@@ -5163,7 +5163,7 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
 					conn_info->resp_ie_len,
 					completed ? WLAN_STATUS_SUCCESS :
 						    WLAN_STATUS_AUTH_TIMEOUT,
-					GFP_KERNEL);
+					KM_SLEEP);
 		brcmf_dbg(CONN, "Report connect result - connection %s\n",
 			  completed ? "succeeded" : "failed");
 	}
@@ -5203,11 +5203,11 @@ brcmf_notify_connect_status_ap(struct brcmf_cfg80211_info *cfg,
 		sinfo.assoc_req_ies_len = e->datalen;
 		generation++;
 		sinfo.generation = generation;
-		cfg80211_new_sta(ndev, e->addr, &sinfo, GFP_KERNEL);
+		cfg80211_new_sta(ndev, e->addr, &sinfo, KM_SLEEP);
 	} else if ((event == BRCMF_E_DISASSOC_IND) ||
 		   (event == BRCMF_E_DEAUTH_IND) ||
 		   (event == BRCMF_E_DEAUTH)) {
-		cfg80211_del_sta(ndev, e->addr, GFP_KERNEL);
+		cfg80211_del_sta(ndev, e->addr, KM_SLEEP);
 	}
 	return 0;
 }
@@ -5237,7 +5237,7 @@ brcmf_notify_connect_status(struct brcmf_if *ifp,
 			brcmf_inform_ibss(cfg, ndev, e->addr);
 			chan = ieee80211_get_channel(cfg->wiphy, cfg->channel);
 			memcpy(profile->bssid, e->addr, ETH_ALEN);
-			cfg80211_ibss_joined(ndev, e->addr, chan, GFP_KERNEL);
+			cfg80211_ibss_joined(ndev, e->addr, chan, KM_SLEEP);
 			clear_bit(BRCMF_VIF_STATUS_CONNECTING,
 				  &ifp->vif->sme_state);
 			set_bit(BRCMF_VIF_STATUS_CONNECTED,
@@ -5298,7 +5298,7 @@ brcmf_notify_mic_status(struct brcmf_if *ifp,
 		key_type = NL80211_KEYTYPE_PAIRWISE;
 
 	cfg80211_michael_mic_failure(ifp->ndev, (u8 *)&e->addr, key_type, -1,
-				     NULL, GFP_KERNEL);
+				     NULL, KM_SLEEP);
 
 	return 0;
 }
@@ -5417,21 +5417,21 @@ static void brcmf_deinit_priv_mem(struct brcmf_cfg80211_info *cfg)
 
 static s32 brcmf_init_priv_mem(struct brcmf_cfg80211_info *cfg)
 {
-	cfg->conf = kzalloc(sizeof(*cfg->conf), GFP_KERNEL);
+	cfg->conf = kzalloc(sizeof(*cfg->conf), KM_SLEEP);
 	if (!cfg->conf)
 		goto init_priv_mem_out;
-	cfg->escan_ioctl_buf = kzalloc(BRCMF_DCMD_MEDLEN, GFP_KERNEL);
+	cfg->escan_ioctl_buf = kzalloc(BRCMF_DCMD_MEDLEN, KM_SLEEP);
 	if (!cfg->escan_ioctl_buf)
 		goto init_priv_mem_out;
-	cfg->extra_buf = kzalloc(WL_EXTRA_BUF_MAX, GFP_KERNEL);
+	cfg->extra_buf = kzalloc(WL_EXTRA_BUF_MAX, KM_SLEEP);
 	if (!cfg->extra_buf)
 		goto init_priv_mem_out;
-	cfg->wowl.nd = kzalloc(sizeof(*cfg->wowl.nd) + sizeof(u32), GFP_KERNEL);
+	cfg->wowl.nd = kzalloc(sizeof(*cfg->wowl.nd) + sizeof(u32), KM_SLEEP);
 	if (!cfg->wowl.nd)
 		goto init_priv_mem_out;
 	cfg->wowl.nd_info = kzalloc(sizeof(*cfg->wowl.nd_info) +
 				    sizeof(struct cfg80211_wowlan_nd_match *),
-				    GFP_KERNEL);
+				    KM_SLEEP);
 	if (!cfg->wowl.nd_info)
 		goto init_priv_mem_out;
 
@@ -5593,7 +5593,7 @@ static int brcmf_construct_chaninfo(struct brcmf_cfg80211_info *cfg,
 	u32 chaninfo;
 	u32 index;
 
-	pbuf = kzalloc(BRCMF_DCMD_MEDLEN, GFP_KERNEL);
+	pbuf = kzalloc(BRCMF_DCMD_MEDLEN, KM_SLEEP);
 
 	if (pbuf == NULL)
 		return -ENOMEM;
@@ -5718,7 +5718,7 @@ static int brcmf_enable_bw40_2g(struct brcmf_cfg80211_info *cfg)
 
 	if (!err) {
 		/* update channel info in 2G band */
-		pbuf = kzalloc(BRCMF_DCMD_MEDLEN, GFP_KERNEL);
+		pbuf = kzalloc(BRCMF_DCMD_MEDLEN, KM_SLEEP);
 
 		if (pbuf == NULL)
 			return -ENOMEM;
@@ -6013,22 +6013,22 @@ static int brcmf_setup_ifmodes(struct wiphy *wiphy, struct brcmf_if *ifp)
 	p2p = brcmf_feat_is_enabled(ifp, BRCMF_FEAT_P2P);
 
 	n_combos = 1 + !!p2p + !!mbss;
-	combo = kcalloc(n_combos, sizeof(*combo), GFP_KERNEL);
+	combo = kcalloc(n_combos, sizeof(*combo), KM_SLEEP);
 	if (!combo)
 		goto err;
 
-	c0_limits = kcalloc(p2p ? 3 : 2, sizeof(*c0_limits), GFP_KERNEL);
+	c0_limits = kcalloc(p2p ? 3 : 2, sizeof(*c0_limits), KM_SLEEP);
 	if (!c0_limits)
 		goto err;
 
 	if (p2p) {
-		p2p_limits = kcalloc(4, sizeof(*p2p_limits), GFP_KERNEL);
+		p2p_limits = kcalloc(4, sizeof(*p2p_limits), KM_SLEEP);
 		if (!p2p_limits)
 			goto err;
 	}
 
 	if (mbss) {
-		mbss_limits = kcalloc(1, sizeof(*mbss_limits), GFP_KERNEL);
+		mbss_limits = kcalloc(1, sizeof(*mbss_limits), KM_SLEEP);
 		if (!mbss_limits)
 			goto err;
 	}
@@ -6208,13 +6208,13 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
 	for (i = 1; i <= n_bands && i < ARRAY_SIZE(bandlist); i++) {
 		if (bandlist[i] == cpu_to_le32(WLC_BAND_2G)) {
 			band = kmemdup(&__wl_band_2ghz, sizeof(__wl_band_2ghz),
-				       GFP_KERNEL);
+				       KM_SLEEP);
 			if (!band)
 				return -ENOMEM;
 
 			band->channels = kmemdup(&__wl_2ghz_channels,
 						 sizeof(__wl_2ghz_channels),
-						 GFP_KERNEL);
+						 KM_SLEEP);
 			if (!band->channels) {
 				kfree(band);
 				return -ENOMEM;
@@ -6225,13 +6225,13 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
 		}
 		if (bandlist[i] == cpu_to_le32(WLC_BAND_5G)) {
 			band = kmemdup(&__wl_band_5ghz, sizeof(__wl_band_5ghz),
-				       GFP_KERNEL);
+				       KM_SLEEP);
 			if (!band)
 				return -ENOMEM;
 
 			band->channels = kmemdup(&__wl_5ghz_channels,
 						 sizeof(__wl_5ghz_channels),
-						 GFP_KERNEL);
+						 KM_SLEEP);
 			if (!band->channels) {
 				kfree(band);
 				return -ENOMEM;

@@ -357,7 +357,7 @@ struct brcmf_flowring *brcmf_flowring_attach(struct device *dev, u16 nrofrings)
 	struct brcmf_flowring *flow;
 	u32 i;
 
-	flow = kzalloc(sizeof(*flow), GFP_KERNEL);
+	flow = kzalloc(sizeof(*flow), KM_SLEEP);
 	if (flow) {
 		flow->dev = dev;
 		flow->nrofrings = nrofrings;
@@ -367,7 +367,7 @@ struct brcmf_flowring *brcmf_flowring_attach(struct device *dev, u16 nrofrings)
 		for (i = 0; i < ARRAY_SIZE(flow->hash); i++)
 			flow->hash[i].ifidx = BRCMF_FLOWRING_INVALID_IFIDX;
 		flow->rings = kcalloc(nrofrings, sizeof(*flow->rings),
-				      GFP_KERNEL);
+				      KM_SLEEP);
 		if (!flow->rings) {
 			kfree(flow);
 			flow = NULL;

@@ -355,7 +355,7 @@ idle:
 	btci->bt_state = BRCMF_BT_DHCP_IDLE;
 	btci->timer_on = false;
 	brcmf_btcoex_boost_wifi(btci, false);
-	cfg80211_crit_proto_stopped(&btci->vif->wdev, GFP_KERNEL);
+	cfg80211_crit_proto_stopped(&btci->vif->wdev, KM_SLEEP);
 	brcmf_btcoex_restore_part1(btci);
 	btci->vif = NULL;
 }
@@ -371,7 +371,7 @@ int brcmf_btcoex_attach(struct brcmf_cfg80211_info *cfg)
 	struct brcmf_btcoex_info *btci = NULL;
 	brcmf_dbg(TRACE, "enter\n");
 
-	btci = kmalloc(sizeof(struct brcmf_btcoex_info), GFP_KERNEL);
+	btci = kmalloc(sizeof(struct brcmf_btcoex_info), KM_SLEEP);
 	if (!btci)
 		return -ENOMEM;
 

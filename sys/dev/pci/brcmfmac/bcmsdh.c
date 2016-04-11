@@ -907,7 +907,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
 	WARN_ON(nents > sdiodev->max_segment_count);
 
 	brcmf_dbg(TRACE, "nents=%d\n", nents);
-	err = sg_alloc_table(&sdiodev->sgtable, nents, GFP_KERNEL);
+	err = sg_alloc_table(&sdiodev->sgtable, nents, KM_SLEEP);
 	if (err < 0) {
 		brcmf_err("allocation failed: disable scatter-gather");
 		sdiodev->sg_support = false;
@@ -919,7 +919,7 @@ void brcmf_sdiod_sgtable_alloc(struct brcmf_sdio_dev *sdiodev)
 #ifdef CONFIG_PM_SLEEP
 static int brcmf_sdiod_freezer_attach(struct brcmf_sdio_dev *sdiodev)
 {
-	sdiodev->freezer = kzalloc(sizeof(*sdiodev->freezer), GFP_KERNEL);
+	sdiodev->freezer = kzalloc(sizeof(*sdiodev->freezer), KM_SLEEP);
 	if (!sdiodev->freezer)
 		return -ENOMEM;
 	atomic_set(&sdiodev->freezer->thread_count, 0);
@@ -1144,10 +1144,10 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
 	if (func->num != 2)
 		return -ENODEV;
 
-	bus_if = kzalloc(sizeof(struct brcmf_bus), GFP_KERNEL);
+	bus_if = kzalloc(sizeof(struct brcmf_bus), KM_SLEEP);
 	if (!bus_if)
 		return -ENOMEM;
-	sdiodev = kzalloc(sizeof(struct brcmf_sdio_dev), GFP_KERNEL);
+	sdiodev = kzalloc(sizeof(struct brcmf_sdio_dev), KM_SLEEP);
 	if (!sdiodev) {
 		kfree(bus_if);
 		return -ENOMEM;
@@ -1156,7 +1156,7 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
 	/* store refs to functions used. mmc_card does
 	 * not hold the F0 function pointer.
 	 */
-	sdiodev->func[0] = kmemdup(func, sizeof(*func), GFP_KERNEL);
+	sdiodev->func[0] = kmemdup(func, sizeof(*func), KM_SLEEP);
 	sdiodev->func[0]->num = 0;
 	sdiodev->func[1] = func->card->sdio_func[0];
 	sdiodev->func[2] = func;

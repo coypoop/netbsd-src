@@ -213,7 +213,7 @@ static int brcmf_init_nvram_parser(struct nvram_parser *nvp,
 		size = data_len;
 	/* Alloc for extra 0 byte + roundup by 4 + length field */
 	size += 1 + 3 + sizeof(u32);
-	nvp->nvram = kzalloc(size, GFP_KERNEL);
+	nvp->nvram = kzalloc(size, KM_SLEEP);
 	if (!nvp->nvram)
 		return -ENOMEM;
 
@@ -241,7 +241,7 @@ static void brcmf_fw_strip_multi_v1(struct nvram_parser *nvp, u16 domain_nr,
 	u8 *nvram;
 	u8 id;
 
-	nvram = kzalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), GFP_KERNEL);
+	nvram = kzalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), KM_SLEEP);
 	if (!nvram)
 		goto fail;
 
@@ -320,7 +320,7 @@ static void brcmf_fw_strip_multi_v2(struct nvram_parser *nvp, u16 domain_nr,
 	u32 i, j;
 	u8 *nvram;
 
-	nvram = kzalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), GFP_KERNEL);
+	nvram = kzalloc(nvp->nvram_len + 1 + 3 + sizeof(u32), KM_SLEEP);
 	if (!nvram)
 		goto fail;
 
@@ -479,7 +479,7 @@ static void brcmf_fw_request_code_done(const struct firmware *fw, void *ctx)
 	}
 	fwctx->code = fw;
 	ret = request_firmware_nowait(THIS_MODULE, true, fwctx->nvram_name,
-				      fwctx->dev, GFP_KERNEL, fwctx,
+				      fwctx->dev, KM_SLEEP, fwctx,
 				      brcmf_fw_request_nvram_done);
 
 	if (!ret)
@@ -510,7 +510,7 @@ int brcmf_fw_get_firmwares_pcie(struct device *dev, u16 flags,
 	if ((flags & BRCMF_FW_REQUEST_NVRAM) && !nvram)
 		return -EINVAL;
 
-	fwctx = kzalloc(sizeof(*fwctx), GFP_KERNEL);
+	fwctx = kzalloc(sizeof(*fwctx), KM_SLEEP);
 	if (!fwctx)
 		return -ENOMEM;
 
@@ -523,7 +523,7 @@ int brcmf_fw_get_firmwares_pcie(struct device *dev, u16 flags,
 	fwctx->bus_nr = bus_nr;
 
 	return request_firmware_nowait(THIS_MODULE, true, code, dev,
-				       GFP_KERNEL, fwctx,
+				       KM_SLEEP, fwctx,
 				       brcmf_fw_request_code_done);
 }
 

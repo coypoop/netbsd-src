@@ -444,7 +444,7 @@ void brcmf_fweh_process_event(struct brcmf_pub *drvr,
 	enum brcmf_fweh_event_code code;
 	struct brcmf_fweh_info *fweh = &drvr->fweh;
 	struct brcmf_fweh_queue_item *event;
-	gfp_t alloc_flag = GFP_KERNEL;
+	gfp_t alloc_flag = KM_SLEEP;
 	void *data;
 	u32 datalen;
 

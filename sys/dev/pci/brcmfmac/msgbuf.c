@@ -290,11 +290,11 @@ brcmf_msgbuf_init_pktids(u32 nr_array_entries,
 	struct brcmf_msgbuf_pktid *array;
 	struct brcmf_msgbuf_pktids *pktids;
 
-	array = kcalloc(nr_array_entries, sizeof(*array), GFP_KERNEL);
+	array = kcalloc(nr_array_entries, sizeof(*array), KM_SLEEP);
 	if (!array)
 		return NULL;
 
-	pktids = kzalloc(sizeof(*pktids), GFP_KERNEL);
+	pktids = kzalloc(sizeof(*pktids), KM_SLEEP);
 	if (!pktids) {
 		kfree(array);
 		return NULL;
@@ -579,7 +579,7 @@ brcmf_msgbuf_flowring_create_worker(struct brcmf_msgbuf *msgbuf,
 	dma_sz = BRCMF_H2D_TXFLOWRING_MAX_ITEM * BRCMF_H2D_TXFLOWRING_ITEMSIZE;
 	dma_buf = dma_alloc_coherent(msgbuf->drvr->bus_if->dev, dma_sz,
 				     &msgbuf->flowring_dma_handle[flowid],
-				     GFP_KERNEL);
+				     KM_SLEEP);
 	if (!dma_buf) {
 		brcmf_err("dma_alloc_coherent failed\n");
 		brcmf_flowring_delete(msgbuf->flow, flowid);
@@ -1415,7 +1415,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 	u32 count;
 
 	if_msgbuf = drvr->bus_if->msgbuf;
-	msgbuf = kzalloc(sizeof(*msgbuf), GFP_KERNEL);
+	msgbuf = kzalloc(sizeof(*msgbuf), KM_SLEEP);
 	if (!msgbuf)
 		goto fail;
 
@@ -1427,11 +1427,11 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 	INIT_WORK(&msgbuf->txflow_work, brcmf_msgbuf_txflow_worker);
 	count = BITS_TO_LONGS(if_msgbuf->nrof_flowrings);
 	count = count * sizeof(unsigned long);
-	msgbuf->flow_map = kzalloc(count, GFP_KERNEL);
+	msgbuf->flow_map = kzalloc(count, KM_SLEEP);
 	if (!msgbuf->flow_map)
 		goto fail;
 
-	msgbuf->txstatus_done_map = kzalloc(count, GFP_KERNEL);
+	msgbuf->txstatus_done_map = kzalloc(count, KM_SLEEP);
 	if (!msgbuf->txstatus_done_map)
 		goto fail;
 
@@ -1439,7 +1439,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 	msgbuf->ioctbuf = dma_alloc_coherent(drvr->bus_if->dev,
 					     BRCMF_TX_IOCTL_MAX_MSG_SIZE,
 					     &msgbuf->ioctbuf_handle,
-					     GFP_KERNEL);
+					     KM_SLEEP);
 	if (!msgbuf->ioctbuf)
 		goto fail;
 	address = (u64)msgbuf->ioctbuf_handle;
@@ -1462,7 +1462,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
 	msgbuf->flowrings = (struct brcmf_commonring **)if_msgbuf->flowrings;
 	msgbuf->nrof_flowrings = if_msgbuf->nrof_flowrings;
 	msgbuf->flowring_dma_handle = kzalloc(msgbuf->nrof_flowrings *
-		sizeof(*msgbuf->flowring_dma_handle), GFP_KERNEL);
+		sizeof(*msgbuf->flowring_dma_handle), KM_SLEEP);
 	if (!msgbuf->flowring_dma_handle)
 		goto fail;
 

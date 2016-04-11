@@ -3741,7 +3741,7 @@ netdev_ioctl(struct net_device *netdev, struct ifreq *ifr, int cmd)
 
     /* Emulate a BSD-style IOCTL syscall. */
     if (!error)
-      error = (kern_addr = kmalloc(length, GFP_KERNEL)) ? 0: -ENOMEM;
+      error = (kern_addr = kmalloc(length, KM_SLEEP)) ? 0: -ENOMEM;
     if (!error && (direction & DIR_IOW))
       error = copy_from_user(kern_addr, user_addr, length);
     if (!error)
