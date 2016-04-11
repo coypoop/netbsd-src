@@ -149,7 +149,7 @@ u32 brcmf_flowring_create(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
 		if (i == flow->nrofrings)
 			return -ENOMEM;
 
-		ring = kzalloc(sizeof(*ring), GFP_ATOMIC);
+		ring = kzalloc(sizeof(*ring), KM_NOSLEEP);
 		if (!ring)
 			return -ENOMEM;
 
@@ -480,7 +480,7 @@ void brcmf_flowring_add_tdls_peer(struct brcmf_flowring *flow, int ifidx,
 	struct brcmf_flowring_tdls_entry *tdls_entry;
 	struct brcmf_flowring_tdls_entry *search;
 
-	tdls_entry = kzalloc(sizeof(*tdls_entry), GFP_ATOMIC);
+	tdls_entry = kzalloc(sizeof(*tdls_entry), KM_NOSLEEP);
 	if (tdls_entry == NULL)
 		return;
 

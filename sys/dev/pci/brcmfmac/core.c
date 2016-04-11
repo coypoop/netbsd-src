@@ -109,7 +109,7 @@ static void _brcmf_set_multicast_list(struct work_struct *work)
 	/* Send down the multicast list first. */
 	cnt = netdev_mc_count(ndev);
 	buflen = sizeof(cnt) + (cnt * ETH_ALEN);
-	buf = kmalloc(buflen, GFP_ATOMIC);
+	buf = kmalloc(buflen, KM_NOSLEEP);
 	if (!buf)
 		return;
 	bufp = buf;
@@ -388,7 +388,7 @@ static void brcmf_rxreorder_process_info(struct brcmf_if *ifp, u8 *reorder_data,
 		/* allocate space for flow reorder info */
 		brcmf_dbg(INFO, "flow-%d: start, maxidx %d\n",
 			  flow_id, max_idx);
-		rfi = kzalloc(buf_size, GFP_ATOMIC);
+		rfi = kzalloc(buf_size, KM_NOSLEEP);
 		if (rfi == NULL) {
 			brcmf_err("failed to alloc buffer\n");
 			brcmf_netif_rx(ifp, pkt);
@@ -1034,7 +1034,7 @@ int brcmf_attach(struct device *dev)
 	brcmf_dbg(TRACE, "Enter\n");
 
 	/* Allocate primary brcmf_info */
-	drvr = kzalloc(sizeof(struct brcmf_pub), GFP_ATOMIC);
+	drvr = kzalloc(sizeof(struct brcmf_pub), KM_NOSLEEP);
 	if (!drvr)
 		return -ENOMEM;
 

@@ -2083,7 +2083,7 @@ static int brcmf_sdio_txpkt_prep_sg(struct brcmf_sdio *bus,
 		ntail = pkt->data_len + tail_pad -
 			(pkt->end - pkt->tail);
 		if (skb_cloned(pkt) || ntail > 0)
-			if (pskb_expand_head(pkt, 0, ntail, GFP_ATOMIC))
+			if (pskb_expand_head(pkt, 0, ntail, KM_NOSLEEP))
 				return -ENOMEM;
 		if (skb_linearize(pkt))
 			return -ENOMEM;
@@ -2766,7 +2766,7 @@ static int brcmf_sdio_readconsole(struct brcmf_sdio *bus)
 	/* Allocate console buffer (one time only) */
 	if (c->buf == NULL) {
 		c->bufsize = le32_to_cpu(c->log_le.buf_size);
-		c->buf = kmalloc(c->bufsize, GFP_ATOMIC);
+		c->buf = kmalloc(c->bufsize, KM_NOSLEEP);
 		if (c->buf == NULL)
 			return -ENOMEM;
 	}
@@ -4034,7 +4034,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
 	brcmf_dbg(TRACE, "Enter\n");
 
 	/* Allocate private bus interface state */
-	bus = kzalloc(sizeof(struct brcmf_sdio), GFP_ATOMIC);
+	bus = kzalloc(sizeof(struct brcmf_sdio), KM_NOSLEEP);
 	if (!bus)
 		goto fail;
 
@@ -4129,7 +4129,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
 		bus->rxblen =
 		    roundup((bus->sdiodev->bus_if->maxctl + SDPCM_HDRLEN),
 			    ALIGNMENT) + bus->head_align;
-		bus->rxbuf = kmalloc(bus->rxblen, GFP_ATOMIC);
+		bus->rxbuf = kmalloc(bus->rxblen, KM_NOSLEEP);
 		if (!(bus->rxbuf)) {
 			brcmf_err("rxbuf allocation failed\n");
 			goto fail;

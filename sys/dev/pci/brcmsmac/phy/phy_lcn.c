@@ -1387,7 +1387,7 @@ wlc_lcnphy_rx_iq_cal(struct brcms_phy *pi,
 	int16_t *ptr;
 	struct brcms_phy_lcnphy *pi_lcn = pi->u.pi_lcnphy;
 
-	ptr = kmalloc(sizeof(int16_t) * 131, GFP_ATOMIC);
+	ptr = kmalloc(sizeof(int16_t) * 131, KM_NOSLEEP);
 	if (NULL == ptr)
 		return false;
 	if (module == 2) {
@@ -2670,7 +2670,7 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
 	uint16_t *values_to_save;
 	struct brcms_phy_lcnphy *pi_lcn = pi->u.pi_lcnphy;
 
-	values_to_save = kmalloc(sizeof(uint16_t) * 20, GFP_ATOMIC);
+	values_to_save = kmalloc(sizeof(uint16_t) * 20, KM_NOSLEEP);
 	if (NULL == values_to_save)
 		return;
 
@@ -3683,11 +3683,11 @@ wlc_lcnphy_a1(struct brcms_phy *pi, int cal_type, int num_levels,
 	uint16_t *phy_c32;
 	phy_c21 = 0;
 	phy_c10 = phy_c13 = phy_c14 = phy_c8 = 0;
-	ptr = kmalloc(sizeof(int16_t) * 131, GFP_ATOMIC);
+	ptr = kmalloc(sizeof(int16_t) * 131, KM_NOSLEEP);
 	if (NULL == ptr)
 		return;
 
-	phy_c32 = kmalloc(sizeof(uint16_t) * 20, GFP_ATOMIC);
+	phy_c32 = kmalloc(sizeof(uint16_t) * 20, KM_NOSLEEP);
 	if (NULL == phy_c32) {
 		kfree(ptr);
 		return;
@@ -5066,7 +5066,7 @@ bool wlc_phy_attach_lcnphy(struct brcms_phy *pi)
 {
 	struct brcms_phy_lcnphy *pi_lcn;
 
-	pi->u.pi_lcnphy = kzalloc(sizeof(struct brcms_phy_lcnphy), GFP_ATOMIC);
+	pi->u.pi_lcnphy = kzalloc(sizeof(struct brcms_phy_lcnphy), KM_NOSLEEP);
 	if (pi->u.pi_lcnphy == NULL)
 		return false;
 

@@ -652,7 +652,7 @@ static u32 brcmf_msgbuf_flowring_create(struct brcmf_msgbuf *msgbuf, int ifidx,
 	u32 flowid;
 	ulong flags;
 
-	create = kzalloc(sizeof(*create), GFP_ATOMIC);
+	create = kzalloc(sizeof(*create), KM_NOSLEEP);
 	if (create == NULL)
 		return BRCMF_FLOWRING_INVALID_ID;
 

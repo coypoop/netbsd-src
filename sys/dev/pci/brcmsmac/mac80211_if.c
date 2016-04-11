@@ -1462,7 +1462,7 @@ struct brcms_timer *brcms_init_timer(struct brcms_info *wl,
 {
 	struct brcms_timer *t;
 
-	t = kzalloc(sizeof(struct brcms_timer), GFP_ATOMIC);
+	t = kzalloc(sizeof(struct brcms_timer), KM_NOSLEEP);
 	if (!t)
 		return NULL;
 
@@ -1474,7 +1474,7 @@ struct brcms_timer *brcms_init_timer(struct brcms_info *wl,
 	wl->timers = t;
 
 #ifdef DEBUG
-	t->name = kstrdup(name, GFP_ATOMIC);
+	t->name = kstrdup(name, KM_NOSLEEP);
 #endif
 
 	return t;
@@ -1576,7 +1576,7 @@ int brcms_ucode_init_buf(struct brcms_info *wl, void **pbuf, uint32_t idx)
 			if (le32_to_cpu(hdr->idx) == idx) {
 				pdata = wl->fw.fw_bin[i]->data +
 					le32_to_cpu(hdr->offset);
-				*pbuf = kmemdup(pdata, len, GFP_ATOMIC);
+				*pbuf = kmemdup(pdata, len, KM_NOSLEEP);
 				if (*pbuf == NULL)
 					goto fail;
 

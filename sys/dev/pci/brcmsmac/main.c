@@ -466,11 +466,11 @@ static struct brcms_bss_cfg *brcms_c_bsscfg_malloc(uint unit)
 {
 	struct brcms_bss_cfg *cfg;
 
-	cfg = kzalloc(sizeof(struct brcms_bss_cfg), GFP_ATOMIC);
+	cfg = kzalloc(sizeof(struct brcms_bss_cfg), KM_NOSLEEP);
 	if (cfg == NULL)
 		goto fail;
 
-	cfg->current_bss = kzalloc(sizeof(struct brcms_bss_info), GFP_ATOMIC);
+	cfg->current_bss = kzalloc(sizeof(struct brcms_bss_info), KM_NOSLEEP);
 	if (cfg->current_bss == NULL)
 		goto fail;
 
@@ -486,14 +486,14 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
 {
 	struct brcms_c_info *wlc;
 
-	wlc = kzalloc(sizeof(struct brcms_c_info), GFP_ATOMIC);
+	wlc = kzalloc(sizeof(struct brcms_c_info), KM_NOSLEEP);
 	if (wlc == NULL) {
 		*err = 1002;
 		goto fail;
 	}
 
 	/* allocate struct brcms_c_pub state structure */
-	wlc->pub = kzalloc(sizeof(struct brcms_pub), GFP_ATOMIC);
+	wlc->pub = kzalloc(sizeof(struct brcms_pub), KM_NOSLEEP);
 	if (wlc->pub == NULL) {
 		*err = 1003;
 		goto fail;
@@ -502,7 +502,7 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
 
 	/* allocate struct brcms_hardware state structure */
 
-	wlc->hw = kzalloc(sizeof(struct brcms_hardware), GFP_ATOMIC);
+	wlc->hw = kzalloc(sizeof(struct brcms_hardware), KM_NOSLEEP);
 	if (wlc->hw == NULL) {
 		*err = 1005;
 		goto fail;
@@ -510,7 +510,7 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
 	wlc->hw->wlc = wlc;
 
 	wlc->hw->bandstate[0] =
-		kzalloc(sizeof(struct brcms_hw_band) * MAXBANDS, GFP_ATOMIC);
+		kzalloc(sizeof(struct brcms_hw_band) * MAXBANDS, KM_NOSLEEP);
 	if (wlc->hw->bandstate[0] == NULL) {
 		*err = 1006;
 		goto fail;
@@ -524,13 +524,13 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
 	}
 
 	wlc->modulecb =
-		kzalloc(sizeof(struct modulecb) * BRCMS_MAXMODULES, GFP_ATOMIC);
+		kzalloc(sizeof(struct modulecb) * BRCMS_MAXMODULES, KM_NOSLEEP);
 	if (wlc->modulecb == NULL) {
 		*err = 1009;
 		goto fail;
 	}
 
-	wlc->default_bss = kzalloc(sizeof(struct brcms_bss_info), GFP_ATOMIC);
+	wlc->default_bss = kzalloc(sizeof(struct brcms_bss_info), KM_NOSLEEP);
 	if (wlc->default_bss == NULL) {
 		*err = 1010;
 		goto fail;
@@ -543,20 +543,20 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
 	}
 
 	wlc->protection = kzalloc(sizeof(struct brcms_protection),
-				  GFP_ATOMIC);
+				  KM_NOSLEEP);
 	if (wlc->protection == NULL) {
 		*err = 1016;
 		goto fail;
 	}
 
-	wlc->stf = kzalloc(sizeof(struct brcms_stf), GFP_ATOMIC);
+	wlc->stf = kzalloc(sizeof(struct brcms_stf), KM_NOSLEEP);
 	if (wlc->stf == NULL) {
 		*err = 1017;
 		goto fail;
 	}
 
 	wlc->bandstate[0] =
-		kzalloc(sizeof(struct brcms_band)*MAXBANDS, GFP_ATOMIC);
+		kzalloc(sizeof(struct brcms_band)*MAXBANDS, KM_NOSLEEP);
 	if (wlc->bandstate[0] == NULL) {
 		*err = 1025;
 		goto fail;
@@ -569,14 +569,14 @@ brcms_c_attach_malloc(uint unit, uint *err, uint devid)
 				+ (sizeof(struct brcms_band)*i));
 	}
 
-	wlc->corestate = kzalloc(sizeof(struct brcms_core), GFP_ATOMIC);
+	wlc->corestate = kzalloc(sizeof(struct brcms_core), KM_NOSLEEP);
 	if (wlc->corestate == NULL) {
 		*err = 1026;
 		goto fail;
 	}
 
 	wlc->corestate->macstat_snapshot =
-		kzalloc(sizeof(struct macstat), GFP_ATOMIC);
+		kzalloc(sizeof(struct macstat), KM_NOSLEEP);
 	if (wlc->corestate->macstat_snapshot == NULL) {
 		*err = 1027;
 		goto fail;

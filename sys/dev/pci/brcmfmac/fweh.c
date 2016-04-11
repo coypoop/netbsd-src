@@ -460,7 +460,7 @@ void brcmf_fweh_process_event(struct brcmf_pub *drvr,
 		return;
 
 	if (in_interrupt())
-		alloc_flag = GFP_ATOMIC;
+		alloc_flag = KM_NOSLEEP;
 
 	event = kzalloc(sizeof(*event) + datalen, alloc_flag);
 	if (!event)

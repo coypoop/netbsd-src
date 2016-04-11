@@ -271,7 +271,7 @@ brcmf_usb_send_ctl(struct brcmf_usbdev_info *devinfo, u8 *buf, int len)
 		(usb_complete_t)brcmf_usb_ctlwrite_complete,
 		devinfo);
 
-	ret = usb_submit_urb(devinfo->ctl_urb, GFP_ATOMIC);
+	ret = usb_submit_urb(devinfo->ctl_urb, KM_NOSLEEP);
 	if (ret < 0)
 		brcmf_err("usb_submit_urb failed %d\n", ret);
 
@@ -305,7 +305,7 @@ brcmf_usb_recv_ctl(struct brcmf_usbdev_info *devinfo, u8 *buf, int len)
 		(usb_complete_t)brcmf_usb_ctlread_complete,
 		devinfo);
 
-	ret = usb_submit_urb(devinfo->ctl_urb, GFP_ATOMIC);
+	ret = usb_submit_urb(devinfo->ctl_urb, KM_NOSLEEP);
 	if (ret < 0)
 		brcmf_err("usb_submit_urb failed %d\n", ret);
 
@@ -411,14 +411,14 @@ brcmf_usbdev_qinit(struct list_head *q, int qsize)
 	int i;
 	struct brcmf_usbreq *req, *reqs;
 
-	reqs = kcalloc(qsize, sizeof(struct brcmf_usbreq), GFP_ATOMIC);
+	reqs = kcalloc(qsize, sizeof(struct brcmf_usbreq), KM_NOSLEEP);
 	if (reqs == NULL)
 		return NULL;
 
 	req = reqs;
 
 	for (i = 0; i < qsize; i++) {
-		req->urb = usb_alloc_urb(0, GFP_ATOMIC);
+		req->urb = usb_alloc_urb(0, KM_NOSLEEP);
 		if (!req->urb)
 			goto fail;
 
@@ -543,7 +543,7 @@ static void brcmf_usb_rx_refill(struct brcmf_usbdev_info *devinfo,
 	req->devinfo = devinfo;
 	brcmf_usb_enq(devinfo, &devinfo->rx_postq, req, NULL);
 
-	ret = usb_submit_urb(req->urb, GFP_ATOMIC);
+	ret = usb_submit_urb(req->urb, KM_NOSLEEP);
 	if (ret) {
 		brcmf_usb_del_fromq(devinfo, req);
 		brcmu_pkt_buf_free_skb(req->skb);
@@ -619,7 +619,7 @@ static int brcmf_usb_tx(struct device *dev, struct sk_buff *skb)
 			  skb->data, skb->len, brcmf_usb_tx_complete, req);
 	req->urb->transfer_flags |= URB_ZERO_PACKET;
 	brcmf_usb_enq(devinfo, &devinfo->tx_postq, req, NULL);
-	ret = usb_submit_urb(req->urb, GFP_ATOMIC);
+	ret = usb_submit_urb(req->urb, KM_NOSLEEP);
 	if (ret) {
 		brcmf_err("brcmf_usb_tx usb_submit_urb FAILED\n");
 		brcmf_usb_del_fromq(devinfo, req);
@@ -722,7 +722,7 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
 	if ((!devinfo) || (devinfo->ctl_urb == NULL))
 		return -EINVAL;
 
-	tmpbuf = kmalloc(buflen, GFP_ATOMIC);
+	tmpbuf = kmalloc(buflen, KM_NOSLEEP);
 	if (!tmpbuf)
 		return -ENOMEM;
 
@@ -742,7 +742,7 @@ static int brcmf_usb_dl_cmd(struct brcmf_usbdev_info *devinfo, u8 cmd,
 		(usb_complete_t)brcmf_usb_sync_complete, devinfo);
 
 	devinfo->ctl_completed = false;
-	ret = usb_submit_urb(devinfo->ctl_urb, GFP_ATOMIC);
+	ret = usb_submit_urb(devinfo->ctl_urb, KM_NOSLEEP);
 	if (ret < 0) {
 		brcmf_err("usb_submit_urb failed %d\n", ret);
 		goto finalize;
@@ -844,7 +844,7 @@ brcmf_usb_dl_send_bulk(struct brcmf_usbdev_info *devinfo, void *buffer, int len)
 	devinfo->bulk_urb->transfer_flags |= URB_ZERO_PACKET;
 
 	devinfo->ctl_completed = false;
-	ret = usb_submit_urb(devinfo->bulk_urb, GFP_ATOMIC);
+	ret = usb_submit_urb(devinfo->bulk_urb, KM_NOSLEEP);
 	if (ret) {
 		brcmf_err("usb_submit_urb failed %d\n", ret);
 		return ret;
@@ -864,7 +864,7 @@ brcmf_usb_dl_writeimage(struct brcmf_usbdev_info *devinfo, u8 *fw, int fwlen)
 
 	brcmf_dbg(USB, "Enter, fw %p, len %d\n", fw, fwlen);
 
-	bulkchunk = kmalloc(TRX_RDL_CHUNK, GFP_ATOMIC);
+	bulkchunk = kmalloc(TRX_RDL_CHUNK, KM_NOSLEEP);
 	if (bulkchunk == NULL) {
 		err = -ENOMEM;
 		goto fail;
@@ -1092,12 +1092,12 @@ struct brcmf_usbdev *brcmf_usb_attach(struct brcmf_usbdev_info *devinfo,
 		goto error;
 	devinfo->tx_freecount = ntxq;
 
-	devinfo->ctl_urb = usb_alloc_urb(0, GFP_ATOMIC);
+	devinfo->ctl_urb = usb_alloc_urb(0, KM_NOSLEEP);
 	if (!devinfo->ctl_urb) {
 		brcmf_err("usb_alloc_urb (ctl) failed\n");
 		goto error;
 	}
-	devinfo->bulk_urb = usb_alloc_urb(0, GFP_ATOMIC);
+	devinfo->bulk_urb = usb_alloc_urb(0, KM_NOSLEEP);
 	if (!devinfo->bulk_urb) {
 		brcmf_err("usb_alloc_urb (bulk) failed\n");
 		goto error;
@@ -1206,7 +1206,7 @@ static int brcmf_usb_probe_cb(struct brcmf_usbdev_info *devinfo)
 	if (!bus_pub)
 		return -ENODEV;
 
-	bus = kzalloc(sizeof(struct brcmf_bus), GFP_ATOMIC);
+	bus = kzalloc(sizeof(struct brcmf_bus), KM_NOSLEEP);
 	if (!bus) {
 		ret = -ENOMEM;
 		goto fail;
@@ -1283,7 +1283,7 @@ brcmf_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
 
 	brcmf_dbg(USB, "Enter 0x%04x:0x%04x\n", id->idVendor, id->idProduct);
 
-	devinfo = kzalloc(sizeof(*devinfo), GFP_ATOMIC);
+	devinfo = kzalloc(sizeof(*devinfo), KM_NOSLEEP);
 	if (devinfo == NULL)
 		return -ENOMEM;
 

@@ -450,7 +450,7 @@ static void *dma_alloc_consistent(struct dma_info *di, uint size,
 			size += align;
 		*alloced = size;
 	}
-	return dma_alloc_coherent(di->dmadev, size, pap, GFP_ATOMIC);
+	return dma_alloc_coherent(di->dmadev, size, pap, KM_NOSLEEP);
 }
 
 static
@@ -560,7 +560,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	struct si_info *sii = container_of(sih, struct si_info, pub);
 
 	/* allocate private info structure */
-	di = kzalloc(sizeof(struct dma_info), GFP_ATOMIC);
+	di = kzalloc(sizeof(struct dma_info), KM_NOSLEEP);
 	if (di == NULL)
 		return NULL;
 
@@ -651,7 +651,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	/* allocate tx packet pointer vector */
 	if (ntxd) {
 		size = ntxd * sizeof(void *);
-		di->txp = kzalloc(size, GFP_ATOMIC);
+		di->txp = kzalloc(size, KM_NOSLEEP);
 		if (di->txp == NULL)
 			goto fail;
 	}
@@ -659,7 +659,7 @@ struct dma_pub *dma_attach(char *name, struct brcms_c_info *wlc,
 	/* allocate rx packet pointer vector */
 	if (nrxd) {
 		size = nrxd * sizeof(void *);
-		di->rxp = kzalloc(size, GFP_ATOMIC);
+		di->rxp = kzalloc(size, KM_NOSLEEP);
 		if (di->rxp == NULL)
 			goto fail;
 	}

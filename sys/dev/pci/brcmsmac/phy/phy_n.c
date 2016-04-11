@@ -23119,7 +23119,7 @@ wlc_phy_loadsampletable_nphy(struct brcms_phy *pi, struct cordic_iq *tone_buf,
 	uint16_t t;
 	uint32_t *data_buf = NULL;
 
-	data_buf = kmalloc(sizeof(uint32_t) * num_samps, GFP_ATOMIC);
+	data_buf = kmalloc(sizeof(uint32_t) * num_samps, KM_NOSLEEP);
 	if (data_buf == NULL)
 		return;
 
@@ -23161,7 +23161,7 @@ wlc_phy_gen_load_samples_nphy(struct brcms_phy *pi, uint32_t f_kHz, uint16_t max
 		tbl_len = (phy_bw << 1);
 	}
 
-	tone_buf = kmalloc(sizeof(struct cordic_iq) * tbl_len, GFP_ATOMIC);
+	tone_buf = kmalloc(sizeof(struct cordic_iq) * tbl_len, KM_NOSLEEP);
 	if (tone_buf == NULL)
 		return 0;
 
@@ -24751,7 +24751,7 @@ wlc_phy_a1_nphy(struct brcms_phy *pi, uint8_t core, uint32_t winsz, uint32_t sta
 
 	sz = end - start + 1;
 
-	buf = kmalloc(2 * sizeof(uint32_t) * NPHY_PAPD_EPS_TBL_SIZE, GFP_ATOMIC);
+	buf = kmalloc(2 * sizeof(uint32_t) * NPHY_PAPD_EPS_TBL_SIZE, KM_NOSLEEP);
 	if (NULL == buf)
 		return;
 
