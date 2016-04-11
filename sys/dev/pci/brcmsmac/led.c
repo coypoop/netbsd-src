@@ -7,7 +7,7 @@
 #include <mac80211_if.h>
 #include <pub.h>
 #include <main.h>
-#include "led.h"
+#include <led.h>
 
 	/* number of leds */
 #define  BRCMS_LED_NO		4

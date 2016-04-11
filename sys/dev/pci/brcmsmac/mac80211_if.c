@@ -37,7 +37,7 @@
 #include <mac80211_if.h>
 #include <main.h>
 #include "debug.h"
-#include "led.h"
+#include <led.h>
 
 #define N_TX_QUEUES	4 /* #tx queues on mac80211<->driver interface */
 #define BRCMS_FLUSH_TIMEOUT	500 /* msec */
