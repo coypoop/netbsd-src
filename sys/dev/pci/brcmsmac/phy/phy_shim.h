@@ -137,20 +137,20 @@ void wlapi_free_timer(struct wlapi_timer *t);
 void wlapi_add_timer(struct wlapi_timer *t, uint ms, int periodic);
 bool wlapi_del_timer(struct wlapi_timer *t);
 void wlapi_intrson(struct phy_shim_info *physhim);
-u32 wlapi_intrsoff(struct phy_shim_info *physhim);
-void wlapi_intrsrestore(struct phy_shim_info *physhim, u32 macintmask);
+uint32_t wlapi_intrsoff(struct phy_shim_info *physhim);
+void wlapi_intrsrestore(struct phy_shim_info *physhim, uint32_t macintmask);
 
-void wlapi_bmac_write_shm(struct phy_shim_info *physhim, uint offset, u16 v);
-u16 wlapi_bmac_read_shm(struct phy_shim_info *physhim, uint offset);
-void wlapi_bmac_mhf(struct phy_shim_info *physhim, u8 idx, u16 mask, u16 val,
+void wlapi_bmac_write_shm(struct phy_shim_info *physhim, uint offset, uint16_t v);
+uint16_t wlapi_bmac_read_shm(struct phy_shim_info *physhim, uint offset);
+void wlapi_bmac_mhf(struct phy_shim_info *physhim, uint8_t idx, uint16_t mask, uint16_t val,
 		    int bands);
-void wlapi_bmac_corereset(struct phy_shim_info *physhim, u32 flags);
+void wlapi_bmac_corereset(struct phy_shim_info *physhim, uint32_t flags);
 void wlapi_suspend_mac_and_wait(struct phy_shim_info *physhim);
-void wlapi_switch_macfreq(struct phy_shim_info *physhim, u8 spurmode);
+void wlapi_switch_macfreq(struct phy_shim_info *physhim, uint8_t spurmode);
 void wlapi_enable_mac(struct phy_shim_info *physhim);
-void wlapi_bmac_mctrl(struct phy_shim_info *physhim, u32 mask, u32 val);
+void wlapi_bmac_mctrl(struct phy_shim_info *physhim, uint32_t mask, uint32_t val);
 void wlapi_bmac_phy_reset(struct phy_shim_info *physhim);
-void wlapi_bmac_bw_set(struct phy_shim_info *physhim, u16 bw);
+void wlapi_bmac_bw_set(struct phy_shim_info *physhim, uint16_t bw);
 void wlapi_bmac_phyclk_fgc(struct phy_shim_info *physhim, bool clk);
 void wlapi_bmac_macphyclk_set(struct phy_shim_info *physhim, bool clk);
 void wlapi_bmac_core_phypll_ctl(struct phy_shim_info *physhim, bool on);
@@ -159,14 +159,14 @@ void wlapi_bmac_ucode_wake_override_phyreg_set(struct phy_shim_info *physhim);
 void wlapi_bmac_ucode_wake_override_phyreg_clear(struct phy_shim_info *physhim);
 void wlapi_bmac_write_template_ram(struct phy_shim_info *physhim, int o,
 				   int len, void *buf);
-u16 wlapi_bmac_rate_shm_offset(struct phy_shim_info *physhim, u8 rate);
+uint16_t wlapi_bmac_rate_shm_offset(struct phy_shim_info *physhim, uint8_t rate);
 void wlapi_ucode_sample_init(struct phy_shim_info *physhim);
 void wlapi_copyfrom_objmem(struct phy_shim_info *physhim, uint, void *buf,
-			   int, u32 sel);
+			   int, uint32_t sel);
 void wlapi_copyto_objmem(struct phy_shim_info *physhim, uint, const void *buf,
-			 int, u32);
+			 int, uint32_t);
 
-void wlapi_high_update_phy_mode(struct phy_shim_info *physhim, u32 phy_mode);
-u16 wlapi_bmac_get_txant(struct phy_shim_info *physhim);
+void wlapi_high_update_phy_mode(struct phy_shim_info *physhim, uint32_t phy_mode);
+uint16_t wlapi_bmac_get_txant(struct phy_shim_info *physhim);
 
 #endif				/* _BRCM_PHY_SHIM_H_ */

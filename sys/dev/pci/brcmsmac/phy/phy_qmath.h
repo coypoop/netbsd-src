@@ -19,24 +19,24 @@
 
 #include <types.h>
 
-u16 qm_mulu16(u16 op1, u16 op2);
+uint16_t qm_muluint16_t(uint16_t op1, uint16_t op2);
 
-s16 qm_muls16(s16 op1, s16 op2);
+int16_t qm_mulint16_t(int16_t op1, int16_t op2);
 
-s32 qm_add32(s32 op1, s32 op2);
+int32_t qm_add32(int32_t op1, int32_t op2);
 
-s16 qm_add16(s16 op1, s16 op2);
+int16_t qm_add16(int16_t op1, int16_t op2);
 
-s16 qm_sub16(s16 op1, s16 op2);
+int16_t qm_sub16(int16_t op1, int16_t op2);
 
-s32 qm_shl32(s32 op, int shift);
+int32_t qm_shl32(int32_t op, int shift);
 
-s16 qm_shl16(s16 op, int shift);
+int16_t qm_shl16(int16_t op, int shift);
 
-s16 qm_shr16(s16 op, int shift);
+int16_t qm_shr16(int16_t op, int shift);
 
-s16 qm_norm32(s32 op);
+int16_t qm_norm32(int32_t op);
 
-void qm_log10(s32 N, s16 qN, s16 *log10N, s16 *qLog10N);
+void qm_log10(int32_t N, int16_t qN, int16_t *log10N, int16_t *qLog10N);
 
 #endif				/* #ifndef _BRCM_QMATH_H_ */

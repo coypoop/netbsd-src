@@ -88,34 +88,34 @@ void wlapi_intrson(struct phy_shim_info *physhim)
 	brcms_intrson(physhim->wl);
 }
 
-u32 wlapi_intrsoff(struct phy_shim_info *physhim)
+uint32_t wlapi_intrsoff(struct phy_shim_info *physhim)
 {
 	return brcms_intrsoff(physhim->wl);
 }
 
-void wlapi_intrsrestore(struct phy_shim_info *physhim, u32 macintmask)
+void wlapi_intrsrestore(struct phy_shim_info *physhim, uint32_t macintmask)
 {
 	brcms_intrsrestore(physhim->wl, macintmask);
 }
 
-void wlapi_bmac_write_shm(struct phy_shim_info *physhim, uint offset, u16 v)
+void wlapi_bmac_write_shm(struct phy_shim_info *physhim, uint offset, uint16_t v)
 {
 	brcms_b_write_shm(physhim->wlc_hw, offset, v);
 }
 
-u16 wlapi_bmac_read_shm(struct phy_shim_info *physhim, uint offset)
+uint16_t wlapi_bmac_read_shm(struct phy_shim_info *physhim, uint offset)
 {
 	return brcms_b_read_shm(physhim->wlc_hw, offset);
 }
 
 void
-wlapi_bmac_mhf(struct phy_shim_info *physhim, u8 idx, u16 mask,
-	       u16 val, int bands)
+wlapi_bmac_mhf(struct phy_shim_info *physhim, uint8_t idx, uint16_t mask,
+	       uint16_t val, int bands)
 {
 	brcms_b_mhf(physhim->wlc_hw, idx, mask, val, bands);
 }
 
-void wlapi_bmac_corereset(struct phy_shim_info *physhim, u32 flags)
+void wlapi_bmac_corereset(struct phy_shim_info *physhim, uint32_t flags)
 {
 	brcms_b_corereset(physhim->wlc_hw, flags);
 }
@@ -125,7 +125,7 @@ void wlapi_suspend_mac_and_wait(struct phy_shim_info *physhim)
 	brcms_c_suspend_mac_and_wait(physhim->wlc);
 }
 
-void wlapi_switch_macfreq(struct phy_shim_info *physhim, u8 spurmode)
+void wlapi_switch_macfreq(struct phy_shim_info *physhim, uint8_t spurmode)
 {
 	brcms_b_switch_macfreq(physhim->wlc_hw, spurmode);
 }
@@ -135,7 +135,7 @@ void wlapi_enable_mac(struct phy_shim_info *physhim)
 	brcms_c_enable_mac(physhim->wlc);
 }
 
-void wlapi_bmac_mctrl(struct phy_shim_info *physhim, u32 mask, u32 val)
+void wlapi_bmac_mctrl(struct phy_shim_info *physhim, uint32_t mask, uint32_t val)
 {
 	brcms_b_mctrl(physhim->wlc_hw, mask, val);
 }
@@ -145,12 +145,12 @@ void wlapi_bmac_phy_reset(struct phy_shim_info *physhim)
 	brcms_b_phy_reset(physhim->wlc_hw);
 }
 
-void wlapi_bmac_bw_set(struct phy_shim_info *physhim, u16 bw)
+void wlapi_bmac_bw_set(struct phy_shim_info *physhim, uint16_t bw)
 {
 	brcms_b_bw_set(physhim->wlc_hw, bw);
 }
 
-u16 wlapi_bmac_get_txant(struct phy_shim_info *physhim)
+uint16_t wlapi_bmac_get_txant(struct phy_shim_info *physhim)
 {
 	return brcms_b_get_txant(physhim->wlc_hw);
 }
@@ -194,7 +194,7 @@ wlapi_bmac_write_template_ram(struct phy_shim_info *physhim, int offset,
 	brcms_b_write_template_ram(physhim->wlc_hw, offset, len, buf);
 }
 
-u16 wlapi_bmac_rate_shm_offset(struct phy_shim_info *physhim, u8 rate)
+uint16_t wlapi_bmac_rate_shm_offset(struct phy_shim_info *physhim, uint8_t rate)
 {
 	return brcms_b_rate_shm_offset(physhim->wlc_hw, rate);
 }
@@ -205,14 +205,14 @@ void wlapi_ucode_sample_init(struct phy_shim_info *physhim)
 
 void
 wlapi_copyfrom_objmem(struct phy_shim_info *physhim, uint offset, void *buf,
-		      int len, u32 sel)
+		      int len, uint32_t sel)
 {
 	brcms_b_copyfrom_objmem(physhim->wlc_hw, offset, buf, len, sel);
 }
 
 void
 wlapi_copyto_objmem(struct phy_shim_info *physhim, uint offset, const void *buf,
-		    int l, u32 sel)
+		    int l, uint32_t sel)
 {
 	brcms_b_copyto_objmem(physhim->wlc_hw, offset, buf, l, sel);
 }
