@@ -20,8 +20,10 @@
 #ifndef __NetBSD__
 #include <linux/types.h>
 #include <linux/io.h>
-#endif
+#else
 #include <sys/types.h>
+#include <sys/param.h>
+#endif
 
 #define WL_CHAN_FREQ_RANGE_2G      0
 #define WL_CHAN_FREQ_RANGE_5GL     1
