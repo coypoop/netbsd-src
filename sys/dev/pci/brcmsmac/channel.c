@@ -19,6 +19,8 @@
 #include <net/cfg80211.h>
 #include <net/mac80211.h>
 #include <net/regulatory.h>
+#else
+#include <sys/types.h>
 #endif
 
 #include <defs.h>
