@@ -2402,7 +2402,7 @@ static void brcmf_convert_sta_flags(u32 fw_sta_flags, struct station_info *si)
 static void brcmf_fill_bss_param(struct brcmf_if *ifp, struct station_info *si)
 {
 	struct {
-		__le32 len;
+		uint32_t len;
 		struct brcmf_bss_info_le bss_le;
 	} *buf;
 	u16 capability;
@@ -2777,7 +2777,7 @@ static s32 brcmf_inform_ibss(struct brcmf_cfg80211_info *cfg,
 		goto CleanUp;
 	}
 
-	*(__le32 *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
+	*(uint32_t *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
 
 	err = brcmf_fil_cmd_data_get(netdev_priv(ndev), BRCMF_C_GET_BSS_INFO,
 				     buf, WL_BSS_INFO_MAX);
@@ -2848,7 +2848,7 @@ static s32 brcmf_update_bss_info(struct brcmf_cfg80211_info *cfg,
 	if (brcmf_is_ibssmode(ifp->vif))
 		return err;
 
-	*(__le32 *)cfg->extra_buf = cpu_to_le32(WL_EXTRA_BUF_MAX);
+	*(uint32_t *)cfg->extra_buf = cpu_to_le32(WL_EXTRA_BUF_MAX);
 	err = brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSS_INFO,
 				     cfg->extra_buf, WL_EXTRA_BUF_MAX);
 	if (err) {
@@ -5104,7 +5104,7 @@ brcmf_bss_roaming_done(struct brcmf_cfg80211_info *cfg,
 	}
 
 	/* data sent to dongle has to be little endian */
-	*(__le32 *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
+	*(uint32_t *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
 	err = brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSS_INFO,
 				     buf, WL_BSS_INFO_MAX);
 
@@ -5479,8 +5479,8 @@ static s32 brcmf_dongle_roam(struct brcmf_if *ifp)
 {
 	s32 err;
 	u32 bcn_timeout;
-	__le32 roamtrigger[2];
-	__le32 roam_delta[2];
+	uint32_t roamtrigger[2];
+	uint32_t roam_delta[2];
 
 	/* Configure beacon timeout value based upon roaming setting */
 	if (ifp->drvr->settings->roamoff)
@@ -5730,7 +5730,7 @@ static int brcmf_enable_bw40_2g(struct brcmf_cfg80211_info *cfg)
 		cfg->d11inf.encchspec(&ch);
 
 		/* pass encoded chanspec in query */
-		*(__le16 *)pbuf = cpu_to_le16(ch.chspec);
+		*(uint16_t *)pbuf = cpu_to_le16(ch.chspec);
 
 		err = brcmf_fil_iovar_data_get(ifp, "chanspecs", pbuf,
 					       BRCMF_DCMD_MEDLEN);
@@ -5821,7 +5821,7 @@ static void brcmf_update_ht_cap(struct ieee80211_supported_band *band,
 	band->ht_cap.mcs.tx_params = IEEE80211_HT_MCS_TX_DEFINED;
 }
 
-static __le16 brcmf_get_mcs_map(u32 nchain, enum ieee80211_vht_mcs_support supp)
+static uint16_t brcmf_get_mcs_map(u32 nchain, enum ieee80211_vht_mcs_support supp)
 {
 	u16 mcs_map;
 	int i;
@@ -5836,7 +5836,7 @@ static void brcmf_update_vht_cap(struct ieee80211_supported_band *band,
 				 u32 bw_cap[2], u32 nchain, u32 txstreams,
 				 u32 txbf_bfe_cap, u32 txbf_bfr_cap)
 {
-	__le16 mcs_map;
+	uint16_t mcs_map;
 
 	/* not allowed in 2.4G band */
 	if (band->band == IEEE80211_BAND_2GHZ)
@@ -6146,7 +6146,7 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
 	const struct ieee80211_iface_combination *combo;
 	struct ieee80211_supported_band *band;
 	u16 max_interfaces = 0;
-	__le32 bandlist[3];
+	uint32_t bandlist[3];
 	u32 n_bands;
 	int err, i;
 

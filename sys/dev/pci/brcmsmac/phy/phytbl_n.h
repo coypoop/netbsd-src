@@ -16,7 +16,7 @@
 
 #define ANT_SWCTRL_TBL_REV3_IDX (0)
 
-#include <types.h>
+#include <bcm_types.h>
 #include "phy_int.h"
 
 extern const struct phytbl_info mimophytbl_info_rev0[],

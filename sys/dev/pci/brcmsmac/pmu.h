@@ -18,7 +18,7 @@
 #ifndef _BRCM_PMU_H_
 #define _BRCM_PMU_H_
 
-#include <types.h>
+#include <bcm_types.h>
 
 uint16_t si_pmu_fast_pwrup_delay(struct si_pub *sih);
 uint32_t si_pmu_measure_alpclk(struct si_pub *sih);

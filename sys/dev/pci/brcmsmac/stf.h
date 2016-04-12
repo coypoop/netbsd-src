@@ -17,7 +17,7 @@
 #ifndef _BRCM_STF_H_
 #define _BRCM_STF_H_
 
-#include <types.h>
+#include <bcm_types.h>
 
 int brcms_c_stf_attach(struct brcms_c_info *wlc);
 void brcms_c_stf_detach(struct brcms_c_info *wlc);

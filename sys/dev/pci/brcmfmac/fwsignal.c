@@ -870,8 +870,8 @@ static u8 brcmf_fws_hdrpush(struct brcmf_fws_info *fws, struct sk_buff *skb)
 	u8 *wlh;
 	u16 data_offset = 0;
 	u8 fillers;
-	__le32 pkttag = cpu_to_le32(brcmf_skbcb(skb)->htod);
-	__le16 pktseq = cpu_to_le16(brcmf_skbcb(skb)->htod_seq);
+	uint32_t pkttag = cpu_to_le32(brcmf_skbcb(skb)->htod);
+	uint16_t pktseq = cpu_to_le16(brcmf_skbcb(skb)->htod_seq);
 
 	brcmf_dbg(TRACE, "enter: %s, idx=%d hslot=%d htod %X seq %X\n",
 		  entry->name, brcmf_skb_if_flags_get_field(skb, INDEX),
@@ -1531,8 +1531,8 @@ static int brcmf_fws_fifocreditback_indicate(struct brcmf_fws_info *fws,
 
 static int brcmf_fws_txstatus_indicate(struct brcmf_fws_info *fws, u8 *data)
 {
-	__le32 status_le;
-	__le16 seq_le;
+	uint32_t status_le;
+	uint16_t seq_le;
 	u32 status;
 	u32 hslot;
 	u32 genbit;
@@ -1561,7 +1561,7 @@ static int brcmf_fws_txstatus_indicate(struct brcmf_fws_info *fws, u8 *data)
 
 static int brcmf_fws_dbg_seqnum_check(struct brcmf_fws_info *fws, u8 *data)
 {
-	__le32 timestamp;
+	uint32_t timestamp;
 
 	memcpy(&timestamp, &data[2], sizeof(timestamp));
 	brcmf_dbg(CTL, "received: seq %d, timestamp %d\n", data[1],

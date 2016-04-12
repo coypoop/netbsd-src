@@ -17,7 +17,7 @@
 #ifndef _BRCM_QMATH_H_
 #define _BRCM_QMATH_H_
 
-#include <types.h>
+#include <bcm_types.h>
 
 uint16_t qm_muluint16_t(uint16_t op1, uint16_t op2);
 

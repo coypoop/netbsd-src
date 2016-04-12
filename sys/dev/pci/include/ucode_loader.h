@@ -16,7 +16,7 @@
 #ifndef	_BRCM_UCODE_H_
 #define	_BRCM_UCODE_H_
 
-#include <types.h>		/* forward structure declarations */
+#include <bcm_types.h>		/* forward structure declarations */
 
 #define MIN_FW_SIZE 40000	/* minimum firmware file size in bytes */
 #define MAX_FW_SIZE 150000
@@ -35,9 +35,9 @@ struct brcms_ucode {
 	struct d11init *d11n0absinitvalint16_t;
 	struct d11init *d11n0bsinitvalint16_t;
 	struct d11init *d11n0initvalint16_t;
-	__le32 *bcm43xx_16_mimo;
+	uint32_t *bcm43xx_16_mimo;
 	size_t bcm43xx_16_mimosz;
-	__le32 *bcm43xx_24_lcn;
+	uint32_t *bcm43xx_24_lcn;
 	size_t bcm43xx_24_lcnsz;
 	uint32_t *bcm43xx_bommajor;
 	uint32_t *bcm43xx_bomminor;

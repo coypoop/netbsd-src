@@ -22,7 +22,7 @@
 #include <linux/skbuff.h>
 #endif
 
-#include <types.h>		/* forward structure declarations */
+#include <bcm_types.h>		/* forward structure declarations */
 
 /* map/unmap direction */
 #define	DMA_TX	1		/* TX direction for DMA */

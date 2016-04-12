@@ -112,8 +112,8 @@
  */
 struct brcmf_p2p_disc_st_le {
 	u8 state;
-	__le16 chspec;
-	__le16 dwell;
+	uint16_t chspec;
+	uint16_t dwell;
 };
 
 /**
@@ -643,7 +643,7 @@ static s32 brcmf_p2p_escan(struct brcmf_p2p_info *p2p, u32 num_chans,
 	struct brcmf_p2p_scan_le *p2p_params;
 	struct brcmf_scan_params_le *sparams;
 
-	memsize += num_chans * sizeof(__le16);
+	memsize += num_chans * sizeof(uint16_t);
 	memblk = kmem_zalloc(memsize, KM_SLEEP);
 	if (!memblk)
 		return -ENOMEM;
@@ -1923,7 +1923,7 @@ static void brcmf_p2p_get_current_chanspec(struct brcmf_p2p_info *p2p,
 				   ETH_ALEN) == 0) {
 		buf = kmem_zalloc(WL_BSS_INFO_MAX, KM_SLEEP);
 		if (buf != NULL) {
-			*(__le32 *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
+			*(uint32_t *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
 			if (brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSS_INFO,
 						   buf, WL_BSS_INFO_MAX) == 0) {
 				bi = (struct brcmf_bss_info_le *)(buf + 4);

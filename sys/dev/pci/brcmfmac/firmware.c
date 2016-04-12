@@ -367,7 +367,7 @@ static void *brcmf_fw_nvram_strip(const u8 *data, size_t data_len,
 	struct nvram_parser nvp;
 	u32 pad;
 	u32 token;
-	__le32 token_le;
+	uint32_t token_le;
 
 	if (brcmf_init_nvram_parser(&nvp, data, data_len) < 0)
 		return NULL;

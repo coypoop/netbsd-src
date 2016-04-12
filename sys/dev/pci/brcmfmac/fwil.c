@@ -169,7 +169,7 @@ s32
 brcmf_fil_cmd_int_set(struct brcmf_if *ifp, u32 cmd, u32 data)
 {
 	s32 err;
-	__le32 data_le = cpu_to_le32(data);
+	uint32_t data_le = cpu_to_le32(data);
 
 	mutex_lock(&ifp->drvr->proto_block);
 	brcmf_dbg(FIL, "ifidx=%d, cmd=%d, value=%d\n", ifp->ifidx, cmd, data);
@@ -183,7 +183,7 @@ s32
 brcmf_fil_cmd_int_get(struct brcmf_if *ifp, u32 cmd, u32 *data)
 {
 	s32 err;
-	__le32 data_le = cpu_to_le32(*data);
+	uint32_t data_le = cpu_to_le32(*data);
 
 	mutex_lock(&ifp->drvr->proto_block);
 	err = brcmf_fil_cmd_data(ifp, cmd, &data_le, sizeof(data_le), false);
@@ -276,7 +276,7 @@ brcmf_fil_iovar_data_get(struct brcmf_if *ifp, char *name, void *data,
 s32
 brcmf_fil_iovar_int_set(struct brcmf_if *ifp, char *name, u32 data)
 {
-	__le32 data_le = cpu_to_le32(data);
+	uint32_t data_le = cpu_to_le32(data);
 
 	return brcmf_fil_iovar_data_set(ifp, name, &data_le, sizeof(data_le));
 }
@@ -284,7 +284,7 @@ brcmf_fil_iovar_int_set(struct brcmf_if *ifp, char *name, u32 data)
 s32
 brcmf_fil_iovar_int_get(struct brcmf_if *ifp, char *name, u32 *data)
 {
-	__le32 data_le = cpu_to_le32(*data);
+	uint32_t data_le = cpu_to_le32(*data);
 	s32 err;
 
 	err = brcmf_fil_iovar_data_get(ifp, name, &data_le, sizeof(data_le));
@@ -302,7 +302,7 @@ brcmf_create_bsscfg(s32 bsscfgidx, char *name, char *data, u32 datalen,
 	u32 prefixlen;
 	u32 namelen;
 	u32 iolen;
-	__le32 bsscfgidx_le;
+	uint32_t bsscfgidx_le;
 
 	if (bsscfgidx == 0)
 		return brcmf_create_iovar(name, data, datalen, buf, buflen);
@@ -401,7 +401,7 @@ brcmf_fil_bsscfg_data_get(struct brcmf_if *ifp, char *name,
 s32
 brcmf_fil_bsscfg_int_set(struct brcmf_if *ifp, char *name, u32 data)
 {
-	__le32 data_le = cpu_to_le32(data);
+	uint32_t data_le = cpu_to_le32(data);
 
 	return brcmf_fil_bsscfg_data_set(ifp, name, &data_le,
 					 sizeof(data_le));
@@ -410,7 +410,7 @@ brcmf_fil_bsscfg_int_set(struct brcmf_if *ifp, char *name, u32 data)
 s32
 brcmf_fil_bsscfg_int_get(struct brcmf_if *ifp, char *name, u32 *data)
 {
-	__le32 data_le = cpu_to_le32(*data);
+	uint32_t data_le = cpu_to_le32(*data);
 	s32 err;
 
 	err = brcmf_fil_bsscfg_data_get(ifp, name, &data_le,

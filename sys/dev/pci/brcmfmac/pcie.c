@@ -405,8 +405,8 @@ brcmf_pcie_copy_mem_todev(struct brcmf_pciedev_info *devinfo, u32 mem_offset,
 			  void *srcaddr, u32 len)
 {
 	void __iomem *address = devinfo->tcm + mem_offset;
-	__le32 *src32;
-	__le16 *src16;
+	uint32_t *src32;
+	uint16_t *src16;
 	u8 *src8;
 
 	if (((ulong)address & 4) || ((ulong)srcaddr & 4) || (len & 4)) {
@@ -420,7 +420,7 @@ brcmf_pcie_copy_mem_todev(struct brcmf_pciedev_info *devinfo, u32 mem_offset,
 			}
 		} else {
 			len = len / 2;
-			src16 = (__le16 *)srcaddr;
+			src16 = (uint16_t *)srcaddr;
 			while (len) {
 				iowrite16(le16_to_cpu(*src16), address);
 				address += 2;
@@ -430,7 +430,7 @@ brcmf_pcie_copy_mem_todev(struct brcmf_pciedev_info *devinfo, u32 mem_offset,
 		}
 	} else {
 		len = len / 4;
-		src32 = (__le32 *)srcaddr;
+		src32 = (uint32_t *)srcaddr;
 		while (len) {
 			iowrite32(le32_to_cpu(*src32), address);
 			address += 4;
@@ -446,8 +446,8 @@ brcmf_pcie_copy_dev_tomem(struct brcmf_pciedev_info *devinfo, u32 mem_offset,
 			  void *dstaddr, u32 len)
 {
 	void __iomem *address = devinfo->tcm + mem_offset;
-	__le32 *dst32;
-	__le16 *dst16;
+	uint32_t *dst32;
+	uint16_t *dst16;
 	u8 *dst8;
 
 	if (((ulong)address & 4) || ((ulong)dstaddr & 4) || (len & 4)) {
@@ -461,7 +461,7 @@ brcmf_pcie_copy_dev_tomem(struct brcmf_pciedev_info *devinfo, u32 mem_offset,
 			}
 		} else {
 			len = len / 2;
-			dst16 = (__le16 *)dstaddr;
+			dst16 = (uint16_t *)dstaddr;
 			while (len) {
 				*dst16 = cpu_to_le16(ioread16(address));
 				address += 2;
@@ -471,7 +471,7 @@ brcmf_pcie_copy_dev_tomem(struct brcmf_pciedev_info *devinfo, u32 mem_offset,
 		}
 	} else {
 		len = len / 4;
-		dst32 = (__le32 *)dstaddr;
+		dst32 = (uint32_t *)dstaddr;
 		while (len) {
 			*dst32 = cpu_to_le32(ioread32(address));
 			address += 4;

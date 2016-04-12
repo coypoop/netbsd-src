@@ -75,9 +75,9 @@
 }
 
 struct firmware_hdr {
-	__le32 offset;
-	__le32 len;
-	__le32 idx;
+	uint32_t offset;
+	uint32_t len;
+	uint32_t idx;
 };
 
 static const char * const brcms_firmwares[MAX_FW_IMAGES] = {
@@ -1612,7 +1612,7 @@ int brcms_ucode_init_uint(struct brcms_info *wl, size_t *n_bytes, uint32_t idx)
 						  "ERROR: fw hdr len\n");
 					return -ENOMSG;
 				}
-				*n_bytes = le32_to_cpu(*((__le32 *) pdata));
+				*n_bytes = le32_to_cpu(*((uint32_t *) pdata));
 				return 0;
 			}
 		}

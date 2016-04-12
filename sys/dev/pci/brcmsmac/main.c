@@ -256,9 +256,9 @@ struct brcms_c_bit_desc {
 #define XMTFIFOTBL_STARTREV	17
 
 struct d11init {
-	__le16 addr;
-	__le16 size;
-	__le32 value;
+	uint16_t addr;
+	uint16_t size;
+	uint32_t value;
 };
 
 struct edcf_acparam {
@@ -1531,7 +1531,7 @@ brcms_b_write_template_ram(struct brcms_hardware *wlc_hw, int offset, int len,
 {
 	struct bcma_device *core = wlc_hw->d11core;
 	uint32_t word;
-	__le32 word_le;
+	uint32_t word_le;
 	__be32 word_be;
 	bool be_bit;
 	brcms_dbg_info(core, "wl%d\n", wlc_hw->unit);
@@ -2260,7 +2260,7 @@ static void brcms_c_gpio_init(struct brcms_c_info *wlc)
 }
 
 static void brcms_ucode_write(struct brcms_hardware *wlc_hw,
-			      const __le32 ucode[], const size_t nbytes)
+			      const uint32_t ucode[], const size_t nbytes)
 {
 	struct bcma_device *core = wlc_hw->d11core;
 	uint i;

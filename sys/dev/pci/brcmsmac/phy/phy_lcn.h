@@ -17,7 +17,7 @@
 #ifndef _BRCM_PHY_LCN_H_
 #define _BRCM_PHY_LCN_H_
 
-#include <types.h>
+#include <bcm_types.h>
 
 struct brcms_phy_lcnphy {
 	int lcnphy_txrf_sp_9_override;

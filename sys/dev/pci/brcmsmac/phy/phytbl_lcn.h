@@ -14,7 +14,7 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <types.h>
+#include <bcm_types.h>
 #include "phy_int.h"
 
 extern const struct phytbl_info dot11lcnphytbl_rx_gain_info_rev0[];

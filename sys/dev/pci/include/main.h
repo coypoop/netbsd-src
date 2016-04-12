@@ -22,7 +22,7 @@
 #endif
 
 #include <brcmu_utils.h>
-#include <types.h>
+#include <bcm_types.h>
 #include "d11.h"
 #include "scb.h"
 

@@ -34,11 +34,11 @@
 #include "bcdc.h"
 
 struct brcmf_proto_bcdc_dcmd {
-	__le32 cmd;	/* dongle command value */
-	__le32 len;	/* lower 16: output buflen;
+	uint32_t cmd;	/* dongle command value */
+	uint32_t len;	/* lower 16: output buflen;
 			 * upper 16: input buflen (excludes header) */
-	__le32 flags;	/* flag defns given below */
-	__le32 status;	/* status code returned from the device */
+	uint32_t flags;	/* flag defns given below */
+	uint32_t status;	/* status code returned from the device */
 };
 
 /* BCDC flag definitions */

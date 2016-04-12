@@ -83,23 +83,23 @@ struct msgbuf_common_hdr {
 	u8				ifidx;
 	u8				flags;
 	u8				rsvd0;
-	__le32				request_id;
+	uint32_t				request_id;
 };
 
 struct msgbuf_buf_addr {
-	__le32				low_addr;
-	__le32				high_addr;
+	uint32_t				low_addr;
+	uint32_t				high_addr;
 };
 
 struct msgbuf_ioctl_req_hdr {
 	struct msgbuf_common_hdr	msg;
-	__le32				cmd;
-	__le16				trans_id;
-	__le16				input_buf_len;
-	__le16				output_buf_len;
-	__le16				rsvd0[3];
+	uint32_t				cmd;
+	uint16_t				trans_id;
+	uint16_t				input_buf_len;
+	uint16_t				output_buf_len;
+	uint16_t				rsvd0[3];
 	struct msgbuf_buf_addr		req_buf_addr;
-	__le32				rsvd1[2];
+	uint32_t				rsvd1[2];
 };
 
 struct msgbuf_tx_msghdr {
@@ -109,67 +109,67 @@ struct msgbuf_tx_msghdr {
 	u8				seg_cnt;
 	struct msgbuf_buf_addr		metadata_buf_addr;
 	struct msgbuf_buf_addr		data_buf_addr;
-	__le16				metadata_buf_len;
-	__le16				data_len;
-	__le32				rsvd0;
+	uint16_t				metadata_buf_len;
+	uint16_t				data_len;
+	uint32_t				rsvd0;
 };
 
 struct msgbuf_rx_bufpost {
 	struct msgbuf_common_hdr	msg;
-	__le16				metadata_buf_len;
-	__le16				data_buf_len;
-	__le32				rsvd0;
+	uint16_t				metadata_buf_len;
+	uint16_t				data_buf_len;
+	uint32_t				rsvd0;
 	struct msgbuf_buf_addr		metadata_buf_addr;
 	struct msgbuf_buf_addr		data_buf_addr;
 };
 
 struct msgbuf_rx_ioctl_resp_or_event {
 	struct msgbuf_common_hdr	msg;
-	__le16				host_buf_len;
-	__le16				rsvd0[3];
+	uint16_t				host_buf_len;
+	uint16_t				rsvd0[3];
 	struct msgbuf_buf_addr		host_buf_addr;
-	__le32				rsvd1[4];
+	uint32_t				rsvd1[4];
 };
 
 struct msgbuf_completion_hdr {
-	__le16				status;
-	__le16				flow_ring_id;
+	uint16_t				status;
+	uint16_t				flow_ring_id;
 };
 
 struct msgbuf_rx_event {
 	struct msgbuf_common_hdr	msg;
 	struct msgbuf_completion_hdr	compl_hdr;
-	__le16				event_data_len;
-	__le16				seqnum;
-	__le16				rsvd0[4];
+	uint16_t				event_data_len;
+	uint16_t				seqnum;
+	uint16_t				rsvd0[4];
 };
 
 struct msgbuf_ioctl_resp_hdr {
 	struct msgbuf_common_hdr	msg;
 	struct msgbuf_completion_hdr	compl_hdr;
-	__le16				resp_len;
-	__le16				trans_id;
-	__le32				cmd;
-	__le32				rsvd0;
+	uint16_t				resp_len;
+	uint16_t				trans_id;
+	uint32_t				cmd;
+	uint32_t				rsvd0;
 };
 
 struct msgbuf_tx_status {
 	struct msgbuf_common_hdr	msg;
 	struct msgbuf_completion_hdr	compl_hdr;
-	__le16				metadata_len;
-	__le16				tx_status;
+	uint16_t				metadata_len;
+	uint16_t				tx_status;
 };
 
 struct msgbuf_rx_complete {
 	struct msgbuf_common_hdr	msg;
 	struct msgbuf_completion_hdr	compl_hdr;
-	__le16				metadata_len;
-	__le16				data_len;
-	__le16				data_offset;
-	__le16				flags;
-	__le32				rx_status_0;
-	__le32				rx_status_1;
-	__le32				rsvd0;
+	uint16_t				metadata_len;
+	uint16_t				data_len;
+	uint16_t				data_offset;
+	uint16_t				flags;
+	uint32_t				rx_status_0;
+	uint32_t				rx_status_1;
+	uint32_t				rsvd0;
 };
 
 struct msgbuf_tx_flowring_create_req {
@@ -178,38 +178,38 @@ struct msgbuf_tx_flowring_create_req {
 	u8				sa[ETH_ALEN];
 	u8				tid;
 	u8				if_flags;
-	__le16				flow_ring_id;
+	uint16_t				flow_ring_id;
 	u8				tc;
 	u8				priority;
-	__le16				int_vector;
-	__le16				max_items;
-	__le16				len_item;
+	uint16_t				int_vector;
+	uint16_t				max_items;
+	uint16_t				len_item;
 	struct msgbuf_buf_addr		flow_ring_addr;
 };
 
 struct msgbuf_tx_flowring_delete_req {
 	struct msgbuf_common_hdr	msg;
-	__le16				flow_ring_id;
-	__le16				reason;
-	__le32				rsvd0[7];
+	uint16_t				flow_ring_id;
+	uint16_t				reason;
+	uint32_t				rsvd0[7];
 };
 
 struct msgbuf_flowring_create_resp {
 	struct msgbuf_common_hdr	msg;
 	struct msgbuf_completion_hdr	compl_hdr;
-	__le32				rsvd0[3];
+	uint32_t				rsvd0[3];
 };
 
 struct msgbuf_flowring_delete_resp {
 	struct msgbuf_common_hdr	msg;
 	struct msgbuf_completion_hdr	compl_hdr;
-	__le32				rsvd0[3];
+	uint32_t				rsvd0[3];
 };
 
 struct msgbuf_flowring_flush_resp {
 	struct msgbuf_common_hdr	msg;
 	struct msgbuf_completion_hdr	compl_hdr;
-	__le32				rsvd0[3];
+	uint32_t				rsvd0[3];
 };
 
 struct brcmf_msgbuf_work_item {

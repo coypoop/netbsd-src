@@ -14,7 +14,7 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <types.h>
+#include <bcm_types.h>
 #include "phytbl_n.h"
 
 static const uint32_t frame_struct_rev0[] = {

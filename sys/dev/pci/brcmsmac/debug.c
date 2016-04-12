@@ -29,7 +29,7 @@
 #include <defs.h>
 #include <brcmu_wifi.h>
 #include <brcmu_utils.h>
-#include <types.h>
+#include <bcm_types.h>
 #include <main.h>
 #include "debug.h"
 #include "brcms_trace_events.h"

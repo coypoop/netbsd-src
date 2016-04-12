@@ -58,9 +58,9 @@
 #define CONSOLE_BUFFER_MAX	2024
 
 struct rte_log_le {
-	__le32 buf;		/* Can't be pointer on (64-bit) hosts */
-	__le32 buf_size;
-	__le32 idx;
+	uint32_t buf;		/* Can't be pointer on (64-bit) hosts */
+	uint32_t buf_size;
+	uint32_t idx;
 	char *_buf_compat;	/* Redundant pointer for backward compat. */
 };
 
@@ -335,26 +335,26 @@ struct brcmf_console {
 };
 
 struct brcmf_trap_info {
-	__le32		type;
-	__le32		epc;
-	__le32		cpsr;
-	__le32		spsr;
-	__le32		r0;	/* a1 */
-	__le32		r1;	/* a2 */
-	__le32		r2;	/* a3 */
-	__le32		r3;	/* a4 */
-	__le32		r4;	/* v1 */
-	__le32		r5;	/* v2 */
-	__le32		r6;	/* v3 */
-	__le32		r7;	/* v4 */
-	__le32		r8;	/* v5 */
-	__le32		r9;	/* sb/v6 */
-	__le32		r10;	/* sl/v7 */
-	__le32		r11;	/* fp/v8 */
-	__le32		r12;	/* ip */
-	__le32		r13;	/* sp */
-	__le32		r14;	/* lr */
-	__le32		pc;	/* r15 */
+	uint32_t		type;
+	uint32_t		epc;
+	uint32_t		cpsr;
+	uint32_t		spsr;
+	uint32_t		r0;	/* a1 */
+	uint32_t		r1;	/* a2 */
+	uint32_t		r2;	/* a3 */
+	uint32_t		r3;	/* a4 */
+	uint32_t		r4;	/* v1 */
+	uint32_t		r5;	/* v2 */
+	uint32_t		r6;	/* v3 */
+	uint32_t		r7;	/* v4 */
+	uint32_t		r8;	/* v5 */
+	uint32_t		r9;	/* sb/v6 */
+	uint32_t		r10;	/* sl/v7 */
+	uint32_t		r11;	/* fp/v8 */
+	uint32_t		r12;	/* ip */
+	uint32_t		r13;	/* sp */
+	uint32_t		r14;	/* lr */
+	uint32_t		pc;	/* r15 */
 };
 #endif				/* DEBUG */
 
@@ -371,15 +371,15 @@ struct sdpcm_shared {
 };
 
 struct sdpcm_shared_le {
-	__le32 flags;
-	__le32 trap_addr;
-	__le32 assert_exp_addr;
-	__le32 assert_file_addr;
-	__le32 assert_line;
-	__le32 console_addr;	/* Address of struct rte_console */
-	__le32 msgtrace_addr;
+	uint32_t flags;
+	uint32_t trap_addr;
+	uint32_t assert_exp_addr;
+	uint32_t assert_file_addr;
+	uint32_t assert_line;
+	uint32_t console_addr;	/* Address of struct rte_console */
+	uint32_t msgtrace_addr;
 	u8 tag[32];
-	__le32 brpt_addr;
+	uint32_t brpt_addr;
 };
 
 /* dongle SDIO bus specific header info */
@@ -984,7 +984,7 @@ static int brcmf_sdio_readshared(struct brcmf_sdio *bus,
 	int rv;
 	u32 shaddr = 0;
 	struct sdpcm_shared_le sh_le;
-	__le32 addr_le;
+	uint32_t addr_le;
 
 	sdio_claim_host(bus->sdiodev->func[1]);
 	brcmf_sdio_bus_sleep(bus, false, false);
@@ -1338,7 +1338,7 @@ static int brcmf_sdio_hdparse(struct brcmf_sdio *bus, u8 *header,
 
 	/* software header */
 	header += SDPCM_HWHDR_LEN;
-	swheader = le32_to_cpu(*(__le32 *)header);
+	swheader = le32_to_cpu(*(uint32_t *)header);
 	if (type == BRCMF_SDIO_FT_SUPER && SDPCM_GLOMDESC(header)) {
 		brcmf_err("Glom descriptor found in superframe head\n");
 		rd->len = 0;
@@ -1389,7 +1389,7 @@ static int brcmf_sdio_hdparse(struct brcmf_sdio *bus, u8 *header,
 			brcmf_err("seq %d: next length error\n", rx_seq);
 		rd->len_nxtfrm = 0;
 	}
-	swheader = le32_to_cpu(*(__le32 *)(header + 4));
+	swheader = le32_to_cpu(*(uint32_t *)(header + 4));
 	fc = swheader & SDPCM_FCMASK_MASK;
 	if (bus->flowcontrol != fc) {
 		if (~bus->flowcontrol & fc)
@@ -1411,8 +1411,8 @@ static int brcmf_sdio_hdparse(struct brcmf_sdio *bus, u8 *header,
 
 static inline void brcmf_sdio_update_hwhdr(u8 *header, u16 frm_length)
 {
-	*(__le16 *)header = cpu_to_le16(frm_length);
-	*(((__le16 *)header) + 1) = cpu_to_le16(~frm_length);
+	*(uint16_t *)header = cpu_to_le16(frm_length);
+	*(((uint16_t *)header) + 1) = cpu_to_le16(~frm_length);
 }
 
 static void brcmf_sdio_hdpack(struct brcmf_sdio *bus, u8 *header,
@@ -1426,9 +1426,9 @@ static void brcmf_sdio_hdpack(struct brcmf_sdio *bus, u8 *header,
 
 	if (bus->txglom) {
 		hdrval = (hd_info->len - hdr_offset) | (hd_info->lastfrm << 24);
-		*((__le32 *)(header + hdr_offset)) = cpu_to_le32(hdrval);
+		*((uint32_t *)(header + hdr_offset)) = cpu_to_le32(hdrval);
 		hdrval = (u16)hd_info->tail_pad << 16;
-		*(((__le32 *)(header + hdr_offset)) + 1) = cpu_to_le32(hdrval);
+		*(((uint32_t *)(header + hdr_offset)) + 1) = cpu_to_le32(hdrval);
 		hdr_offset += SDPCM_HWEXT_LEN;
 	}
 
@@ -1437,8 +1437,8 @@ static void brcmf_sdio_hdpack(struct brcmf_sdio *bus, u8 *header,
 		  SDPCM_CHANNEL_MASK;
 	hdrval |= (hd_info->dat_offset << SDPCM_DOFFSET_SHIFT) &
 		  SDPCM_DOFFSET_MASK;
-	*((__le32 *)(header + hdr_offset)) = cpu_to_le32(hdrval);
-	*(((__le32 *)(header + hdr_offset)) + 1) = 0;
+	*((uint32_t *)(header + hdr_offset)) = cpu_to_le32(hdrval);
+	*(((uint32_t *)(header + hdr_offset)) + 1) = 0;
 	trace_brcmf_sdpcm_hdr(SDPCM_TX + !!(bus->txglom), header);
 }
 
@@ -2202,12 +2202,12 @@ brcmf_sdio_txpkt_postp(struct brcmf_sdio *bus, struct sk_buff_head *pktq)
 			brcmu_pkt_buf_free_skb(pkt_next);
 		} else {
 			hdr = pkt_next->data + bus->tx_hdrlen - SDPCM_SWHDR_LEN;
-			dat_offset = le32_to_cpu(*(__le32 *)hdr);
+			dat_offset = le32_to_cpu(*(uint32_t *)hdr);
 			dat_offset = (dat_offset & SDPCM_DOFFSET_MASK) >>
 				     SDPCM_DOFFSET_SHIFT;
 			skb_pull(pkt_next, dat_offset);
 			if (bus->txglom) {
-				tail_pad = le16_to_cpu(*(__le16 *)(hdr - 2));
+				tail_pad = le16_to_cpu(*(uint16_t *)(hdr - 2));
 				skb_trim(pkt_next, pkt_next->len - tail_pad);
 			}
 		}
@@ -2874,7 +2874,7 @@ static int brcmf_sdio_dump_console(struct seq_file *seq, struct brcmf_sdio *bus,
 {
 	u32 addr, console_ptr, console_size, console_index;
 	char *conbuf = NULL;
-	__le32 sh_val;
+	uint32_t sh_val;
 	int rv;
 
 	/* obtain console information from device memory */

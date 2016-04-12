@@ -751,37 +751,37 @@ struct cck_phy_hdr {
 
 /* TX DMA buffer header */
 struct d11txh {
-	__le16 MacTxControlLow;	/* 0x0 */
-	__le16 MacTxControlHigh;	/* 0x1 */
-	__le16 MacFrameControl;	/* 0x2 */
-	__le16 TxFesTimeNormal;	/* 0x3 */
-	__le16 PhyTxControlWord;	/* 0x4 */
-	__le16 PhyTxControlWord_1;	/* 0x5 */
-	__le16 PhyTxControlWord_1_Fbr;	/* 0x6 */
-	__le16 PhyTxControlWord_1_Rts;	/* 0x7 */
-	__le16 PhyTxControlWord_1_FbrRts;	/* 0x8 */
-	__le16 MainRates;	/* 0x9 */
-	__le16 XtraFrameTypes;	/* 0xa */
+	uint16_t MacTxControlLow;	/* 0x0 */
+	uint16_t MacTxControlHigh;	/* 0x1 */
+	uint16_t MacFrameControl;	/* 0x2 */
+	uint16_t TxFesTimeNormal;	/* 0x3 */
+	uint16_t PhyTxControlWord;	/* 0x4 */
+	uint16_t PhyTxControlWord_1;	/* 0x5 */
+	uint16_t PhyTxControlWord_1_Fbr;	/* 0x6 */
+	uint16_t PhyTxControlWord_1_Rts;	/* 0x7 */
+	uint16_t PhyTxControlWord_1_FbrRts;	/* 0x8 */
+	uint16_t MainRates;	/* 0x9 */
+	uint16_t XtraFrameTypes;	/* 0xa */
 	uint8_t IV[16];		/* 0x0b - 0x12 */
 	uint8_t TxFrameRA[6];	/* 0x13 - 0x15 */
-	__le16 TxFesTimeFallback;	/* 0x16 */
+	uint16_t TxFesTimeFallback;	/* 0x16 */
 	uint8_t RTSPLCPFallback[6];	/* 0x17 - 0x19 */
-	__le16 RTSDurFallback;	/* 0x1a */
+	uint16_t RTSDurFallback;	/* 0x1a */
 	uint8_t FragPLCPFallback[6];	/* 0x1b - 1d */
-	__le16 FragDurFallback;	/* 0x1e */
-	__le16 MModeLen;	/* 0x1f */
-	__le16 MModeFbrLen;	/* 0x20 */
-	__le16 TstampLow;	/* 0x21 */
-	__le16 TstampHigh;	/* 0x22 */
-	__le16 ABI_MimoAntSel;	/* 0x23 */
-	__le16 PreloadSize;	/* 0x24 */
-	__le16 AmpduSeqCtl;	/* 0x25 */
-	__le16 TxFrameID;	/* 0x26 */
-	__le16 TxStatus;	/* 0x27 */
-	__le16 MaxNMpdus;	/* 0x28 */
-	__le16 MaxABytes_MRT;	/* 0x29 */
-	__le16 MaxABytes_FBR;	/* 0x2a */
-	__le16 MinMBytes;	/* 0x2b */
+	uint16_t FragDurFallback;	/* 0x1e */
+	uint16_t MModeLen;	/* 0x1f */
+	uint16_t MModeFbrLen;	/* 0x20 */
+	uint16_t TstampLow;	/* 0x21 */
+	uint16_t TstampHigh;	/* 0x22 */
+	uint16_t ABI_MimoAntSel;	/* 0x23 */
+	uint16_t PreloadSize;	/* 0x24 */
+	uint16_t AmpduSeqCtl;	/* 0x25 */
+	uint16_t TxFrameID;	/* 0x26 */
+	uint16_t TxStatus;	/* 0x27 */
+	uint16_t MaxNMpdus;	/* 0x28 */
+	uint16_t MaxABytes_MRT;	/* 0x29 */
+	uint16_t MaxABytes_FBR;	/* 0x2a */
+	uint16_t MinMBytes;	/* 0x2b */
 	uint8_t RTSPhyHeader[D11_PHY_HDR_LEN];	/* 0x2c - 0x2e */
 	struct ieee80211_rts rts_frame;	/* 0x2f - 0x36 */
 	uint16_t PAD;		/* 0x37 */
@@ -1386,18 +1386,18 @@ struct shm_acparams {
  * RxChan: gain code, channel radio code, and phy type
  */
 struct d11rxhdr_le {
-	__le16 RxFrameSize;
+	uint16_t RxFrameSize;
 	uint16_t PAD;
-	__le16 PhyRxStatus_0;
-	__le16 PhyRxStatus_1;
-	__le16 PhyRxStatus_2;
-	__le16 PhyRxStatus_3;
-	__le16 PhyRxStatus_4;
-	__le16 PhyRxStatus_5;
-	__le16 RxStatus1;
-	__le16 RxStatus2;
-	__le16 RxTSFTime;
-	__le16 RxChan;
+	uint16_t PhyRxStatus_0;
+	uint16_t PhyRxStatus_1;
+	uint16_t PhyRxStatus_2;
+	uint16_t PhyRxStatus_3;
+	uint16_t PhyRxStatus_4;
+	uint16_t PhyRxStatus_5;
+	uint16_t RxStatus1;
+	uint16_t RxStatus2;
+	uint16_t RxTSFTime;
+	uint16_t RxChan;
 } __packed;
 
 struct d11rxhdr {

@@ -113,8 +113,8 @@ struct brcmf_btcoex_info {
 static s32 brcmf_btcoex_params_write(struct brcmf_if *ifp, u32 addr, u32 data)
 {
 	struct {
-		__le32 addr;
-		__le32 data;
+		uint32_t addr;
+		uint32_t data;
 	} reg_write;
 
 	reg_write.addr = cpu_to_le32(addr);

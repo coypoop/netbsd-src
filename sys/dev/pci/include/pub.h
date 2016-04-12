@@ -22,7 +22,7 @@
 #endif
 
 #include <brcmu_wifi.h>
-#include <types.h>
+#include <bcm_types.h>
 #include "defs.h"
 
 #define	BRCMS_NUMRATES	16	/* max # of rates in a rateset */

@@ -24,7 +24,7 @@
 
 #include <brcmu_utils.h>
 #include "aiutils.h"
-#include <types.h>
+#include <bcm_types.h>
 #include <main.h>
 #include <dma.h>
 #include "soc.h"
@@ -200,10 +200,10 @@
  * Descriptors are only read by the hardware, never written back.
  */
 struct dma64desc {
-	__le32 ctrl1;	/* misc control bits & bufcount */
-	__le32 ctrl2;	/* buffer count and address extension */
-	__le32 addrlow;	/* memory address of the date buffer, bits 31:0 */
-	__le32 addrhigh; /* memory address of the date buffer, bits 63:32 */
+	uint32_t ctrl1;	/* misc control bits & bufcount */
+	uint32_t ctrl2;	/* buffer count and address extension */
+	uint32_t addrlow;	/* memory address of the date buffer, bits 31:0 */
+	uint32_t addrhigh; /* memory address of the date buffer, bits 63:32 */
 };
 
 /* dma engine software state */
@@ -286,7 +286,7 @@ struct dma_info {
 };
 
 /* Check for odd number of 1's */
-static uint32_t parity32(__le32 data)
+static uint32_t parity32(uint32_t data)
 {
 	/* no swap needed for counting 1's */
 	uint32_t par_data = *(uint32_t *)&data;
@@ -940,7 +940,7 @@ int dma_rx(struct dma_pub *pub, struct sk_buff_head *skb_list)
 	if (p == NULL)
 		return 0;
 
-	len = le16_to_cpu(*(__le16 *) (p->data));
+	len = le16_to_cpu(*(uint16_t *) (p->data));
 	brcms_dbg_dma(di->core, "%s: dma_rx len %d\n", di->name, len);
 	dma_spin_for_len(len, p);
 

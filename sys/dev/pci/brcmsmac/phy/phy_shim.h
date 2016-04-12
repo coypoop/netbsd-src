@@ -21,7 +21,7 @@
 #ifndef _BRCM_PHY_SHIM_H_
 #define _BRCM_PHY_SHIM_H_
 
-#include "types.h"
+#include <bcm_types.h>
 
 #define RADAR_TYPE_NONE		0	/* Radar type None */
 #define RADAR_TYPE_ETSI_1	1	/* ETSI 1 Radar type */

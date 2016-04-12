@@ -17,7 +17,7 @@
 #ifndef _BRCM_PHY_INT_H_
 #define _BRCM_PHY_INT_H_
 
-#include <types.h>
+#include <bcm_types.h>
 #include <brcmu_utils.h>
 #include <brcmu_wifi.h>
 

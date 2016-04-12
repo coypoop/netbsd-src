@@ -92,7 +92,7 @@ static void _brcmf_set_multicast_list(struct work_struct *work)
 	struct net_device *ndev;
 	struct netdev_hw_addr *ha;
 	u32 cmd_value, cnt;
-	__le32 cnt_le;
+	uint32_t cnt_le;
 	char *buf, *bufp;
 	u32 buflen;
 	s32 err;

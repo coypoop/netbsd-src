@@ -100,27 +100,27 @@ static struct brcmf_firmware_mapping brcmf_usb_fwnames[] = {
 
 
 struct trx_header_le {
-	__le32 magic;		/* "HDR0" */
-	__le32 len;		/* Length of file including header */
-	__le32 crc32;		/* CRC from flag_version to end of file */
-	__le32 flag_version;	/* 0:15 flags, 16:31 version */
-	__le32 offsets[TRX_MAX_OFFSET];	/* Offsets of partitions from start of
+	uint32_t magic;		/* "HDR0" */
+	uint32_t len;		/* Length of file including header */
+	uint32_t crc32;		/* CRC from flag_version to end of file */
+	uint32_t flag_version;	/* 0:15 flags, 16:31 version */
+	uint32_t offsets[TRX_MAX_OFFSET];	/* Offsets of partitions from start of
 					 * header
 					 */
 };
 
 struct rdl_state_le {
-	__le32 state;
-	__le32 bytes;
+	uint32_t state;
+	uint32_t bytes;
 };
 
 struct bootrom_id_le {
-	__le32 chip;		/* Chip id */
-	__le32 chiprev;		/* Chip rev */
-	__le32 ramsize;		/* Size of  RAM */
-	__le32 remapbase;	/* Current remap base address */
-	__le32 boardtype;	/* Type of board */
-	__le32 boardrev;	/* Board revision */
+	uint32_t chip;		/* Chip id */
+	uint32_t chiprev;		/* Chip rev */
+	uint32_t ramsize;		/* Size of  RAM */
+	uint32_t remapbase;	/* Current remap base address */
+	uint32_t boardtype;	/* Type of board */
+	uint32_t boardrev;	/* Board revision */
 };
 
 struct brcmf_usb_image {
