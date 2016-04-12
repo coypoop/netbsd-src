@@ -23,6 +23,7 @@
 #else
 #include <sys/types.h>
 #include <sys/param.h>
+#include <sys/kmem.h>
 #endif
 
 #define WL_CHAN_FREQ_RANGE_2G      0
