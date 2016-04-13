@@ -360,7 +360,7 @@ struct brcms_hardware {
 	uint mac_suspend_depth;	/* current depth of mac_suspend levels */
 	uint32_t wake_override;	/* bit flags to force MAC to WAKE mode */
 	uint32_t mute_override;	/* Prevent ucode from sending beacons */
-	uint8_t etheraddr[ETH_ALEN];	/* currently configured ethernet address */
+	uint8_t etheraddr[ETHER_ADDR_LEN];	/* currently configured ethernet address */
 	bool noreset;		/* true= do not reset hw, used by WLC_OUT */
 	bool forcefastclk;	/* true if h/w is forcing to use fast clk */
 	bool clk;		/* core is out of reset and has clock */
@@ -486,7 +486,7 @@ struct brcms_c_info {
 	uint16_t deviceid;
 	uint ucode_rev;
 
-	uint8_t perm_etheraddr[ETH_ALEN];
+	uint8_t perm_etheraddr[ETHER_ADDR_LEN];
 
 	bool bandlocked;
 	bool bandinit_pending;
@@ -614,7 +614,7 @@ struct brcms_bss_cfg {
 	enum brcms_bss_type type;
 	uint8_t SSID_len;
 	uint8_t SSID[IEEE80211_MAX_SSID_LEN];
-	uint8_t BSSID[ETH_ALEN];
+	uint8_t BSSID[ETHER_ADDR_LEN];
 	struct brcms_bss_info *current_bss;
 };
 

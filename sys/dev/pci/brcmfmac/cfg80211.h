@@ -115,7 +115,7 @@ struct brcmf_cfg80211_security {
  * @key: key information
  */
 struct brcmf_cfg80211_profile {
-	u8 bssid[ETH_ALEN];
+	u8 bssid[ETHER_ADDR_LEN];
 	struct brcmf_cfg80211_security sec;
 	struct brcmf_wsec_key key[BRCMF_MAX_DEFAULT_KEYS];
 };

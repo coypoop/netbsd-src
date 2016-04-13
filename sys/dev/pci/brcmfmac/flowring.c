@@ -48,14 +48,14 @@ static const u8 brcmf_flowring_prio2fifo[] = {
 
 
 static bool
-brcmf_flowring_is_tdls_mac(struct brcmf_flowring *flow, u8 mac[ETH_ALEN])
+brcmf_flowring_is_tdls_mac(struct brcmf_flowring *flow, u8 mac[ETHER_ADDR_LEN])
 {
 	struct brcmf_flowring_tdls_entry *search;
 
 	search = flow->tdls_entry;
 
 	while (search) {
-		if (memcmp(search->mac, mac, ETH_ALEN) == 0)
+		if (memcmp(search->mac, mac, ETHER_ADDR_LEN) == 0)
 			return true;
 		search = search->next;
 	}
@@ -64,7 +64,7 @@ brcmf_flowring_is_tdls_mac(struct brcmf_flowring *flow, u8 mac[ETH_ALEN])
 }
 
 
-u32 brcmf_flowring_lookup(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
+u32 brcmf_flowring_lookup(struct brcmf_flowring *flow, u8 da[ETHER_ADDR_LEN],
 			  u8 prio, u8 ifidx)
 {
 	struct brcmf_flowring_hash *hash;
@@ -91,7 +91,7 @@ u32 brcmf_flowring_lookup(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
 	found = false;
 	hash = flow->hash;
 	for (i = 0; i < BRCMF_FLOWRING_HASHSIZE; i++) {
-		if ((sta || (memcmp(hash[hash_idx].mac, mac, ETH_ALEN) == 0)) &&
+		if ((sta || (memcmp(hash[hash_idx].mac, mac, ETHER_ADDR_LEN) == 0)) &&
 		    (hash[hash_idx].fifo == fifo) &&
 		    (hash[hash_idx].ifidx == ifidx)) {
 			found = true;
@@ -106,7 +106,7 @@ u32 brcmf_flowring_lookup(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
 }
 
 
-u32 brcmf_flowring_create(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
+u32 brcmf_flowring_create(struct brcmf_flowring *flow, u8 da[ETHER_ADDR_LEN],
 			  u8 prio, u8 ifidx)
 {
 	struct brcmf_flowring_ring *ring;
@@ -153,7 +153,7 @@ u32 brcmf_flowring_create(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
 		if (!ring)
 			return -ENOMEM;
 
-		memcpy(hash[hash_idx].mac, mac, ETH_ALEN);
+		memcpy(hash[hash_idx].mac, mac, ETHER_ADDR_LEN);
 		hash[hash_idx].fifo = fifo;
 		hash[hash_idx].ifidx = ifidx;
 		hash[hash_idx].flowid = i;
@@ -426,7 +426,7 @@ void brcmf_flowring_configure_addr_mode(struct brcmf_flowring *flow, int ifidx,
 
 
 void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
-				u8 peer[ETH_ALEN])
+				u8 peer[ETHER_ADDR_LEN])
 {
 	struct brcmf_bus *bus_if = dev_get_drvdata(flow->dev);
 	struct brcmf_pub *drvr = bus_if->drvr;
@@ -442,7 +442,7 @@ void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
 	search = flow->tdls_entry;
 	prev = NULL;
 	while (search) {
-		if (memcmp(search->mac, peer, ETH_ALEN) == 0) {
+		if (memcmp(search->mac, peer, ETHER_ADDR_LEN) == 0) {
 			sta = false;
 			break;
 		}
@@ -452,7 +452,7 @@ void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
 
 	hash = flow->hash;
 	for (i = 0; i < BRCMF_FLOWRING_HASHSIZE; i++) {
-		if ((sta || (memcmp(hash[i].mac, peer, ETH_ALEN) == 0)) &&
+		if ((sta || (memcmp(hash[i].mac, peer, ETHER_ADDR_LEN) == 0)) &&
 		    (hash[i].ifidx == ifidx)) {
 			flowid = flow->hash[i].flowid;
 			if (flow->rings[flowid]->status == RING_OPEN) {
@@ -475,7 +475,7 @@ void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
 
 
 void brcmf_flowring_add_tdls_peer(struct brcmf_flowring *flow, int ifidx,
-				  u8 peer[ETH_ALEN])
+				  u8 peer[ETHER_ADDR_LEN])
 {
 	struct brcmf_flowring_tdls_entry *tdls_entry;
 	struct brcmf_flowring_tdls_entry *search;
@@ -484,17 +484,17 @@ void brcmf_flowring_add_tdls_peer(struct brcmf_flowring *flow, int ifidx,
 	if (tdls_entry == NULL)
 		return;
 
-	memcpy(tdls_entry->mac, peer, ETH_ALEN);
+	memcpy(tdls_entry->mac, peer, ETHER_ADDR_LEN);
 	tdls_entry->next = NULL;
 	if (flow->tdls_entry == NULL) {
 		flow->tdls_entry = tdls_entry;
 	} else {
 		search = flow->tdls_entry;
-		if (memcmp(search->mac, peer, ETH_ALEN) == 0)
+		if (memcmp(search->mac, peer, ETHER_ADDR_LEN) == 0)
 			return;
 		while (search->next) {
 			search = search->next;
-			if (memcmp(search->mac, peer, ETH_ALEN) == 0)
+			if (memcmp(search->mac, peer, ETHER_ADDR_LEN) == 0)
 				return;
 		}
 		search->next = tdls_entry;

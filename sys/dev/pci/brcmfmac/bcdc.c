@@ -341,13 +341,13 @@ brcmf_proto_bcdc_configure_addr_mode(struct brcmf_pub *drvr, int ifidx,
 
 static void
 brcmf_proto_bcdc_delete_peer(struct brcmf_pub *drvr, int ifidx,
-			     u8 peer[ETH_ALEN])
+			     u8 peer[ETHER_ADDR_LEN])
 {
 }
 
 static void
 brcmf_proto_bcdc_add_tdls_peer(struct brcmf_pub *drvr, int ifidx,
-			       u8 peer[ETH_ALEN])
+			       u8 peer[ETHER_ADDR_LEN])
 {
 }
 

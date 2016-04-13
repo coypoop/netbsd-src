@@ -108,7 +108,7 @@ static void _brcmf_set_multicast_list(struct work_struct *work)
 
 	/* Send down the multicast list first. */
 	cnt = netdev_mc_count(ndev);
-	buflen = sizeof(cnt) + (cnt * ETH_ALEN);
+	buflen = sizeof(cnt) + (cnt * ETHER_ADDR_LEN);
 	buf = kmem_alloc(buflen, KM_NOSLEEP);
 	if (!buf)
 		return;
@@ -121,8 +121,8 @@ static void _brcmf_set_multicast_list(struct work_struct *work)
 	netdev_for_each_mc_addr(ha, ndev) {
 		if (!cnt)
 			break;
-		memcpy(bufp, ha->addr, ETH_ALEN);
-		bufp += ETH_ALEN;
+		memcpy(bufp, ha->addr, ETHER_ADDR_LEN);
+		bufp += ETHER_ADDR_LEN;
 		cnt--;
 	}
 
@@ -162,13 +162,13 @@ _brcmf_set_mac_address(struct work_struct *work)
 	brcmf_dbg(TRACE, "Enter, bsscfgidx=%d\n", ifp->bsscfgidx);
 
 	err = brcmf_fil_iovar_data_set(ifp, "cur_etheraddr", ifp->mac_addr,
-				       ETH_ALEN);
+				       ETHER_ADDR_LEN);
 	if (err < 0) {
 		brcmf_err("Setting cur_etheraddr failed, %d\n", err);
 	} else {
 		brcmf_dbg(TRACE, "MAC address updated to %pM\n",
 			  ifp->mac_addr);
-		memcpy(ifp->ndev->dev_addr, ifp->mac_addr, ETH_ALEN);
+		memcpy(ifp->ndev->dev_addr, ifp->mac_addr, ETHER_ADDR_LEN);
 	}
 }
 
@@ -177,7 +177,7 @@ static int brcmf_netdev_set_mac_address(struct net_device *ndev, void *addr)
 	struct brcmf_if *ifp = netdev_priv(ndev);
 	struct sockaddr *sa = (struct sockaddr *)addr;
 
-	memcpy(&ifp->mac_addr, sa->sa_data, ETH_ALEN);
+	memcpy(&ifp->mac_addr, sa->sa_data, ETHER_ADDR_LEN);
 	schedule_work(&ifp->setmacaddr_work);
 	return 0;
 }
@@ -681,7 +681,7 @@ int brcmf_net_attach(struct brcmf_if *ifp, bool rtnl_locked)
 			      drvr->hdrlen;
 
 	/* set the mac address */
-	memcpy(ndev->dev_addr, ifp->mac_addr, ETH_ALEN);
+	memcpy(ndev->dev_addr, ifp->mac_addr, ETHER_ADDR_LEN);
 
 	INIT_WORK(&ifp->setmacaddr_work, _brcmf_set_mac_address);
 	INIT_WORK(&ifp->multicast_work, _brcmf_set_multicast_list);
@@ -772,7 +772,7 @@ static int brcmf_net_p2p_attach(struct brcmf_if *ifp)
 	ndev->netdev_ops = &brcmf_netdev_ops_p2p;
 
 	/* set the mac address */
-	memcpy(ndev->dev_addr, ifp->mac_addr, ETH_ALEN);
+	memcpy(ndev->dev_addr, ifp->mac_addr, ETHER_ADDR_LEN);
 
 	if (register_netdev(ndev) != 0) {
 		brcmf_err("couldn't register the p2p net device\n");
@@ -848,7 +848,7 @@ struct brcmf_if *brcmf_add_if(struct brcmf_pub *drvr, s32 bsscfgidx, s32 ifidx,
 	spin_lock_init(&ifp->netif_stop_lock);
 
 	if (mac_addr != NULL)
-		memcpy(ifp->mac_addr, mac_addr, ETH_ALEN);
+		memcpy(ifp->mac_addr, mac_addr, ETHER_ADDR_LEN);
 
 	brcmf_dbg(TRACE, " ==== pid:%x, if:%s (%pM) created ===\n",
 		  current->pid, name, ifp->mac_addr);

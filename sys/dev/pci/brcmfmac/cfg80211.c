@@ -1386,9 +1386,9 @@ brcmf_cfg80211_join_ibss(struct wiphy *wiphy, struct net_device *ndev,
 
 	/* BSSID */
 	if (params->bssid) {
-		memcpy(join_params.params_le.bssid, params->bssid, ETH_ALEN);
+		memcpy(join_params.params_le.bssid, params->bssid, ETHER_ADDR_LEN);
 		join_params_size += BRCMF_ASSOC_PARAMS_FIXED_SIZE;
-		memcpy(profile->bssid, params->bssid, ETH_ALEN);
+		memcpy(profile->bssid, params->bssid, ETHER_ADDR_LEN);
 	} else {
 		eth_broadcast_addr(join_params.params_le.bssid);
 		eth_zero_addr(profile->bssid);
@@ -1863,7 +1863,7 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 	ext_join_params->scan_le.home_time = cpu_to_le32(-1);
 
 	if (sme->bssid)
-		memcpy(&ext_join_params->assoc_le.bssid, sme->bssid, ETH_ALEN);
+		memcpy(&ext_join_params->assoc_le.bssid, sme->bssid, ETHER_ADDR_LEN);
 	else
 		eth_broadcast_addr(ext_join_params->assoc_le.bssid);
 
@@ -1908,7 +1908,7 @@ brcmf_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 	join_params.ssid_le.SSID_len = cpu_to_le32(ssid_len);
 
 	if (sme->bssid)
-		memcpy(join_params.params_le.bssid, sme->bssid, ETH_ALEN);
+		memcpy(join_params.params_le.bssid, sme->bssid, ETHER_ADDR_LEN);
 	else
 		eth_broadcast_addr(join_params.params_le.bssid);
 
@@ -1946,7 +1946,7 @@ brcmf_cfg80211_disconnect(struct wiphy *wiphy, struct net_device *ndev,
 	clear_bit(BRCMF_VIF_STATUS_CONNECTING, &ifp->vif->sme_state);
 	cfg80211_disconnected(ndev, reason_code, NULL, 0, true, KM_SLEEP);
 
-	memcpy(&scbval.ea, &profile->bssid, ETH_ALEN);
+	memcpy(&scbval.ea, &profile->bssid, ETHER_ADDR_LEN);
 	scbval.val = cpu_to_le32(reason_code);
 	err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_DISASSOC,
 				     &scbval, sizeof(scbval));
@@ -2080,7 +2080,7 @@ brcmf_add_keyext(struct wiphy *wiphy, struct net_device *ndev,
 	/* Instead of bcast for ea address for default wep keys,
 		 driver needs it to be Null */
 	if (!is_multicast_ether_addr(mac_addr))
-		memcpy((char *)&key.ea, (void *)mac_addr, ETH_ALEN);
+		memcpy((char *)&key.ea, (void *)mac_addr, ETHER_ADDR_LEN);
 	key.len = (u32) params->key_len;
 	/* check for key index change */
 	if (key.len == 0) {
@@ -2500,7 +2500,7 @@ brcmf_cfg80211_get_station(struct wiphy *wiphy, struct net_device *ndev,
 		return brcmf_cfg80211_get_station_ibss(ifp, sinfo);
 
 	memset(&sta_info_le, 0, sizeof(sta_info_le));
-	memcpy(&sta_info_le, mac, ETH_ALEN);
+	memcpy(&sta_info_le, mac, ETHER_ADDR_LEN);
 	err = brcmf_fil_iovar_data_get(ifp, "tdls_sta_info",
 				       &sta_info_le,
 				       sizeof(sta_info_le));
@@ -2603,7 +2603,7 @@ brcmf_cfg80211_dump_station(struct wiphy *wiphy, struct net_device *ndev,
 		}
 	}
 	if (idx < le32_to_cpu(cfg->assoclist.count)) {
-		memcpy(mac, cfg->assoclist.mac[idx], ETH_ALEN);
+		memcpy(mac, cfg->assoclist.mac[idx], ETHER_ADDR_LEN);
 		return brcmf_cfg80211_get_station(wiphy, ndev, mac, sinfo);
 	}
 	return -ENOENT;
@@ -2934,7 +2934,7 @@ brcmf_compare_update_same_bss(struct brcmf_cfg80211_info *cfg,
 	ch_bss_info_le.chspec = le16_to_cpu(bss_info_le->chanspec);
 	cfg->d11inf.decchspec(&ch_bss_info_le);
 
-	if (!memcmp(&bss_info_le->BSSID, &bss->BSSID, ETH_ALEN) &&
+	if (!memcmp(&bss_info_le->BSSID, &bss->BSSID, ETHER_ADDR_LEN) &&
 		ch_bss.band == ch_bss_info_le.band &&
 		bss_info_le->SSID_len == bss->SSID_len &&
 		!memcmp(bss_info_le->SSID, bss->SSID, bss_info_le->SSID_len)) {
@@ -3240,9 +3240,9 @@ static int brcmf_dev_pno_config(struct brcmf_if *ifp,
 	pfn_mac.version = BRCMF_PFN_MACADDR_CFG_VER;
 	pfn_mac.flags = BRCMF_PFN_MAC_OUI_ONLY | BRCMF_PFN_SET_MAC_UNASSOC;
 
-	memcpy(pfn_mac.mac, request->mac_addr, ETH_ALEN);
+	memcpy(pfn_mac.mac, request->mac_addr, ETHER_ADDR_LEN);
 	mac_mask = request->mac_addr_mask;
-	for (i = 0; i < ETH_ALEN; i++) {
+	for (i = 0; i < ETHER_ADDR_LEN; i++) {
 		pfn_mac.mac[i] &= mac_mask[i];
 		pfn_mac.mac[i] |= get_random_int() & ~(mac_mask[i]);
 	}
@@ -3693,10 +3693,10 @@ brcmf_cfg80211_set_pmksa(struct wiphy *wiphy, struct net_device *ndev,
 
 	npmk = le32_to_cpu(cfg->pmk_list.npmk);
 	for (i = 0; i < npmk; i++)
-		if (!memcmp(pmksa->bssid, pmk[i].bssid, ETH_ALEN))
+		if (!memcmp(pmksa->bssid, pmk[i].bssid, ETHER_ADDR_LEN))
 			break;
 	if (i < BRCMF_MAXPMKID) {
-		memcpy(pmk[i].bssid, pmksa->bssid, ETH_ALEN);
+		memcpy(pmk[i].bssid, pmksa->bssid, ETHER_ADDR_LEN);
 		memcpy(pmk[i].pmkid, pmksa->pmkid, WLAN_PMKID_LEN);
 		if (i == npmk) {
 			npmk++;
@@ -3737,12 +3737,12 @@ brcmf_cfg80211_del_pmksa(struct wiphy *wiphy, struct net_device *ndev,
 
 	npmk = le32_to_cpu(cfg->pmk_list.npmk);
 	for (i = 0; i < npmk; i++)
-		if (!memcmp(&pmksa->bssid, &pmk[i].bssid, ETH_ALEN))
+		if (!memcmp(&pmksa->bssid, &pmk[i].bssid, ETHER_ADDR_LEN))
 			break;
 
 	if ((npmk > 0) && (i < npmk)) {
 		for (; i < (npmk - 1); i++) {
-			memcpy(&pmk[i].bssid, &pmk[i + 1].bssid, ETH_ALEN);
+			memcpy(&pmk[i].bssid, &pmk[i + 1].bssid, ETHER_ADDR_LEN);
 			memcpy(&pmk[i].pmkid, &pmk[i + 1].pmkid,
 			       WLAN_PMKID_LEN);
 		}
@@ -4573,7 +4573,7 @@ brcmf_cfg80211_del_station(struct wiphy *wiphy, struct net_device *ndev,
 	if (!check_vif_up(ifp->vif))
 		return -EIO;
 
-	memcpy(&scbval.ea, params->mac, ETH_ALEN);
+	memcpy(&scbval.ea, params->mac, ETHER_ADDR_LEN);
 	scbval.val = cpu_to_le32(params->reason_code);
 	err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SCB_DEAUTHENTICATE_FOR_REASON,
 				     &scbval, sizeof(scbval));
@@ -4603,10 +4603,10 @@ brcmf_cfg80211_change_station(struct wiphy *wiphy, struct net_device *ndev,
 
 	if (params->sta_flags_set & BIT(NL80211_STA_FLAG_AUTHORIZED))
 		err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SET_SCB_AUTHORIZE,
-					     (void *)mac, ETH_ALEN);
+					     (void *)mac, ETHER_ADDR_LEN);
 	else
 		err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SET_SCB_DEAUTHORIZE,
-					     (void *)mac, ETH_ALEN);
+					     (void *)mac, ETHER_ADDR_LEN);
 	if (err < 0)
 		brcmf_err("Setting SCB (de-)authorize failed, %d\n", err);
 
@@ -4698,8 +4698,8 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
 		/* Add the packet Id */
 		action_frame->packet_id = cpu_to_le32(*cookie);
 		/* Add BSSID */
-		memcpy(&action_frame->da[0], &mgmt->da[0], ETH_ALEN);
-		memcpy(&af_params->bssid[0], &mgmt->bssid[0], ETH_ALEN);
+		memcpy(&action_frame->da[0], &mgmt->da[0], ETHER_ADDR_LEN);
+		memcpy(&af_params->bssid[0], &mgmt->bssid[0], ETHER_ADDR_LEN);
 		/* Add the length exepted for 802.11 header  */
 		action_frame->len = cpu_to_le16(len - DOT11_MGMT_HDR_LEN);
 		/* Add the channel. Use the one specified as parameter if any or
@@ -4848,7 +4848,7 @@ static int brcmf_cfg80211_tdls_oper(struct wiphy *wiphy,
 	memset(&info, 0, sizeof(info));
 	info.mode = (u8)ret;
 	if (peer)
-		memcpy(info.ea, peer, ETH_ALEN);
+		memcpy(info.ea, peer, ETHER_ADDR_LEN);
 
 	ret = brcmf_fil_iovar_data_set(ifp, "tdls_endpoint",
 				       &info, sizeof(info));
@@ -5094,7 +5094,7 @@ brcmf_bss_roaming_done(struct brcmf_cfg80211_info *cfg,
 	brcmf_dbg(TRACE, "Enter\n");
 
 	brcmf_get_assoc_ies(cfg, ifp);
-	memcpy(profile->bssid, e->addr, ETH_ALEN);
+	memcpy(profile->bssid, e->addr, ETHER_ADDR_LEN);
 	brcmf_update_bss_info(cfg, ifp);
 
 	buf = kmem_zalloc(WL_BSS_INFO_MAX, KM_SLEEP);
@@ -5150,7 +5150,7 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
 			       &ifp->vif->sme_state)) {
 		if (completed) {
 			brcmf_get_assoc_ies(cfg, ifp);
-			memcpy(profile->bssid, e->addr, ETH_ALEN);
+			memcpy(profile->bssid, e->addr, ETHER_ADDR_LEN);
 			brcmf_update_bss_info(cfg, ifp);
 			set_bit(BRCMF_VIF_STATUS_CONNECTED,
 				&ifp->vif->sme_state);
@@ -5236,7 +5236,7 @@ brcmf_notify_connect_status(struct brcmf_if *ifp,
 		if (brcmf_is_ibssmode(ifp->vif)) {
 			brcmf_inform_ibss(cfg, ndev, e->addr);
 			chan = ieee80211_get_channel(cfg->wiphy, cfg->channel);
-			memcpy(profile->bssid, e->addr, ETH_ALEN);
+			memcpy(profile->bssid, e->addr, ETHER_ADDR_LEN);
 			cfg80211_ibss_joined(ndev, e->addr, chan, KM_SLEEP);
 			clear_bit(BRCMF_VIF_STATUS_CONNECTING,
 				  &ifp->vif->sme_state);
@@ -6167,10 +6167,10 @@ static int brcmf_setup_wiphy(struct wiphy *wiphy, struct brcmf_if *ifp)
 	     i++) {
 		u8 *addr = drvr->addresses[i].addr;
 
-		memcpy(addr, drvr->mac, ETH_ALEN);
+		memcpy(addr, drvr->mac, ETHER_ADDR_LEN);
 		if (i) {
 			addr[0] |= BIT(1);
-			addr[ETH_ALEN - 1] ^= i;
+			addr[ETHER_ADDR_LEN - 1] ^= i;
 		}
 	}
 	wiphy->addresses = drvr->addresses;
@@ -6481,7 +6481,7 @@ struct brcmf_cfg80211_info *brcmf_cfg80211_attach(struct brcmf_pub *drvr,
 		brcmf_err("Could not allocate wiphy device\n");
 		return NULL;
 	}
-	memcpy(wiphy->perm_addr, drvr->mac, ETH_ALEN);
+	memcpy(wiphy->perm_addr, drvr->mac, ETHER_ADDR_LEN);
 	set_wiphy_dev(wiphy, busdev);
 
 	cfg = wiphy_priv(wiphy);

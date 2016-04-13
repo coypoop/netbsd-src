@@ -391,7 +391,7 @@ struct brcmf_fws_mac_descriptor {
 	u8 ac_bitmap;
 	u8 requested_credit;
 	u8 requested_packet;
-	u8 ea[ETH_ALEN];
+	u8 ea[ETHER_ADDR_LEN];
 	u8 seq[BRCMF_FWS_FIFO_COUNT];
 	struct pktq psq;
 	int transit_count;
@@ -720,7 +720,7 @@ static void brcmf_fws_macdesc_init(struct brcmf_fws_mac_descriptor *desc,
 	desc->interface_id = ifidx;
 	desc->ac_bitmap = 0xff; /* update this when handling APSD */
 	if (addr)
-		memcpy(&desc->ea[0], addr, ETH_ALEN);
+		memcpy(&desc->ea[0], addr, ETHER_ADDR_LEN);
 }
 
 static
@@ -745,7 +745,7 @@ brcmf_fws_macdesc_lookup(struct brcmf_fws_info *fws, u8 *ea)
 
 	entry = &fws->desc.nodes[0];
 	for (i = 0; i < ARRAY_SIZE(fws->desc.nodes); i++) {
-		if (entry->occupied && !memcmp(entry->ea, ea, ETH_ALEN))
+		if (entry->occupied && !memcmp(entry->ea, ea, ETHER_ADDR_LEN))
 			return entry;
 		entry++;
 	}

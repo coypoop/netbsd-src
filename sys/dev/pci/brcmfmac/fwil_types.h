@@ -156,7 +156,7 @@ enum brcmf_wowl_pattern_type {
 };
 
 struct brcmf_fil_p2p_if_le {
-	u8 addr[ETH_ALEN];
+	u8 addr[ETHER_ADDR_LEN];
 	uint16_t type;
 	uint16_t chspec;
 };
@@ -168,7 +168,7 @@ struct brcmf_fil_chan_info_le {
 };
 
 struct brcmf_fil_action_frame_le {
-	u8	da[ETH_ALEN];
+	u8	da[ETHER_ADDR_LEN];
 	uint16_t	len;
 	uint32_t	packet_id;
 	u8	data[BRCMF_FIL_ACTION_FRAME_SIZE];
@@ -177,7 +177,7 @@ struct brcmf_fil_action_frame_le {
 struct brcmf_fil_af_params_le {
 	uint32_t					channel;
 	uint32_t					dwell_time;
-	u8					bssid[ETH_ALEN];
+	u8					bssid[ETHER_ADDR_LEN];
 	u8					pad[2];
 	struct brcmf_fil_action_frame_le	action_frame;
 };
@@ -201,7 +201,7 @@ struct brcmf_fil_bwcap_le {
  * @pad: unused (for future use).
  */
 struct brcmf_tdls_iovar_le {
-	u8 ea[ETH_ALEN];		/* Station address */
+	u8 ea[ETHER_ADDR_LEN];		/* Station address */
 	u8 mode;			/* mode: depends on iovar */
 	uint16_t chanspec;
 	uint32_t pad;			/* future */
@@ -257,7 +257,7 @@ struct brcmf_bss_info_le {
 	uint32_t length;		/* byte length of data in this record,
 				 * starting at version and including IEs
 				 */
-	u8 BSSID[ETH_ALEN];
+	u8 BSSID[ETHER_ADDR_LEN];
 	uint16_t beacon_period;	/* units are Kusec */
 	uint16_t capability;	/* Capability information */
 	u8 SSID_len;
@@ -302,7 +302,7 @@ struct brcmf_ssid_le {
 
 struct brcmf_scan_params_le {
 	struct brcmf_ssid_le ssid_le;	/* default: {0, ""} */
-	u8 bssid[ETH_ALEN];	/* default: bcast */
+	u8 bssid[ETHER_ADDR_LEN];	/* default: bcast */
 	s8 bss_type;		/* default: any,
 				 * DOT11_BSSTYPE_ANY/INFRASTRUCTURE/INDEPENDENT
 				 */
@@ -364,7 +364,7 @@ struct brcmf_escan_result_le {
 /* used for association with a specific BSSID and chanspec list */
 struct brcmf_assoc_params_le {
 	/* 00:00:00:00:00:00: broadcast scan */
-	u8 bssid[ETH_ALEN];
+	u8 bssid[ETHER_ADDR_LEN];
 	/* 0: all available channels, otherwise count of chanspecs in
 	 * chanspec_list */
 	uint32_t chanspec_num;
@@ -432,7 +432,7 @@ struct brcmf_wsec_key {
 		u16 lo;	/* lower 16 bits of IV */
 	} rxiv;
 	u32 pad_4[2];
-	u8 ea[ETH_ALEN];	/* per station */
+	u8 ea[ETHER_ADDR_LEN];	/* per station */
 };
 
 /*
@@ -454,13 +454,13 @@ struct brcmf_wsec_key_le {
 		uint16_t lo;	/* lower 16 bits of IV */
 	} rxiv;
 	uint32_t pad_4[2];
-	u8 ea[ETH_ALEN];	/* per station */
+	u8 ea[ETHER_ADDR_LEN];	/* per station */
 };
 
 /* Used to get specific STA parameters */
 struct brcmf_scb_val_le {
 	uint32_t val;
-	u8 ea[ETH_ALEN];
+	u8 ea[ETHER_ADDR_LEN];
 };
 
 /* channel encoding */
@@ -476,7 +476,7 @@ struct brcmf_sta_info_le {
 	uint16_t cap;		/* sta's advertised capabilities */
 	uint32_t flags;		/* flags defined below */
 	uint32_t idle;		/* time since data pkt rx'd from sta */
-	u8 ea[ETH_ALEN];		/* Station address */
+	u8 ea[ETHER_ADDR_LEN];		/* Station address */
 	uint32_t count;			/* # rates in this set */
 	u8 rates[BRCMF_MAXRATES_IN_SET];	/* rates in 500kbps units */
 						/* w/hi bit set if basic */
@@ -639,7 +639,7 @@ struct brcmf_rev_info_le {
  */
 struct brcmf_assoclist_le {
 	uint32_t count;
-	u8 mac[BRCMF_MAX_ASSOCLIST][ETH_ALEN];
+	u8 mac[BRCMF_MAX_ASSOCLIST][ETHER_ADDR_LEN];
 };
 
 /**
@@ -661,7 +661,7 @@ struct brcmf_wowl_wakeind_le {
  * @pmkid: he PMK material itself.
  */
 struct brcmf_pmksa {
-	u8 bssid[ETH_ALEN];
+	u8 bssid[ETHER_ADDR_LEN];
 	u8 pmkid[WLAN_PMKID_LEN];
 };
 
@@ -736,7 +736,7 @@ struct brcmf_pno_net_param_le {
  * @timestamp: age in seconds.
  */
 struct brcmf_pno_net_info_le {
-	u8 bssid[ETH_ALEN];
+	u8 bssid[ETHER_ADDR_LEN];
 	u8 channel;
 	u8 SSID_len;
 	u8 SSID[32];
@@ -767,7 +767,7 @@ struct brcmf_pno_scanresults_le {
 struct brcmf_pno_macaddr_le {
 	u8 version;
 	u8 flags;
-	u8 mac[ETH_ALEN];
+	u8 mac[ETHER_ADDR_LEN];
 };
 
 /**

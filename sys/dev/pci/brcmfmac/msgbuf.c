@@ -174,8 +174,8 @@ struct msgbuf_rx_complete {
 
 struct msgbuf_tx_flowring_create_req {
 	struct msgbuf_common_hdr	msg;
-	u8				da[ETH_ALEN];
-	u8				sa[ETH_ALEN];
+	u8				da[ETHER_ADDR_LEN];
+	u8				sa[ETHER_ADDR_LEN];
 	u8				tid;
 	u8				if_flags;
 	uint16_t				flow_ring_id;
@@ -216,8 +216,8 @@ struct brcmf_msgbuf_work_item {
 	struct list_head queue;
 	u32 flowid;
 	int ifidx;
-	u8 sa[ETH_ALEN];
-	u8 da[ETH_ALEN];
+	u8 sa[ETHER_ADDR_LEN];
+	u8 da[ETHER_ADDR_LEN];
 };
 
 struct brcmf_msgbuf {
@@ -607,8 +607,8 @@ brcmf_msgbuf_flowring_create_worker(struct brcmf_msgbuf *msgbuf,
 	create->tid = brcmf_flowring_tid(msgbuf->flow, flowid);
 	create->flow_ring_id = cpu_to_le16(flowid +
 					   BRCMF_NROF_H2D_COMMON_MSGRINGS);
-	memcpy(create->sa, work->sa, ETH_ALEN);
-	memcpy(create->da, work->da, ETH_ALEN);
+	memcpy(create->sa, work->sa, ETHER_ADDR_LEN);
+	memcpy(create->da, work->da, ETHER_ADDR_LEN);
 	address = (u64)msgbuf->flowring_dma_handle[flowid];
 	create->flow_ring_addr.high_addr = cpu_to_le32(address >> 32);
 	create->flow_ring_addr.low_addr = cpu_to_le32(address & 0xffffffff);
@@ -665,8 +665,8 @@ static u32 brcmf_msgbuf_flowring_create(struct brcmf_msgbuf *msgbuf, int ifidx,
 
 	create->flowid = flowid;
 	create->ifidx = ifidx;
-	memcpy(create->sa, eh->h_source, ETH_ALEN);
-	memcpy(create->da, eh->h_dest, ETH_ALEN);
+	memcpy(create->sa, eh->h_source, ETHER_ADDR_LEN);
+	memcpy(create->da, eh->h_dest, ETHER_ADDR_LEN);
 
 	spin_lock_irqsave(&msgbuf->flowring_work_lock, flags);
 	list_add_tail(&create->queue, &msgbuf->work_queue);
@@ -813,7 +813,7 @@ brcmf_msgbuf_configure_addr_mode(struct brcmf_pub *drvr, int ifidx,
 
 
 static void
-brcmf_msgbuf_delete_peer(struct brcmf_pub *drvr, int ifidx, u8 peer[ETH_ALEN])
+brcmf_msgbuf_delete_peer(struct brcmf_pub *drvr, int ifidx, u8 peer[ETHER_ADDR_LEN])
 {
 	struct brcmf_msgbuf *msgbuf = (struct brcmf_msgbuf *)drvr->proto->pd;
 
@@ -822,7 +822,7 @@ brcmf_msgbuf_delete_peer(struct brcmf_pub *drvr, int ifidx, u8 peer[ETH_ALEN])
 
 
 static void
-brcmf_msgbuf_add_tdls_peer(struct brcmf_pub *drvr, int ifidx, u8 peer[ETH_ALEN])
+brcmf_msgbuf_add_tdls_peer(struct brcmf_pub *drvr, int ifidx, u8 peer[ETHER_ADDR_LEN])
 {
 	struct brcmf_msgbuf *msgbuf = (struct brcmf_msgbuf *)drvr->proto->pd;
 

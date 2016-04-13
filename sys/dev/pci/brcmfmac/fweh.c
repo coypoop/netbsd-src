@@ -50,7 +50,7 @@ struct brcmf_event_msg_be {
 	__be32 reason;
 	__be32 auth_type;
 	__be32 datalen;
-	u8 addr[ETH_ALEN];
+	u8 addr[ETHER_ADDR_LEN];
 	char ifname[IFNAMSIZ];
 	u8 ifidx;
 	u8 bsscfgidx;
@@ -83,7 +83,7 @@ struct brcmf_fweh_queue_item {
 	struct list_head q;
 	enum brcmf_fweh_event_code code;
 	u8 ifidx;
-	u8 ifaddr[ETH_ALEN];
+	u8 ifaddr[ETHER_ADDR_LEN];
 	struct brcmf_event_msg_be emsg;
 	u8 data[0];
 };
@@ -284,7 +284,7 @@ static void brcmf_fweh_event_worker(struct work_struct *work)
 		emsg.reason = be32_to_cpu(emsg_be->reason);
 		emsg.auth_type = be32_to_cpu(emsg_be->auth_type);
 		emsg.datalen = be32_to_cpu(emsg_be->datalen);
-		memcpy(emsg.addr, emsg_be->addr, ETH_ALEN);
+		memcpy(emsg.addr, emsg_be->addr, ETHER_ADDR_LEN);
 		memcpy(emsg.ifname, emsg_be->ifname, sizeof(emsg.ifname));
 		emsg.ifidx = emsg_be->ifidx;
 		emsg.bsscfgidx = emsg_be->bsscfgidx;
@@ -472,7 +472,7 @@ void brcmf_fweh_process_event(struct brcmf_pub *drvr,
 	/* use memcpy to get aligned event message */
 	memcpy(&event->emsg, &event_packet->msg, sizeof(event->emsg));
 	memcpy(event->data, data, datalen);
-	memcpy(event->ifaddr, event_packet->eth.h_dest, ETH_ALEN);
+	memcpy(event->ifaddr, event_packet->eth.h_dest, ETHER_ADDR_LEN);
 
 	brcmf_fweh_queue_event(fweh, event);
 }

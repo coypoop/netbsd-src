@@ -448,7 +448,7 @@ static int brcmf_p2p_set_firmware(struct brcmf_if *ifp, u8 *p2p_mac)
 	brcmf_fil_iovar_int_set(ifp, "p2p_disc", 0);
 
 	ret = brcmf_fil_iovar_data_set(ifp, "p2p_da_override", p2p_mac,
-				       ETH_ALEN);
+				       ETHER_ADDR_LEN);
 	if (ret)
 		brcmf_err("failed to update device address ret %d\n", ret);
 
@@ -478,7 +478,7 @@ static void brcmf_p2p_generate_bss_mac(struct brcmf_p2p_info *p2p, u8 *dev_addr)
 	/* Generate the P2P Device Address.  This consists of the device's
 	 * primary MAC address with the locally administered bit set.
 	 */
-	memcpy(p2p->dev_addr, dev_addr, ETH_ALEN);
+	memcpy(p2p->dev_addr, dev_addr, ETHER_ADDR_LEN);
 	if (local_admin)
 		p2p->dev_addr[0] |= 0x02;
 
@@ -486,7 +486,7 @@ static void brcmf_p2p_generate_bss_mac(struct brcmf_p2p_info *p2p, u8 *dev_addr)
 	 * BSSCFGs need to simultaneously co-exist, then this address must be
 	 * different from the P2P Device Address, but also locally administered.
 	 */
-	memcpy(p2p->int_addr, p2p->dev_addr, ETH_ALEN);
+	memcpy(p2p->int_addr, p2p->dev_addr, ETHER_ADDR_LEN);
 	p2p->int_addr[0] |= 0x02;
 	p2p->int_addr[4] ^= 0x80;
 }
@@ -1220,7 +1220,7 @@ bool brcmf_p2p_scan_finding_common_channel(struct brcmf_cfg80211_info *cfg,
 	struct brcmu_chan ch;
 	u8 *ie;
 	s32 err;
-	u8 p2p_dev_addr[ETH_ALEN];
+	u8 p2p_dev_addr[ETHER_ADDR_LEN];
 
 	if (!test_bit(BRCMF_P2P_STATUS_FINDING_COMMON_CHANNEL, &p2p->status))
 		return false;
@@ -1312,7 +1312,7 @@ brcmf_p2p_gon_req_collision(struct brcmf_p2p_info *p2p, u8 *mac)
 	 * this device will process gon request and drop gon req of peer.
 	 */
 	ifp = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif->ifp;
-	if (memcmp(mac, ifp->mac_addr, ETH_ALEN) < 0) {
+	if (memcmp(mac, ifp->mac_addr, ETHER_ADDR_LEN) < 0) {
 		brcmf_dbg(INFO, "Block transmit gon req !!!\n");
 		p2p->block_gon_req_tx = true;
 		/* if we are finding a common channel for sending af,
@@ -1415,10 +1415,10 @@ int brcmf_p2p_notify_action_frame_rx(struct brcmf_if *ifp,
 		brcmf_err("No memory available for action frame\n");
 		return -ENOMEM;
 	}
-	memcpy(mgmt_frame->da, ifp->mac_addr, ETH_ALEN);
+	memcpy(mgmt_frame->da, ifp->mac_addr, ETHER_ADDR_LEN);
 	brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSSID, mgmt_frame->bssid,
-			       ETH_ALEN);
-	memcpy(mgmt_frame->sa, e->addr, ETH_ALEN);
+			       ETHER_ADDR_LEN);
+	memcpy(mgmt_frame->sa, e->addr, ETHER_ADDR_LEN);
 	mgmt_frame->frame_control = cpu_to_le16(IEEE80211_STYPE_ACTION);
 	memcpy(&mgmt_frame->u, frame, mgmt_frame_len);
 	mgmt_frame_len += offsetof(struct ieee80211_mgmt, u);
@@ -1728,7 +1728,7 @@ bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
 	if (test_bit(BRCMF_SCAN_STATUS_BUSY, &cfg->scan_status))
 		brcmf_abort_scanning(cfg);
 
-	memcpy(afx_hdl->tx_dst_addr, action_frame->da, ETH_ALEN);
+	memcpy(afx_hdl->tx_dst_addr, action_frame->da, ETHER_ADDR_LEN);
 
 	/* To make sure to send successfully action frame, turn off mpc */
 	if (config_af_params.mpc_onoff == 0)
@@ -1912,7 +1912,7 @@ static void brcmf_p2p_get_current_chanspec(struct brcmf_p2p_info *p2p,
 					   u16 *chanspec)
 {
 	struct brcmf_if *ifp;
-	u8 mac_addr[ETH_ALEN];
+	u8 mac_addr[ETHER_ADDR_LEN];
 	struct brcmu_chan ch;
 	struct brcmf_bss_info_le *bi;
 	u8 *buf;
@@ -1920,7 +1920,7 @@ static void brcmf_p2p_get_current_chanspec(struct brcmf_p2p_info *p2p,
 	ifp = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif->ifp;
 
 	if (brcmf_fil_cmd_data_get(ifp, BRCMF_C_GET_BSSID, mac_addr,
-				   ETH_ALEN) == 0) {
+				   ETHER_ADDR_LEN) == 0) {
 		buf = kmem_zalloc(WL_BSS_INFO_MAX, KM_SLEEP);
 		if (buf != NULL) {
 			*(uint32_t *)buf = cpu_to_le32(WL_BSS_INFO_MAX);
@@ -2003,7 +2003,7 @@ int brcmf_p2p_ifchange(struct brcmf_cfg80211_info *cfg,
 }
 
 static int brcmf_p2p_request_p2p_if(struct brcmf_p2p_info *p2p,
-				    struct brcmf_if *ifp, u8 ea[ETH_ALEN],
+				    struct brcmf_if *ifp, u8 ea[ETHER_ADDR_LEN],
 				    enum brcmf_fil_p2p_if_types iftype)
 {
 	struct brcmf_fil_p2p_if_le if_request;
@@ -2014,7 +2014,7 @@ static int brcmf_p2p_request_p2p_if(struct brcmf_p2p_info *p2p,
 	brcmf_p2p_get_current_chanspec(p2p, &chanspec);
 
 	/* fill the firmware request */
-	memcpy(if_request.addr, ea, ETH_ALEN);
+	memcpy(if_request.addr, ea, ETHER_ADDR_LEN);
 	if_request.type = cpu_to_le16((u16)iftype);
 	if_request.chspec = cpu_to_le16(chanspec);
 
@@ -2033,7 +2033,7 @@ static int brcmf_p2p_disable_p2p_if(struct brcmf_cfg80211_vif *vif)
 	struct brcmf_if *ifp = netdev_priv(pri_ndev);
 	u8 *addr = vif->wdev.netdev->dev_addr;
 
-	return brcmf_fil_iovar_data_set(ifp, "p2p_ifdis", addr, ETH_ALEN);
+	return brcmf_fil_iovar_data_set(ifp, "p2p_ifdis", addr, ETHER_ADDR_LEN);
 }
 
 static int brcmf_p2p_release_p2p_if(struct brcmf_cfg80211_vif *vif)
@@ -2043,7 +2043,7 @@ static int brcmf_p2p_release_p2p_if(struct brcmf_cfg80211_vif *vif)
 	struct brcmf_if *ifp = netdev_priv(pri_ndev);
 	u8 *addr = vif->wdev.netdev->dev_addr;
 
-	return brcmf_fil_iovar_data_set(ifp, "p2p_ifdel", addr, ETH_ALEN);
+	return brcmf_fil_iovar_data_set(ifp, "p2p_ifdel", addr, ETHER_ADDR_LEN);
 }
 
 /**
@@ -2103,7 +2103,7 @@ static struct wireless_dev *brcmf_p2p_create_p2pdev(struct brcmf_p2p_info *p2p,
 	/* discovery interface created */
 	p2p_ifp = p2p_vif->ifp;
 	p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif = p2p_vif;
-	memcpy(p2p_ifp->mac_addr, p2p->dev_addr, ETH_ALEN);
+	memcpy(p2p_ifp->mac_addr, p2p->dev_addr, ETHER_ADDR_LEN);
 	memcpy(&p2p_vif->wdev.address, p2p->dev_addr, sizeof(p2p->dev_addr));
 
 	/* verify bsscfg index for P2P discovery */

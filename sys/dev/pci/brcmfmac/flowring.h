@@ -21,7 +21,7 @@
 
 
 struct brcmf_flowring_hash {
-	u8 mac[ETH_ALEN];
+	u8 mac[ETHER_ADDR_LEN];
 	u8 fifo;
 	u8 ifidx;
 	u8 flowid;
@@ -41,7 +41,7 @@ struct brcmf_flowring_ring {
 };
 
 struct brcmf_flowring_tdls_entry {
-	u8 mac[ETH_ALEN];
+	u8 mac[ETHER_ADDR_LEN];
 	struct brcmf_flowring_tdls_entry *next;
 };
 
@@ -57,9 +57,9 @@ struct brcmf_flowring {
 };
 
 
-u32 brcmf_flowring_lookup(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
+u32 brcmf_flowring_lookup(struct brcmf_flowring *flow, u8 da[ETHER_ADDR_LEN],
 			  u8 prio, u8 ifidx);
-u32 brcmf_flowring_create(struct brcmf_flowring *flow, u8 da[ETH_ALEN],
+u32 brcmf_flowring_create(struct brcmf_flowring *flow, u8 da[ETHER_ADDR_LEN],
 			  u8 prio, u8 ifidx);
 void brcmf_flowring_delete(struct brcmf_flowring *flow, u8 flowid);
 void brcmf_flowring_open(struct brcmf_flowring *flow, u8 flowid);
@@ -76,9 +76,9 @@ void brcmf_flowring_detach(struct brcmf_flowring *flow);
 void brcmf_flowring_configure_addr_mode(struct brcmf_flowring *flow, int ifidx,
 					enum proto_addr_mode addr_mode);
 void brcmf_flowring_delete_peer(struct brcmf_flowring *flow, int ifidx,
-				u8 peer[ETH_ALEN]);
+				u8 peer[ETHER_ADDR_LEN]);
 void brcmf_flowring_add_tdls_peer(struct brcmf_flowring *flow, int ifidx,
-				  u8 peer[ETH_ALEN]);
+				  u8 peer[ETHER_ADDR_LEN]);
 
 
 #endif /* BRCMFMAC_FLOWRING_H */

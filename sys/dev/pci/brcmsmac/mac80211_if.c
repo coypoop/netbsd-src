@@ -1101,7 +1101,7 @@ static struct brcms_info *brcms_attach(struct bcma_device *pdev)
 	struct brcms_info *wl = NULL;
 	int unit, err;
 	struct ieee80211_hw *hw;
-	uint8_t perm[ETH_ALEN];
+	uint8_t perm[ETHER_ADDR_LEN];
 
 	unit = n_adapters_found;
 	err = 0;
@@ -1157,7 +1157,7 @@ static struct brcms_info *brcms_attach(struct bcma_device *pdev)
 
 	brcms_c_regd_init(wl->wlc);
 
-	memcpy(perm, &wl->pub->cur_etheraddr, ETH_ALEN);
+	memcpy(perm, &wl->pub->cur_etheraddr, ETHER_ADDR_LEN);
 	if (WARN_ON(!is_valid_ether_addr(perm)))
 		goto fail;
 	SET_IEEE80211_PERM_ADDR(hw, perm);

@@ -15,7 +15,7 @@
 #ifndef BRCMFMAC_COMMON_H
 #define BRCMFMAC_COMMON_H
 
-extern const u8 ALLFFMAC[ETH_ALEN];
+extern const u8 ALLFFMAC[ETHER_ADDR_LEN];
 
 #define BRCMF_FW_ALTPATH_LEN			256
 

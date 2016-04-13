@@ -209,7 +209,7 @@ struct brcmf_event_msg {
 	u32 reason;
 	s32 auth_type;
 	u32 datalen;
-	u8 addr[ETH_ALEN];
+	u8 addr[ETHER_ADDR_LEN];
 	char ifname[IFNAMSIZ];
 	u8 ifidx;
 	u8 bsscfgidx;

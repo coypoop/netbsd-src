@@ -100,7 +100,7 @@ struct afx_hdl {
 	bool is_listen;
 	u16 my_listen_chan;
 	u16 peer_listen_chan;
-	u8 tx_dst_addr[ETH_ALEN];
+	u8 tx_dst_addr[ETHER_ADDR_LEN];
 };
 
 /**
@@ -128,8 +128,8 @@ struct afx_hdl {
 struct brcmf_p2p_info {
 	struct brcmf_cfg80211_info *cfg;
 	unsigned long status;
-	u8 dev_addr[ETH_ALEN];
-	u8 int_addr[ETH_ALEN];
+	u8 dev_addr[ETHER_ADDR_LEN];
+	u8 int_addr[ETHER_ADDR_LEN];
 	struct p2p_bss bss_idx[P2PAPI_BSSCFG_MAX];
 	struct timer_list listen_timer;
 	u8 listen_channel;

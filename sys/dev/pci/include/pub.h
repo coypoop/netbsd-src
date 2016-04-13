@@ -126,7 +126,7 @@ struct brcms_c_rateset {
 
 /* wlc internal bss_info */
 struct brcms_bss_info {
-	uint8_t BSSID[ETH_ALEN];	/* network BSSID */
+	uint8_t BSSID[ETHER_ADDR_LEN];	/* network BSSID */
 	uint16_t flags;		/* flags for internal attributes */
 	uint8_t SSID_len;		/* the length of SSID */
 	uint8_t SSID[32];		/* SSID string */
@@ -165,7 +165,7 @@ struct brcms_pub {
 	bool _ampdu;		/* ampdu enabled or not */
 	uint8_t _n_enab;		/* bitmap of 11N + HT support */
 
-	uint8_t cur_etheraddr[ETH_ALEN];	/* our local ethernet address */
+	uint8_t cur_etheraddr[ETHER_ADDR_LEN];	/* our local ethernet address */
 
 	uint32_t radio_disabled;	/* bit vector for radio disabled reasons */
 

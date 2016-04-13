@@ -24,6 +24,8 @@
 #include <linux/ieee80211.h>
 #include <linux/module.h>
 #include <net/mac80211.h>
+#else
+#include <net/if_ether.h>
 #endif
 
 #include <defs.h>

@@ -18,8 +18,10 @@
 #define	_BRCMU_WIFI_H_
 
 #ifndef __NetBSD__
-#include <linux/if_ether.h>		/* for ETH_ALEN */
+#include <linux/if_ether.h>		/* for ETHER_ADDR_LEN */
 #include <linux/ieee80211.h>		/* for WLAN_PMKID_LEN */
+#else
+#include <net/if_ether.h>		/* for ETHER_ADDR_LEN */
 #endif
 
 /*

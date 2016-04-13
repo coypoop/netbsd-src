@@ -22,6 +22,8 @@
 #include <linux/if_ether.h>
 #include <net/cfg80211.h>
 #include <net/mac80211.h>
+#else
+#include <net/if_ether.h>
 #endif
 
 #include <brcm_hw_ids.h>
@@ -1902,20 +1904,20 @@ static bool brcms_c_validboardtype(struct brcms_hardware *wlc_hw)
 	return true;
 }
 
-static void brcms_c_get_macaddr(struct brcms_hardware *wlc_hw, uint8_t etheraddr[ETH_ALEN])
+static void brcms_c_get_macaddr(struct brcms_hardware *wlc_hw, uint8_t etheraddr[ETHER_ADDR_LEN])
 {
 	struct ssb_sprom *sprom = &wlc_hw->d11core->bus->sprom;
 
 	/* If macaddr exists, use it (Sromrev4, CIS, ...). */
 	if (!is_zero_ether_addr(sprom->il0mac)) {
-		memcpy(etheraddr, sprom->il0mac, ETH_ALEN);
+		memcpy(etheraddr, sprom->il0mac, ETHER_ADDR_LEN);
 		return;
 	}
 
 	if (wlc_hw->_nbands > 1)
-		memcpy(etheraddr, sprom->et1mac, ETH_ALEN);
+		memcpy(etheraddr, sprom->et1mac, ETHER_ADDR_LEN);
 	else
-		memcpy(etheraddr, sprom->il0mac, ETH_ALEN);
+		memcpy(etheraddr, sprom->il0mac, ETHER_ADDR_LEN);
 }
 
 /* power both the pll and external oscillator on/off */
@@ -2496,7 +2498,7 @@ static void brcms_b_tx_fifo_resume(struct brcms_hardware *wlc_hw,
 /* precondition: requires the mac core to be enabled */
 static void brcms_b_mute(struct brcms_hardware *wlc_hw, bool mute_tx)
 {
-	static const uint8_t null_ether_addr[ETH_ALEN] = {0, 0, 0, 0, 0, 0};
+	static const uint8_t null_ether_addr[ETHER_ADDR_LEN] = {0, 0, 0, 0, 0, 0};
 	uint8_t *ethaddr = wlc_hw->wlc->pub->cur_etheraddr;
 
 	if (mute_tx) {
@@ -6581,7 +6583,7 @@ brcms_c_d11hdrs_mac80211(struct brcms_c_info *wlc, struct ieee80211_hw *hw,
 	txh->TxFesTimeFallback = cpu_to_le16(0);
 
 	/* TxFrameRA */
-	memcpy(&txh->TxFrameRA, &h->addr1, ETH_ALEN);
+	memcpy(&txh->TxFrameRA, &h->addr1, ETHER_ADDR_LEN);
 
 	/* TxFrameID */
 	txh->TxFrameID = cpu_to_le16(frameid);
@@ -6669,12 +6671,12 @@ brcms_c_d11hdrs_mac80211(struct brcms_c_info *wlc, struct ieee80211_hw *hw,
 			rts->frame_control = cpu_to_le16(IEEE80211_FTYPE_CTL |
 							 IEEE80211_STYPE_CTS);
 
-			memcpy(&rts->ra, &h->addr2, ETH_ALEN);
+			memcpy(&rts->ra, &h->addr2, ETHER_ADDR_LEN);
 		} else {
 			rts->frame_control = cpu_to_le16(IEEE80211_FTYPE_CTL |
 							 IEEE80211_STYPE_RTS);
 
-			memcpy(&rts->ra, &h->addr1, 2 * ETH_ALEN);
+			memcpy(&rts->ra, &h->addr1, 2 * ETHER_ADDR_LEN);
 		}
 
 		/* mainrate
@@ -7547,7 +7549,7 @@ brcms_c_set_addrmatch(struct brcms_c_info *wlc, int match_reg_offset,
 {
 	brcms_b_set_addrmatch(wlc->hw, match_reg_offset, addr);
 	if (match_reg_offset == RCM_BSSID_OFFSET)
-		memcpy(wlc->bsscfg->BSSID, addr, ETH_ALEN);
+		memcpy(wlc->bsscfg->BSSID, addr, ETHER_ADDR_LEN);
 }
 
 /*
@@ -8029,8 +8031,8 @@ brcms_c_attach(struct brcms_info *wl, struct bcma_device *core, uint unit,
 	for (i = 0; i < NFIFO; i++)
 		wlc->core->txavail[i] = wlc->hw->txavail[i];
 
-	memcpy(&wlc->perm_etheraddr, &wlc->hw->etheraddr, ETH_ALEN);
-	memcpy(&pub->cur_etheraddr, &wlc->hw->etheraddr, ETH_ALEN);
+	memcpy(&wlc->perm_etheraddr, &wlc->hw->etheraddr, ETHER_ADDR_LEN);
+	memcpy(&pub->cur_etheraddr, &wlc->hw->etheraddr, ETHER_ADDR_LEN);
 
 	for (j = 0; j < wlc->pub->_nbands; j++) {
 		wlc->band = wlc->bandstate[j];

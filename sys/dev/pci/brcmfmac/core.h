@@ -114,7 +114,7 @@ struct brcmf_pub {
 
 	/* Dongle media info */
 	char fwver[BRCMF_DRIVER_FIRMWARE_VERSION_LEN];
-	u8 mac[ETH_ALEN];		/* MAC address obtained from dongle */
+	u8 mac[ETHER_ADDR_LEN];		/* MAC address obtained from dongle */
 
 	/* Multicast data packets sent to dongle */
 	unsigned long tx_multicast;
@@ -194,7 +194,7 @@ struct brcmf_if {
 	struct brcmf_fws_mac_descriptor *fws_desc;
 	int ifidx;
 	s32 bsscfgidx;
-	u8 mac_addr[ETH_ALEN];
+	u8 mac_addr[ETHER_ADDR_LEN];
 	u8 netif_stop;
 	spinlock_t netif_stop_lock;
 	atomic_t pend_8021x_cnt;

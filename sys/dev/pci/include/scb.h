@@ -19,6 +19,8 @@
 
 #ifndef __NetBSD__
 #include <linux/if_ether.h>
+#else
+#include <net/if_ether.h>
 #endif
 
 #include <brcmu_utils.h>
@@ -69,7 +71,7 @@ struct scb {
 	uint32_t flags;	/* various bit flags as defined below */
 	uint32_t flags2;	/* various bit flags2 as defined below */
 	uint8_t state;	/* current state bitfield of auth/assoc process */
-	uint8_t ea[ETH_ALEN];	/* station address */
+	uint8_t ea[ETHER_ADDR_LEN];	/* station address */
 	uint fragresid[NUMPRIO];/* #bytes unused in frag buffer per prio */
 
 	uint16_t seqctl[NUMPRIO];	/* seqctl of last received frame (for dups) */
