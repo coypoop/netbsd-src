@@ -69,8 +69,8 @@ struct brcms_info {
 
 	int irq;
 
-	spinlock_t lock;	/* per-device perimeter lock */
-	spinlock_t isr_lock;	/* per-device ISR synchronization lock */
+	kmutex_t lock;	/* per-device perimeter lock */
+	kmutex_t isr_lock;	/* per-device ISR synchronization lock */
 
 	/* tx flush */
 	wait_queue_head_t tx_flush_wq;
