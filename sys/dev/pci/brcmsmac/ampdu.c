@@ -191,12 +191,12 @@ static int brcms_c_ampdu_set(struct ampdu_info *ampdu, bool on)
 		if (!(wlc->pub->_n_enab & SUPPORT_11N)) {
 			brcms_err(core, "wl%d: driver not nmode enabled\n",
 				  wlc->pub->unit);
-			return -ENOTSUPP;
+			return -ENOTSUP;
 		}
 		if (!brcms_c_ampdu_cap(ampdu)) {
 			brcms_err(core, "wl%d: device not ampdu capable\n",
 				  wlc->pub->unit);
-			return -ENOTSUPP;
+			return -ENOTSUP;
 		}
 		wlc->pub->_ampdu = on;
 	}

@@ -29,7 +29,7 @@ int brcms_led_register(struct brcms_info *wl);
 static inline void brcms_led_unregister(struct brcms_info *wl) {};
 static inline int brcms_led_register(struct brcms_info *wl)
 {
-	return -ENOTSUPP;
+	return -ENOTSUP;
 };
 #endif
 

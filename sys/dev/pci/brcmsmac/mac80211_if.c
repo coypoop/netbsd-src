@@ -565,7 +565,7 @@ static int brcms_ops_config(struct ieee80211_hw *hw, uint32_t changed)
 			err = brcms_c_set_channel(wl->wlc,
 						  conf->chandef.chan->hw_value);
 		else
-			err = -ENOTSUPP;
+			err = -ENOTSUP;
 	}
 	if (changed & IEEE80211_CONF_CHANGE_RETRY_LIMITS)
 		err = brcms_c_set_rate_limit(wl->wlc,

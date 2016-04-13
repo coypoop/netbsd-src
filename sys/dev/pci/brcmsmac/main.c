@@ -5265,7 +5265,7 @@ int brcms_c_set_gmode(struct brcms_c_info *wlc, uint8_t gmode, bool config)
 	 * Gmode is not GMODE_LEGACY_B
 	 */
 	if ((wlc->pub->_n_enab & SUPPORT_11N) && gmode == GMODE_LEGACY_B)
-		return -ENOTSUPP;
+		return -ENOTSUP;
 
 	/* verify that we are dealing with 2G band and grab the band pointer */
 	if (wlc->band->bandtype == BRCM_BAND_2G)
@@ -5315,7 +5315,7 @@ int brcms_c_set_gmode(struct brcms_c_info *wlc, uint8_t gmode, bool config)
 		/* Error */
 		brcms_err(wlc->hw->d11core, "wl%d: %s: invalid gmode %d\n",
 			  wlc->pub->unit, __func__, gmode);
-		return -ENOTSUPP;
+		return -ENOTSUP;
 	}
 
 	band->gmode = gmode;
