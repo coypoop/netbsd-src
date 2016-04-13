@@ -19,6 +19,8 @@
 
 #ifndef __NetBSD__
 #include <linux/skbuff.h>
+#else
+#include <sys/types.h>
 #endif
 
 /*
